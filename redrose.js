@@ -171,43 +171,6 @@ async function getRandomImage(message, params) {
 
 
 
-async function getNews(message, args) {
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
-
-    let headers = { 'Content-Type': 'application/json' }
-
-
-    if (args.toLowerCase() == "deutsch" || args.toLowerCase() == "deutschland") {
-        let apiURL = "https://newsapi.org/v2/top-headlines?country=nl&from=" + date + "&sortBy=publishedAt&apiKey=6ccf12ffa73f4ff2b7de2ccc56464d86"
-        await fetch(apiURL, { method: "GET", headers: headers })
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json['articles'][0])
-                message.channel.send("Letzte Top-Nachrichten aus Deutschland: ")
-                message.channel.send("Nachricht von: " + "\n" + json['articles'][0]['publishedAt'])
-                message.channel.send(json['articles'][0]['title']);
-                message.channel.send(json['articles'][0]['description']);
-                message.channel.send("Mehr Lesen: \n" + json['articles'][0]['url'])
-            })
-    } else {
-        let apiURL = "https://newsapi.org/v2/everything?q=" + args + "&from=" + date + "&sortBy=publishedAt&apiKey=6ccf12ffa73f4ff2b7de2ccc56464d86"
-        await fetch(apiURL, { method: "GET", headers: headers })
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json['articles'][0])
-                message.channel.send("Last News: ")
-                message.channel.send("News from: " + "\n" + json['articles'][0]['publishedAt'])
-                message.channel.send(json['articles'][0]['title']);
-                message.channel.send(json['articles'][0]['description']);
-                message.channel.send("Read More: \n" + json['articles'][0]['url'])
-            })
-    }
-}
-
-
-
 client.on('message', async message => {
     if (message.author.bot) return
     if (!message.content.startsWith(prefix)) return
@@ -230,19 +193,10 @@ client.on('message', async message => {
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}delete`)) {
         purgeMessages(message);
-    } else if (message.content.startsWith(`${prefix}news`)) {
-        let cont = message.content.slice(prefix.lenght).split(" ");
-        let args = cont.slice(1);
-        getNews(message, args[0]);
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {
         let cont = message.content.slice(prefix.lenght).split(" ");
         let args = cont.slice(1);
         getByUserName(message, args[0])
-    } else if (message.content.startsWith(`${prefix}news`)) {
-        let cont = message.content.slice(prefix.lenght).split(" ");
-        let args = cont.slice(1);
-        getNews(message, args[0]);
-
     } else if (message.content.startsWith(`${prefix}cuddle`) ||
         message.content.startsWith(`${prefix}lick`) ||
         message.content.startsWith(`${prefix}lewd`) ||

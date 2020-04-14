@@ -56,29 +56,6 @@ function tagsort(tags) {
     }
 }
 
-
-
-
-async function doWorkEmote(message, args) {
-
-    let cuddleEmbed = {
-        "content": "test",
-        "title": message.member.user.tag + " cuddles with @" + client.users.cache.get(args)['username'],
-        "description": "look how cute they are " + client.users.cache.get(args)['username'],
-        "url": "https://discordapp.com",
-        "color": 15844367,
-        "timestamp": "2020-01-25T21:38:40.648Z",
-        "image": {
-            "url": url
-        }
-    }
-
-    //channel.send({ embed: cuddleEmbed });
-    message.channel.send({ embed: cuddleEmbed })
-}
-
-
-
 async function getByUserName(message, args) {
     let apiURL = "https://api.vrchat.cloud/api/1/"
     let end = false;
@@ -248,8 +225,6 @@ client.on('message', async message => {
         }
     } else if (message.content.startsWith(`${prefix}utc`)) {
         message.channel.send("The UTC time is : " + Date.UTC(0, 0, 0, 0, 0, 0))
-    } else if (message.content.startsWith(`${prefix}gay`)) {
-        message.channel.send("Y0u G4y!")
     } else if (message.content.startsWith(`${prefix}image`)) {
         const image = message.content.split(' ')
         getRandomImage(message, image[1])
@@ -263,10 +238,6 @@ client.on('message', async message => {
         let cont = message.content.slice(prefix.lenght).split(" ");
         let args = cont.slice(1);
         getByUserName(message, args[0])
-    } else if (message.content.startsWith(`${prefix}Vrcuser`)) {
-        let cont = message.content.slice(prefix.lenght).split(" ");
-        let args = cont.slice(1);
-        getByUserName(message, args[0])
     } else if (message.content.startsWith(`${prefix}news`)) {
         let cont = message.content.slice(prefix.lenght).split(" ");
         let args = cont.slice(1);
@@ -275,7 +246,8 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}cuddle`) ||
         message.content.startsWith(`${prefix}lick`) ||
         message.content.startsWith(`${prefix}lewd`) ||
-        message.content.startsWith(`${prefix}bite`)) {
+        message.content.startsWith(`${prefix}bite`) ||
+        message.content.startsWith(`${prefix}kiss`)) {
         let cont = message.content.slice(prefix.lenght).split(" ");
         let args = cont.slice(1);
         console.log(args[0])

@@ -17,7 +17,7 @@ class Emote {
         let extra = ""
         let apiKey = giphy_apiKey
 
-
+        console.log("my content is currently" + message.content)
         if (message.content.startsWith(`${prefix}cuddle`)) {
             params = "cuddle"
             action = " cuddles with "
@@ -29,7 +29,7 @@ class Emote {
         } else if (message.content.startsWith(`${prefix}kiss`)) {
             params = "kiss"
             action = " is kissing "
-            extra = "this kiss was awesome"
+            extra = "this kiss was awesome "
         } else if (message.content.startsWith(`${prefix}lewd`)) {
             params = "lewd"
             action = " is lewding "

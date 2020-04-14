@@ -71,125 +71,189 @@ class MOD {
                 break;
         }
 
-
-        if (!message.member.hasPermission("BAN_MEMBERS")) {
-            message.reply("You do not have permission to ban someone.")
-            return;
-        } else if (!message.member.hasPermission("KICK_MEMBERS")) {
-            message.reply("You do not have permission to kick someone.")
-            return;
-        } else if (!message.member.hasPermission("WARN_MEMBERS")) {
-            message.reply("You do not have permission to warn someone.")
-            return;
-        } else {
-            console.log(client.users.cache.get(args))
-            await BanRequest(params, action, extra);
+        try {
+            if (!message.member.hasPermission("BAN_MEMBERS")) {
+                message.reply("You do not have permission to ban someone.")
+                return;
+            } else if (!message.member.hasPermission("KICK_MEMBERS")) {
+                message.reply("You do not have permission to kick someone.")
+                return;
+            } else {
+                await BanRequest(params, action, extra);
+            }
+        } catch (error) {
+            message.channel.send(error.message)
         }
 
         async function BanRequest(params, action, extra) {
 
+            try {
+                const user = message.mentions.users.first()
+                console.log("current user: " + user)
 
-            const user = message.mentions.users.first()
-            console.log("current user: " + user)
+                /*
+                                switch (params) {
+                                    case "kick":
+                                        if (!user) {
+                                            try {
+                                                // Check if a valid userID has been entered instead of a Discord user mention
+                                                if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
+                                                // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
+                                                user = message.guild.members.get(args.slice(0, 1).join(' '));
+                                                user = user.user;
+                                            } catch (error) {
+                                                return message.reply('Couldn\' get a Discord user with this userID!');
+                                            }
+                                        }
+                                        if (user === message.author) return message.channel.send('You can\'t kick yourself'); // Check if the user mention or the entered userID is the message author himsmelf
+                                        //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
+                                        if (!message.guild.member(user).kickable) return message.reply('You can\'t kick this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
 
+                                        await message.guild.member(user).kick() // Bans the user
+                                        break;
+                                    case "ban":
+                                        if (!user) {
+                                            try {
+                                                // Check if a valid userID has been entered instead of a Discord user mention
+                                                if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
+                                                // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
+                                                user = message.guild.members.get(args.slice(0, 1).join(' '));
+                                                user = user.user;
+                                            } catch (error) {
+                                                return message.reply('Couldn\' get a Discord user with this userID!');
+                                            }
+                                        }
+                                        if (user === message.author) return message.channel.send('You can\'t ban yourself'); // Check if the user mention or the entered userID is the message author himsmelf
+                                        //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
+                                        if (!message.guild.member(user).bannable) return message.reply('You can\'t ban this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
 
+                                        await message.guild.member(user).ban() // Bans the user
+                                        break;
+                                    case "warn":
+                                        if (!user) {
+                                            try {
+                                                // Check if a valid userID has been entered instead of a Discord user mention
+                                                if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
+                                                // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
+                                                user = message.guild.members.get(args.slice(0, 1).join(' '));
+                                                user = user.user;
+                                            } catch (error) {
+                                                return message.reply('Couldn\' get a Discord user with this userID!');
+                                            }
+                                        }
+                                        if (user === message.author) return message.channel.send('You can\'t warn yourself'); // Check if the user mention or the entered userID is the message author himsmelf
+                                        //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
+                                        if (!message.guild.member(user).warnable) return message.reply('You can\'t warn this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
 
-
-            if (params == "kick") {
-                if (!user) {
-                    try {
-                        // Check if a valid userID has been entered instead of a Discord user mention
-                        if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
-                        // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
-                        user = message.guild.members.get(args.slice(0, 1).join(' '));
-                        user = user.user;
-                    } catch (error) {
-                        return message.reply('Couldn\' get a Discord user with this userID!');
-                    }
-                }
-                if (user === message.author) return message.channel.send('You can\'t kick yourself'); // Check if the user mention or the entered userID is the message author himsmelf
-                //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
-                if (!message.guild.member(user).kickable) return message.reply('You can\'t kick this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
-
-                await message.guild.member(user).kick() // Bans the user
-            }
-
-            if (params == "ban") {
-                if (!user) {
-                    try {
-                        // Check if a valid userID has been entered instead of a Discord user mention
-                        if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
-                        // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
-                        user = message.guild.members.get(args.slice(0, 1).join(' '));
-                        user = user.user;
-                    } catch (error) {
-                        return message.reply('Couldn\' get a Discord user with this userID!');
-                    }
-                }
-                if (user === message.author) return message.channel.send('You can\'t ban yourself'); // Check if the user mention or the entered userID is the message author himsmelf
-                //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
-                if (!message.guild.member(user).banable) return message.reply('You can\'t ban this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
-
-                await message.guild.member(user).ban() // Bans the user
-            }
-
-
-            if (params == "warn") {
-                if (!user) {
-                    try {
-                        // Check if a valid userID has been entered instead of a Discord user mention
-                        if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
-                        // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
-                        user = message.guild.members.get(args.slice(0, 1).join(' '));
-                        user = user.user;
-                    } catch (error) {
-                        return message.reply('Couldn\' get a Discord user with this userID!');
-                    }
-                }
-                if (user === message.author) return message.channel.send('You can\'t warn yourself'); // Check if the user mention or the entered userID is the message author himsmelf
-                //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
-                if (!message.guild.member(user).warnable) return message.reply('You can\'t warn this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
-
-                await message.guild.member(user).warn() // Bans the user
-            }
-            /*const banConfirmationEmbed = new Discord.RichEmbed()
-                .setColor('RED')
-                .setDescription(`✅ ${user.tag} has been successfully banned!`);
-            message.channel.send({
-                embed: banConfirmationEmbed
-            }); // Sends a confirmation embed that the user has been successfully banned
-*/
+                                        await message.guild.member(user).warn() // Bans the user
+                                        break;
+                                    default:
+                                        return message.reply('An unknown error occurred. Please contact Crypto.')
+                                }
+                                */
 
 
 
-            await fetch(apiURL, { method: "GET", headers: headers })
-                .then((resp) => resp.json())
-                .then((object) => {
 
-
-                    //message.channel.send("DEBUG INFO: The limit is 20 and i got " + object['data'].length + " objects.")
-
-
-
-                    let random = Math.floor(Math.random() * 21);
-
-                    if (object['data'].length < 20) {
-                        random = Math.floor(Math.random() * (object['data'].length))
-                    }
-
-                    let coderun = false;
-                    while (coderun == false) {
-                        if (object['data'][random]['embed_url'] === undefined) {
-                            console.log("Something was wrong");
-                            random = Math.floor(Math.random() * 21);
-                        } else if (object['data'][random]['images']['original']['url'] != undefined) {
-                            coderun = true;
-                        } else {
-                            coderun = true;
-                            break;
+                if (params == "kick") {
+                    if (!user) {
+                        try {
+                            // Check if a valid userID has been entered instead of a Discord user mention
+                            if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
+                            // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
+                            user = message.guild.members.get(args.slice(0, 1).join(' '));
+                            user = user.user;
+                        } catch (error) {
+                            return message.reply('Couldn\' get a Discord user with this userID!');
                         }
                     }
-                    try {
+                    if (user === message.author) return message.channel.send('You can\'t kick yourself'); // Check if the user mention or the entered userID is the message author himsmelf
+                    //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
+                    if (!message.guild.member(user).kickable) return message.reply('You can\'t kick this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
+
+                    await message.guild.member(user).kick() // Bans the user
+                }
+
+                if (params == "ban") {
+                    if (!user) {
+                        try {
+                            // Check if a valid userID has been entered instead of a Discord user mention
+                            if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
+                            // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
+                            user = message.guild.members.get(args.slice(0, 1).join(' '));
+                            user = user.user;
+                        } catch (error) {
+                            return message.reply('Couldn\' get a Discord user with this userID!');
+                        }
+                    }
+                    if (user === message.author) return message.channel.send('You can\'t ban yourself'); // Check if the user mention or the entered userID is the message author himsmelf
+                    //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
+                    if (!message.guild.member(user).banable) return message.reply('You can\'t ban this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
+
+                    await message.guild.member(user).ban() // Bans the user
+                }
+
+
+                if (params == "warn") {
+                    if (!user) {
+                        try {
+                            // Check if a valid userID has been entered instead of a Discord user mention
+                            if (!message.guild.members.get(args.slice(0, 1).join(' '))) throw new Error('Couldn\' get a Discord user with this userID!');
+                            // If the client (bot) can get a user with this userID, it overwrites the current user variable to the user object that the client fetched
+                            user = message.guild.members.get(args.slice(0, 1).join(' '));
+                            user = user.user;
+                        } catch (error) {
+                            return message.reply('Couldn\' get a Discord user with this userID!');
+                        }
+                    }
+                    if (user === message.author) return message.channel.send('You can\'t warn yourself'); // Check if the user mention or the entered userID is the message author himsmelf
+                    //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
+                    if (!message.guild.member(user).warnable) return message.reply('You can\'t warn this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
+
+                    await message.guild.member(user).warn() // Bans the user
+                }
+                /*const banConfirmationEmbed = new Discord.RichEmbed()
+                                .setColor('RED')
+                                .setDescription(`✅ ${user.tag} has been successfully banned!`);
+                            message.channel.send({
+                                embed: banConfirmationEmbed
+                            }); // Sends a confirmation embed that the user has been successfully banned
+                */
+            } catch (error) {
+                message.channel.send(error.message)
+            }
+
+            console.log("i got here")
+
+            try {
+                await fetch(apiURL, { method: "GET", headers: headers })
+                    .then((resp) => resp.json())
+                    .then((object) => {
+
+
+                        //message.channel.send("DEBUG INFO: The limit is 20 and i got " + object['data'].length + " objects.")
+
+
+
+                        let random = Math.floor(Math.random() * 21);
+
+                        if (object['data'].length < 20) {
+                            random = Math.floor(Math.random() * (object['data'].length))
+                        }
+
+                        let coderun = false;
+                        while (coderun == false) {
+                            if (object['data'][random]['embed_url'] === undefined) {
+                                console.log("Something was wrong");
+                                random = Math.floor(Math.random() * 21);
+                            } else if (object['data'][random]['images']['original']['url'] != undefined) {
+                                coderun = true;
+                            } else {
+                                coderun = true;
+                                break;
+                            }
+                        }
+
 
                         let url = object['data'][random]['images']['original']['url']
 
@@ -208,10 +272,11 @@ class MOD {
                         //channel.send({ embed: cuddleEmbed });
                         message.channel.send({ embed: moderationEmbed });
 
-                    } catch (error) {
-                        message.channel.send(error.message);
-                    }
-                })
+
+                    })
+            } catch (error) {
+                message.channel.send(error.message);
+            }
         }
 
     }

@@ -4,6 +4,7 @@
 
 // Webhook test commit //
 var Emote = require("./emote")
+var MOD = require("./moderation")
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
@@ -194,9 +195,13 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}delete`)) {
         purgeMessages(message);
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {
-        let cont = message.content.slice(prefix.lenght).split(" ");
+        let cont = message.content.slice(prefix.length).split(" ");
         let args = cont.slice(1);
         getByUserName(message, args[0])
+    } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`) || message.content.startsWith(`${prefix}warn`)) {
+        let cont = message.content.slice(prefix.length).split(" ");
+        let args = cont.slice(1);
+        MOD.moderation(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}cuddle`) ||
         message.content.startsWith(`${prefix}lick`) ||
         message.content.startsWith(`${prefix}lewd`) ||

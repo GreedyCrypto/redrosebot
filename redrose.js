@@ -13,11 +13,14 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
+const weirdchamp = client.emojis.find(emoji => emoji.name === "weirdchamp");
+
+
 const responseObject = {
     "ayy": "Ayy, lmao!",
     "wat": "Say what?",
     "lol": "rofl",
-    "help": ":weirdchamp: it's to late to help you"
+    "help": weirdchamp + " it's to late to help you"
   };
 
 

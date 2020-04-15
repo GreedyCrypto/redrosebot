@@ -211,7 +211,7 @@ async function getRandomImage(message, params) {
 
 client.on('message', async message => {
     if (message.author.bot) return
-    if (!message.content.startsWith(prefix)) return
+    if (!message.content.startsWith(prefix) || !responseObject[message.content]) return
 
     if (message.content.startsWith(`${prefix}play`)) {
         message.channel.send("Searching for youtube video to play..")

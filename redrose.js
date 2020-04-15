@@ -13,9 +13,6 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
-const weirdchamp = client.emojis.find(emoji => emoji.name === "weirdchamp");
-
-
 const responseObject = {
     "ayy": "Ayy, lmao!",
     "wat": "Say what?",
@@ -63,6 +60,9 @@ const {
 const apiKey = "&api_key=6OUrndBG5G4nPWopJ50HhCq5y9j5IiQz"
 
 const client = new Discord.Client();
+
+
+const weirdchamp = client.emojis.find(emoji => emoji.name === "weirdchamp");
 
 
 function tagsort(tags) {

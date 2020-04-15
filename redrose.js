@@ -13,12 +13,6 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
-const responseObject = {
-    "ayy": "Ayy, lmao!",
-    "wat": "Say what?",
-    "lol": "rofl",
-    "help": weirdchamp + " it's to late to help you"
-  };
 
 
 
@@ -64,6 +58,12 @@ const client = new Discord.Client();
 
 const weirdchamp = client.emojis.find(emoji => emoji.name === "weirdchamp");
 
+const responseObject = {
+    "ayy": "Ayy, lmao!",
+    "wat": "Say what?",
+    "lol": "rofl",
+    "help": weirdchamp + " it's to late to help you"
+};
 
 function tagsort(tags) {
     console.log("Mein wert ist " + tags)

@@ -234,7 +234,7 @@ client.on('message', async message => {
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}emojilist`)) {
         const emojiList = message.guild.emojis.map(e=>e.toString()).join(" ");
-        message.channel.send(emojiList);
+        message.channel.send(`${emojiList}`);
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {

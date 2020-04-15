@@ -188,7 +188,7 @@ class MOD {
                     }
                     if (user === message.author) return message.channel.send('You can\'t ban yourself'); // Check if the user mention or the entered userID is the message author himsmelf
                     //if (!reason) return message.reply('You forgot to enter a reason for this ban!'); // Check if a reason has been given by the message author
-                    if (!message.guild.member(user).banable) return message.reply('You can\'t ban this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
+                    if (!message.guild.member(user).bannable) return message.reply('You can\'t ban this user because you the bot has not sufficient permissions!'); // Check if the user is bannable with the bot's permissions
 
                     await message.guild.member(user).ban() // Bans the user
                 }

@@ -56,7 +56,7 @@ const apiKey = "&api_key=6OUrndBG5G4nPWopJ50HhCq5y9j5IiQz"
 const client = new Discord.Client();
 
 
-const weirdchamp = client.emojis.get("305818615712579584");
+//const weirdchamp = client.emojis.get("305818615712579584");
 
 const responseObject = {
     "ayy": "Ayy, lmao!",

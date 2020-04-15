@@ -57,14 +57,13 @@ const client = new Discord.Client();
 
 
 //const weirdchamp = client.emojis.get("305818615712579584");
-/*
+
 const responseObject = {
     "ayy": "Ayy, lmao!",
     "wat": "Say what?",
-    "lol": "rofl",
-    "help": weirdchamp + " it's to late to help you"
+    "lol": "rofl"
 };
-*/
+
 function tagsort(tags) {
     console.log("Mein wert ist " + tags)
         // Check for null or undefined in IndexOf tags //

@@ -17,7 +17,7 @@ const responseObject = {
     "ayy": "Ayy, lmao!",
     "wat": "Say what?",
     "lol": "rofl",
-    "help": ":angeryping:"
+    "help": ":weirdchamp: it's to late to help you"
   };
 
 

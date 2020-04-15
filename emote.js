@@ -38,6 +38,10 @@ class Emote {
             params = "bite"
             action = " bites "
             extra = "i just hope that didn't hurt to much <3"
+        } else if (message.content.startsWith(`${prefix}bite`)) {
+            params = "rape"
+            action = " rapes "
+            extra = " you know you want it.. "
         } else {
             message.channel.send("An unknown error occurred. Please check contact the coder.")
         }

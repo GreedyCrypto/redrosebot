@@ -56,7 +56,7 @@ const apiKey = "&api_key=6OUrndBG5G4nPWopJ50HhCq5y9j5IiQz"
 const client = new Discord.Client();
 
 
-const weirdchamp = client.emojis.find(emoji => emoji.name === "weirdchamp");
+const weirdchamp = client.emojis.get("305818615712579584");
 
 const responseObject = {
     "ayy": "Ayy, lmao!",
@@ -232,6 +232,9 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}image`)) {
         const image = message.content.split(' ')
         getRandomImage(message, image[1])
+    } else if (message.content.startsWith(`${prefix}emojilist`)) {
+        const emojiList = message.guild.emojis.map(e=>e.toString()).join(" ");
+        message.channel.send(emojiList);
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {

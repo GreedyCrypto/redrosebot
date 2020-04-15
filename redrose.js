@@ -205,6 +205,7 @@ client.on('message', async message => {
         MOD.moderation(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}cuddle`) ||
         message.content.startsWith(`${prefix}lick`) ||
+        message.content.startsWith(`${prefix}hug`) ||
         message.content.startsWith(`${prefix}lewd`) ||
         message.content.startsWith(`${prefix}bite`) ||
         message.content.startsWith(`${prefix}kiss`)||

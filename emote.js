@@ -69,7 +69,11 @@ class Emote {
         } else if (message.content.startsWith(`${prefix}rape`)) {
             params = "rape"
             action = " rapes "
-            extra = " you know you want it.. "
+            extra = "you know you want it.. "
+        } else if (message.content.startsWith(`${prefix}hug`)) {
+            params = "hug"
+            action = " is hugging "
+            extra = "why do you feel so warm? "
         } else {
             message.channel.send("An unknown error occurred. Please check contact the coder.")
         }

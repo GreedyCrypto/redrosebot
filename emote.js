@@ -59,7 +59,7 @@ class Emote {
             action = " is kissing "
             extra = "this kiss was awesome "
         } else if (message.content.startsWith(`${prefix}lewd`)) {
-            params = "lewd"
+            params = "hentai"
             action = " is lewding "
             extra = "ERP IN A PUBLIC LOBBY??? BRUH "
         } else if (message.content.startsWith(`${prefix}bite`)) {

@@ -282,6 +282,7 @@ client.on('message', async message => {
 
                 try {
 
+            let url = object['data'][random]['images']['original']['url']
 
             let cuddleEmbed = {
                 "content": params,

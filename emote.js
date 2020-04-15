@@ -69,7 +69,7 @@ class Emote {
         } else if (message.content.startsWith(`${prefix}gay`)) {
             params = "gay"
             action = " is acting gay on "
-            extra = "yo that's fkin gay"
+            extra = "yo that's fkin gay "
         } else if (message.content.startsWith(`${prefix}rape`)) {
             params = "rape"
             action = " rapes "

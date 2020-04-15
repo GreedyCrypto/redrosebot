@@ -250,8 +250,7 @@ client.on('message', async message => {
             }
 
             let random = Math.floor(Math.random() * 21);
-
-            
+            let color = discordColors[colorRandomize]
             let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
 
             await fetch(apiURL, { method: "GET", headers: headers })
@@ -295,10 +294,6 @@ client.on('message', async message => {
                     "url": url
                 }
             }
-
-
-            let color = discordColors[colorRandomize]
-            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
 
             //channel.send({ embed: cuddleEmbed });
             message.channel.send({ embed: cuddleEmbed });

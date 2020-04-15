@@ -43,8 +43,14 @@ class Emote {
         }
 
 
+    
+        let offsetRandomize = Math.floor(Math.random() * 10)
 
-        let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=0&q=" + params + apiKey
+        while(offsetRandomize > 5) {
+            offsetRandomize = Math.floor(Math.random() * 10)
+        }
+
+        let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
             //let user = getUserFromMention(args)
         console.log(apiURL)
 
@@ -85,6 +91,10 @@ class Emote {
                         break;
                     }
                 }
+
+
+
+
                 try {
                     //str.substring(0, str.length() - 1)
                     //message.channel.send(message.member.user.tag + " cuddles with: " + args + ": " + "\n" + object['data'][random]['embed_url'])

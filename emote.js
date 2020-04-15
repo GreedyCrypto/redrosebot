@@ -90,9 +90,6 @@ class Emote {
 
 
         let color = discordColors[colorRandomize]
-        message.channel.send('current color:' + color)
-
-        message.channel.send('The Current Offset is: ' + offsetRandomize)
         let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
             //let user = getUserFromMention(args)
         console.log(apiURL)
@@ -134,9 +131,6 @@ class Emote {
                         break;
                     }
                 }
-
-
-                message.channel.send('The Current Image is:' + random)
 
                 try {
                     //str.substring(0, str.length() - 1)

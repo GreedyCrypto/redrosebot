@@ -94,7 +94,7 @@ class Emote {
 
 
         let color = discordColors[colorRandomize]
-        let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
+        let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + "+" + "anime" + apiKey
             //let user = getUserFromMention(args)
         console.log(apiURL)
 

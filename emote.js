@@ -49,7 +49,7 @@ class Emote {
         while(offsetRandomize > 5) {
             offsetRandomize = Math.floor(Math.random() * 10)
         }
-
+        message.channel.send('The Current Offset is: ' + offsetRandomize)
         let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
             //let user = getUserFromMention(args)
         console.log(apiURL)
@@ -93,7 +93,7 @@ class Emote {
                 }
 
 
-
+                message.channel.send('The Current Image is:' + random)
 
                 try {
                     //str.substring(0, str.length() - 1)

@@ -74,44 +74,6 @@ class Emote {
             params = "hug"
             action = " is hugging "
             extra = "why do you feel so warm? "
-        } else if (message.content.startsWith(`${prefix}cry`)) {
-            params = "cry"
-            action = " is crying "
-            extra = "why "
-
-            let cuddleEmbed = {
-                "content": params,
-                "title": message.member.user.tag + action,
-                "description": extra,
-                "url": "",
-                "color": color,
-                "timestamp": "2020-01-25T21:38:40.648Z",
-                "image": {
-                    "url": url
-                }
-            }
-
-            let offsetRandomize = Math.floor(Math.random() * 10)
-
-            while(offsetRandomize > 5) {
-                offsetRandomize = Math.floor(Math.random() * 10)
-            }
-    
-    
-            let colorRandomize = Math.floor(Math.random() * 24)
-            while(colorRandomize > 23){
-            colorRandomize = Math.floor(Math.random() * 24)
-            }
-    
-    
-            let color = discordColors[colorRandomize]
-            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
-
-            //channel.send({ embed: cuddleEmbed });
-            message.channel.send({ embed: cuddleEmbed });
-
-
-
         } else {
             message.channel.send("An unknown error occurred. Please check contact the coder.")
         }

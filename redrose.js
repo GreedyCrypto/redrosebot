@@ -13,6 +13,35 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
+
+const discordColors = [
+    0,
+    1752220,
+    3066993,
+    3447003,
+    10181046,
+    15844367,
+    15105570,
+    15158332,
+    9807270,
+    8359053,
+    3426654,
+    1146986,
+    2067276,
+    2123412,
+    7419530,
+    12745742,
+    11027200,
+    10038562,
+    9936031,
+    12370112,
+    2899536,
+    16580705,
+    12320855
+ ]
+ 
+
+
 const {
 
     prefix,
@@ -203,10 +232,79 @@ client.on('message', async message => {
         let cont = message.content.slice(prefix.length).split(" ");
         let args = cont.slice(1);
         MOD.moderation(client, message, args[0])
+    } else if (message.content.startsWith(`${prefix}cry`)) {
+            params = "cry"
+            action = " is crying "
+            extra = "why "
+
+
+            await fetch(apiURL, { method: "GET", headers: headers })
+            .then((resp) => resp.json())
+            .then((object) => {
+
+
+                //message.channel.send("DEBUG INFO: The limit is 20 and i got " + object['data'].length + " objects.")
+
+
+                let offsetRandomize = Math.floor(Math.random() * 10)
+
+                while(offsetRandomize > 5) {
+                    offsetRandomize = Math.floor(Math.random() * 10)
+                }
+        
+        
+                let colorRandomize = Math.floor(Math.random() * 24)
+                while(colorRandomize > 23){
+                colorRandomize = Math.floor(Math.random() * 24)
+                }
+
+                let random = Math.floor(Math.random() * 21);
+
+                if (object['data'].length < 20) {
+                    random = Math.floor(Math.random() * (object['data'].length))
+                }
+
+                let coderun = false;
+                while (coderun == false) {
+                    if (object['data'][random]['embed_url'] === undefined) {
+                        console.log("Something was wrong");
+                        random = Math.floor(Math.random() * 21);
+                    } else if (object['data'][random]['images']['original']['url'] != undefined) {
+                        coderun = true;
+                    } else {
+                        coderun = true;
+                        break;
+                    }
+                }
+
+                try {
+
+
+            let cuddleEmbed = {
+                "content": params,
+                "title": message.member.user.tag + action,
+                "description": extra,
+                "url": "",
+                "color": color,
+                "timestamp": "2020-01-25T21:38:40.648Z",
+                "image": {
+                    "url": url
+                }
+            }
+
+
+            let color = discordColors[colorRandomize]
+            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
+
+            //channel.send({ embed: cuddleEmbed });
+            message.channel.send({ embed: cuddleEmbed });
+                }catch(error){
+                    message.channel.send(error.message)
+                }
+            })
     } else if (message.content.startsWith(`${prefix}cuddle`) ||
         message.content.startsWith(`${prefix}lick`) ||
         message.content.startsWith(`${prefix}hug`) ||
-        message.content.startsWith(`${prefix}cry`) ||
         message.content.startsWith(`${prefix}lewd`) ||
         message.content.startsWith(`${prefix}bite`) ||
         message.content.startsWith(`${prefix}kiss`)||

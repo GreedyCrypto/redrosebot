@@ -197,7 +197,8 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {
         let cont = message.content.slice(prefix.length).split(" ");
         let args = cont.slice(1);
-        getByUserName(message, args[0])
+        message.reply("this function is temporary deactivated")
+	//getByUserName(message, args[0])
     } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`) || message.content.startsWith(`${prefix}warn`)) {
         let cont = message.content.slice(prefix.length).split(" ");
         let args = cont.slice(1);

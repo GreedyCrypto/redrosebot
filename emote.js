@@ -76,8 +76,42 @@ class Emote {
             extra = "why do you feel so warm? "
         } else if (message.content.startsWith(`${prefix}cry`)) {
             params = "cry"
-            action = " is crying"
-            extra = "why..? "
+            action = " is crying "
+            extra = "why "
+
+            let cuddleEmbed = {
+                "content": params,
+                "title": message.member.user.tag + action,
+                "description": extra,
+                "url": "",
+                "color": color,
+                "timestamp": "2020-01-25T21:38:40.648Z",
+                "image": {
+                    "url": url
+                }
+            }
+
+            let offsetRandomize = Math.floor(Math.random() * 10)
+
+            while(offsetRandomize > 5) {
+                offsetRandomize = Math.floor(Math.random() * 10)
+            }
+    
+    
+            let colorRandomize = Math.floor(Math.random() * 24)
+            while(colorRandomize > 23){
+            colorRandomize = Math.floor(Math.random() * 24)
+            }
+    
+    
+            let color = discordColors[colorRandomize]
+            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
+
+            //channel.send({ embed: cuddleEmbed });
+            message.channel.send({ embed: cuddleEmbed });
+
+
+
         } else {
             message.channel.send("An unknown error occurred. Please check contact the coder.")
         }
@@ -156,9 +190,6 @@ class Emote {
                     let url = object['data'][random]['images']['original']['url']
 
 
-             
-                    let userTag = ""
-                    if(params != "cry"){
                     switch (client.users.cache.get(args)['username']) {
                         case 'undefined':
                             message.channel.send("Please enter a correct username")
@@ -171,17 +202,11 @@ class Emote {
                         default:
                             break;
                     }
-                    userTag = client.users.cache.get(args)['username']
-                    }else{
-                    userTag = ""
-                    }
-
-            
 
                     let cuddleEmbed = {
                         "content": params,
-                        "title": message.member.user.tag + action + userTag,
-                        "description": extra + userTag,
+                        "title": message.member.user.tag + action + client.users.cache.get(args)['username'],
+                        "description": extra + client.users.cache.get(args)['username'],
                         "url": "https://discordapp.com",
                         "color": color,
                         "timestamp": "2020-01-25T21:38:40.648Z",

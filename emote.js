@@ -9,6 +9,34 @@ let fetch = require('node-fetch')
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 
+
+const discordColors = {
+   DEFAULT: 0,
+   AQUA: 1752220,
+   GREEN: 3066993,
+   BLUE: 3447003,
+   PURPLE: 10181046,
+   GOLD: 15844367,
+   ORANGE: 15105570,
+   RED: 15158332,
+   GREY: 9807270,
+   DARKER_GREY: 8359053,
+   NAVY: 3426654,
+   DARK_AQUA: 1146986,
+   DARK_GREEN: 2067276,
+   DARK_BLUE: 2123412,
+   DARK_PURPLE: 7419530,
+   DARK_GOLD: 12745742,
+   DARK_ORANGE: 11027200,
+   DARK_RED: 10038562,
+   DARK_GREY: 9936031,
+   LIGHT_GREY: 12370112,
+   DARK_NAVY: 2899536,
+   LUMINOUS_VIVID_PINK: 16580705,
+   DARK_VIVID_PINK: 12320855
+}
+
+
 class Emote {
 
     static async emotetype(client, message, args) {
@@ -53,6 +81,17 @@ class Emote {
         while(offsetRandomize > 5) {
             offsetRandomize = Math.floor(Math.random() * 10)
         }
+
+
+        let colorRandomize = Math.floor(Math.random() * 24)
+        while(colorRandomize > 23){
+        colorRandomize = Math.floor(Math.random() * 24)
+        }
+
+
+        let color = discordColors[colorRandomize]
+
+
         message.channel.send('The Current Offset is: ' + offsetRandomize)
         let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
             //let user = getUserFromMention(args)
@@ -133,7 +172,7 @@ class Emote {
                         "title": message.member.user.tag + action + client.users.cache.get(args)['username'],
                         "description": extra + client.users.cache.get(args)['username'],
                         "url": "https://discordapp.com",
-                        "color": 15844367,
+                        "color": color,
                         "timestamp": "2020-01-25T21:38:40.648Z",
                         "image": {
                             "url": url

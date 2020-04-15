@@ -13,6 +13,14 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
+const responseObject = {
+    "ayy": "Ayy, lmao!",
+    "wat": "Say what?",
+    "lol": "rofl",
+    "help": ":angeryping:"
+  };
+
+
 
 const discordColors = [
     0,
@@ -221,6 +229,8 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}image`)) {
         const image = message.content.split(' ')
         getRandomImage(message, image[1])
+    } else if (responseObject[message.content]) {
+        message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {
         purgeMessages(message);
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {

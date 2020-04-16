@@ -13,7 +13,10 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
-
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date + ' ' + time;
 
 
 const discordColors = [
@@ -305,7 +308,7 @@ client.on('message', async message => {
                 "description": extra,
                 "url": "",
                 "color": color,
-                "timestamp": "2020-01-25T21:38:40.648Z",
+                "timestamp": dateTime,
                 "image": {
                     "url": url
                 }
@@ -375,7 +378,7 @@ client.on('message', async message => {
                 "description": extra,
                 "url": "",
                 "color": color,
-                "timestamp": "2020-01-25T21:38:40.648Z",
+                "timestamp": dateTime,
                 "image": {
                     "url": url
                 }

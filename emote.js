@@ -9,6 +9,10 @@ let fetch = require('node-fetch')
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date + ' ' + time;
 
 const discordColors = [
    0,
@@ -175,7 +179,7 @@ class Emote {
                         "description": extra + client.users.cache.get(args)['username'],
                         "url": "https://discordapp.com",
                         "color": color,
-                        "timestamp": "2020-01-25T21:38:40.648Z",
+                        "timestamp": dateTime,
                         "image": {
                             "url": url
                         }

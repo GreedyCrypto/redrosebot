@@ -86,7 +86,7 @@ class BLOCK {
 
         async function getImage(color, daysLeft, hoursLeft, minutesleft, blocksLeft, currentBlock, colorRandomize, offsetRandomize, params, dateTime){
             let apiKey = giphy_apiKey
-            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + "+" + "anime" + apiKey
+            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + "Bitcoin" + apiKey
                 await fetch(apiURL, { method: "GET", headers: headers })
                 .then((resp) => resp.json())
                 .then((object) => {
@@ -135,7 +135,7 @@ class BLOCK {
                         let BlockEmbed = {
                             "content": params,
                             "title": "Block Halving Countdown",
-                            "description": "Time left until 2020 halving: " + daysLeft.toFixed(2) + "days " + hoursLeft.toFixed(2) + "hours " + minutesleft.toFixed(2) + "minutes ",
+                            "description": "Time left until 2020 halving: " + daysLeft.toFixed(0) + "days ",
                             "url": "https://www.bitcoinblockhalf.com/",
                             "color": color,
                             "timestamp": dateTime,

@@ -134,7 +134,7 @@ class BLOCK {
             
                         let BlockEmbed = {
                             "content": params,
-                            "title": "Block Halving Countdown",
+                            "title": "Block Halving Countdown | Blocks left: " + blocksLeft,
                             "description": "Time left until 2020 halving: " + daysLeft.toFixed(0) + " days",
                             "url": "https://www.bitcoinblockhalf.com/",
                             "color": color,

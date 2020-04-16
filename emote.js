@@ -9,10 +9,7 @@ let fetch = require('node-fetch')
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime = date + ' ' + time;
+
 
 const discordColors = [
    0,
@@ -48,6 +45,11 @@ class Emote {
         let action = ""
         let extra = ""
         let apiKey = giphy_apiKey
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
 
         console.log("my content is currently" + message.content)
         if (message.content.startsWith(`${prefix}cuddle`)) {

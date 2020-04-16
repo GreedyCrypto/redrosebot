@@ -13,10 +13,6 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime = date + ' ' + time;
 
 
 const discordColors = [
@@ -255,6 +251,11 @@ client.on('message', async message => {
             action = " is crying "
             extra = "why "
 
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date + ' ' + time;
+
             let offsetRandomize = Math.floor(Math.random() * 10)
 
             while(offsetRandomize > 5) {
@@ -324,6 +325,12 @@ client.on('message', async message => {
             params = "rage"
             action = " is raging "
             extra = "yo i'm fkin angry.."
+
+
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date + ' ' + time;
 
             let offsetRandomize = Math.floor(Math.random() * 10)
 

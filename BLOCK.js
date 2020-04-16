@@ -77,14 +77,14 @@ class BLOCK {
 
                 let color = discordColors[colorRandomize]
 
-                getImage(color, daysLeft, hoursLeft, minutesleft, blocksLeft, currentBlock, colorRandomize, offsetRandomize, params)
+                getImage(color, daysLeft, hoursLeft, minutesleft, blocksLeft, currentBlock, colorRandomize, offsetRandomize, params, dateTime)
         })
 
 
 
 
 
-        async function getImage(color, daysLeft, hoursLeft, minutesleft, blocksLeft, currentBlock, colorRandomize, offsetRandomize, params){
+        async function getImage(color, daysLeft, hoursLeft, minutesleft, blocksLeft, currentBlock, colorRandomize, offsetRandomize, params, dateTime){
             let apiKey = giphy_apiKey
             let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + "+" + "anime" + apiKey
                 await fetch(apiURL, { method: "GET", headers: headers })

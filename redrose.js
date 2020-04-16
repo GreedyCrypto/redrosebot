@@ -5,6 +5,7 @@
 // Webhook test commit //
 var Emote = require("./emote")
 var MOD = require("./moderation")
+var BLOCK = require("./BLOCK")
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
@@ -409,6 +410,10 @@ client.on('message', async message => {
         let args = cont.slice(1);
         console.log(args[0])
         Emote.emotetype(client, message, args[0]);
+    } else if (message.content.startsWith(`${prefix}blockinfo`)) {
+        let cont = message.content.slice(prefix.length).split(" ");
+        let args = cont.slice(1);
+        BLOCK.halving(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}help`)) {
         message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif");
     } else {

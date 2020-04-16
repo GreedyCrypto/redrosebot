@@ -264,7 +264,11 @@ client.on('message', async message => {
     };
 
     if (message.author.bot) return
-    if (!message.content.startsWith(prefix) && (!responseObject[message.content]) || (!(message.content === "bruh"))) return
+    if (message.content === "bruh") {
+    dobruh(message)
+    return
+    }
+    if (!message.content.startsWith(prefix) && (!responseObject[message.content])) return
 
     if (message.content.startsWith(`${prefix}play`)) {
         message.channel.send("Searching for youtube video to play..")
@@ -287,8 +291,6 @@ client.on('message', async message => {
         message.channel.send(`${emojiList}`);
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
-    } else if (message.content === "bruh") {
-        dobruh(message)
     } else if (message.content.startsWith(`${prefix}delete`)) {
         purgeMessages(message);
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {

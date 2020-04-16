@@ -260,10 +260,9 @@ client.on('message', async message => {
     const responseObject = {
         "ayy": "Ayy, lmao!",
         "wat": "Say what?",
-        "lol": "rofl",
-        "bruh": dobruh(message)
+        "lol": "rofl"
     };
-    
+
     if (message.author.bot) return
     if (!message.content.startsWith(prefix) && !responseObject[message.content]) return
 
@@ -288,6 +287,8 @@ client.on('message', async message => {
         message.channel.send(`${emojiList}`);
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
+    } else if (message.content === "bruh") {
+        dobruh(message)
     } else if (message.content.startsWith(`${prefix}delete`)) {
         purgeMessages(message);
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {

@@ -58,12 +58,7 @@ const client = new Discord.Client();
 
 //const weirdchamp = client.emojis.get("305818615712579584");
 
-const responseObject = {
-    "ayy": "Ayy, lmao!",
-    "wat": "Say what?",
-    "lol": "rofl",
-    "bruh": dobruh(message)
-};
+
 
 function tagsort(tags) {
     console.log("Mein wert ist " + tags)
@@ -262,6 +257,13 @@ async function dobruh(message) {
 
 
 client.on('message', async message => {
+    const responseObject = {
+        "ayy": "Ayy, lmao!",
+        "wat": "Say what?",
+        "lol": "rofl",
+        "bruh": dobruh(message)
+    };
+    
     if (message.author.bot) return
     if (!message.content.startsWith(prefix) && !responseObject[message.content]) return
 

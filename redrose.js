@@ -62,7 +62,7 @@ const responseObject = {
     "ayy": "Ayy, lmao!",
     "wat": "Say what?",
     "lol": "rofl",
-    "bruh": dobruh()
+    "bruh": dobruh(message)
 };
 
 function tagsort(tags) {
@@ -211,7 +211,7 @@ async function getRandomImage(message, params) {
 }
 
 
-async function dobruh() {
+async function dobruh(message) {
     let offsetRandomize = Math.floor(Math.random() * 10)
 
     while(offsetRandomize > 5) {

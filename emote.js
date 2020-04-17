@@ -1,7 +1,8 @@
 const {
 
     prefix,
-    giphy_apiKey
+    giphy_apiKey,
+    discordColors
 
 } = require('./config.json')
 
@@ -11,31 +12,6 @@ const Discord = require('discord.js')
 
 
 
-const discordColors = [
-   0,
-   1752220,
-   3066993,
-   3447003,
-   10181046,
-   15844367,
-   15105570,
-   15158332,
-   9807270,
-   8359053,
-   3426654,
-   1146986,
-   2067276,
-   2123412,
-   7419530,
-   12745742,
-   11027200,
-   10038562,
-   9936031,
-   12370112,
-   2899536,
-   16580705,
-   12320855
-]
 
 
 class Emote {

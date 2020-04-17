@@ -6,6 +6,7 @@
 var Emote = require("./emote")
 var MOD = require("./moderation")
 var BLOCK = require("./BLOCK")
+var VRC = require("./vrchat")
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
@@ -16,38 +17,12 @@ let user = null
 
 
 
-const discordColors = [
-    0,
-    1752220,
-    3066993,
-    3447003,
-    10181046,
-    15844367,
-    15105570,
-    15158332,
-    9807270,
-    8359053,
-    3426654,
-    1146986,
-    2067276,
-    2123412,
-    7419530,
-    12745742,
-    11027200,
-    10038562,
-    9936031,
-    12370112,
-    2899536,
-    16580705,
-    12320855
- ]
- 
-
 
 const {
 
     prefix,
     token,
+    discordColors
 
 } = require('./config.json')
 
@@ -58,112 +33,6 @@ const client = new Discord.Client()
 
 //const weirdchamp = client.emojis.get("305818615712579584")
 
-
-
-function tagsort(tags) {
-    console.log("Mein wert ist " + tags)
-        // Check for null or undefined in IndexOf tags //
-    if (tags == "undefined" && tags == null) {
-        console.log("Can't show tags for unknown user.")
-        globalrank = "Rank Unknown"
-    }
-
-    if (tags.indexOf("troll") != -1) {
-        console.log("This Person is a confirmed troll.".red)
-        globalrank = "This Person is a confirmed troll."
-    } else if (tags.indexOf("system_legend") != -1) {
-        console.log("Legendary User and appears as" + " Trusted User".magenta)
-        globalrank = "Legendary User and appears as Trusted User"
-    } else if (tags.indexOf("system_trust_legend") != -1) {
-        console.log("Veteran User and appears as" + " Trusted User".magenta)
-        globalrank = "Veteran User and appears as Trusted User"
-    } else if (tags.indexOf("system_trust_veteran") != -1) {
-        console.log("Trusted User".magenta)
-        globalrank = "Trusted User"
-    } else if (tags.indexOf("system_trust_trusted") != -1) {
-        console.log("Known User".yellow)
-        globalrank = "Known User"
-    } else if (tags.indexOf("system_trust_known") != -1) {
-        console.log("User".green)
-        globalrank = "User"
-    } else if (tags.indexOf("system_trust_basic") != -1) {
-        console.log("New User".blue)
-        globalrank = "New User"
-    }
-}
-
-async function getByUserName(message, args) {
-    let apiURL = "https://api.vrchat.cloud/api/1/"
-    let end = false
-    username = ""
-    password = ""
-    let headers = { 'Authorization': 'Basic ' + btoa(username + ':' + password), 'Content-Type': 'raw' }
-    do {
-        console.log("Please enter username: ")
-        let searchuser = args
-        let apiKey = "&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
-        endpoint = "users" + "?search=" + searchuser
-        try {
-            await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
-                .then(response => response.json())
-                .then((object) => {
-                    console.log(object)
-                    if (object.length == 0) {
-                        message.channel.send("I didn't found any user. Bazinga.")
-                        end = true
-                    } else {
-
-
-
-                        /* Discord Embed
-
-                                        let cuddleEmbed = {
-                                            "content": "test",
-                                            "title": message.member.user.tag + " cuddles with @" + client.users.cache.get(args)['username'],
-                                            "description": "look how cute they are " + client.users.cache.get(args)['username'],
-                                            "url": "https://discordapp.com",
-                                            "color": 15844367,
-                                            "timestamp": "2020-01-25T21:38:40.648Z",
-                                            "image": {
-                                                "url": url
-                                            }
-                                        }
-
-                                        //channel.send({ embed: cuddleEmbed })
-                                        message.channel.send({ embed: cuddleEmbed })
-
-                        */
-
-
-                        message.channel.send("I've found " + object.length + " users")
-                        message.channel.send("Showing the first 3 Entry's.." + "\n")
-                        message.channel.send("DisplayName: \n" + object[0]['displayName'])
-                        message.channel.send("Avatar-Bild: \n" + object[0]['currentAvatarThumbnailImageUrl'])
-                        let tags = object[0]['tags']
-                        tagsort(tags)
-                        message.channel.send("This peson has the following rank: " + globalrank)
-                        message.channel.send("DisplayName: \n" + object[1]['displayName'])
-                        message.channel.send("Avatar-Bild: \n" + object[1]['currentAvatarThumbnailImageUrl'])
-                        let tags2 = object[1]['tags']
-                        tagsort(tags2)
-                        message.channel.send("This peson has the following rank: " + globalrank)
-                        message.channel.send("DisplayName: \n" + object[2]['displayName'])
-                        message.channel.send("Avatar-Bild: \n" + object[2]['currentAvatarThumbnailImageUrl'])
-                        let tags3 = object[2]['tags']
-                        tagsort(tags3)
-
-                        message.channel.send("This peson has the following rank: " + globalrank)
-                        end = true
-                    }
-                })
-        } catch (ex) {
-            message.channel.send(ex.message, "User not found. Please try again.")
-            end = false
-        }
-    }
-    while (end == false)
-    console.log("Request Proceeded Successfully.")
-}
 
 
 async function getRandomImage(message, params) {
@@ -353,8 +222,8 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
-        message.reply("this function is temporary deactivated")
-	//getByUserName(message, args[0])
+        //message.reply("this function is temporary deactivated")
+	    VRC.getByUserName(message, args[0])
     } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`) || message.content.startsWith(`${prefix}warn`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)

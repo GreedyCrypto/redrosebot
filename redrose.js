@@ -255,6 +255,56 @@ async function dobruh(message) {
 }
 
 
+async function dotrigger(message) {
+    let offsetRandomize = Math.floor(Math.random() * 10)
+
+    while(offsetRandomize > 5) {
+        offsetRandomize = Math.floor(Math.random() * 10)
+    }
+
+    let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + "triggered" + apiKey
+    console.log(apiURL)
+
+    await fetch(apiURL, { method: "GET", headers: headers })
+        .then((resp) => resp.json())
+        .then((object) => {
+
+
+            //message.channel.send("DEBUG INFO: The limit is 20 and i got " + object['data'].length + " objects.")
+
+
+
+
+
+
+            let random = Math.floor(Math.random() * 21);
+
+            if (object['data'].length < 20) {
+                random = Math.floor(Math.random() * (object['data'].length))
+            }
+
+            let coderun = false;
+            while (coderun == false) {
+                if (object['data'][random]['embed_url'] === undefined) {
+                    console.log("Something was wrong");
+                    random = Math.floor(Math.random() * 21);
+                } else if (object['data'][random]['embed_url'] != undefined) {
+                    coderun = true;
+                } else {
+                    coderun = true;
+                    break;
+                }
+            }
+            try {
+                message.channel.send(object['data'][random]['embed_url'])
+            } catch (error) {
+                message.channel.send(error);
+            }
+        })
+}
+
+
+
 
 client.on('message', async message => {
     const responseObject = {
@@ -268,6 +318,13 @@ client.on('message', async message => {
     dobruh(message)
     return
     }
+
+    if(message.content.indexOf("triggered") || message.content.indexOf("Triggered").toLowerCase()){
+    dotrigger(message)
+    return
+    }
+
+
     if (!message.content.startsWith(prefix) && (!responseObject[message.content])) return
 
     if (message.content.startsWith(`${prefix}play`)) {

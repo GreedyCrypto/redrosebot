@@ -24,6 +24,8 @@ let btoa = require("btoa")
 let globalrank = null
 let user = null
 
+let endpoint = ""
+
 
 
 class VRC{

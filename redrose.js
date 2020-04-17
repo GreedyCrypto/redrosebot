@@ -319,7 +319,7 @@ client.on('message', async message => {
     return
     }
 
-    if(message.content.indexOf("triggered")){
+    if(message.content.indexOf('triggered') != -1){
     dotrigger(message)
     return
     }

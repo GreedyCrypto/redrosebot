@@ -41,13 +41,9 @@ static async getByUserName(message, args){
     async function tagsort(tags){
         console.log("Mein wert ist " + tags)
                 // Check for null or undefined in IndexOf tags //
-        if (tags == "undefined" && tags == null) {
-            console.log("Can't show tags for unknown user.")
-            return "Rank Unknown"
-        }
         
         if (tags.indexOf("troll") != -1) {
-            return "This Person is a confirmed troll."
+            return "Confirmed troll."
         } else if (tags.indexOf("system_legend") != -1) {
             return "Legendary User and appears as Trusted User"
         } else if (tags.indexOf("system_trust_legend") != -1) {
@@ -60,6 +56,8 @@ static async getByUserName(message, args){
             return "User"
         } else if (tags.indexOf("system_trust_basic") != -1) {
             return "New User"
+        } else {
+            return "Visitor"
         }
     }
         

@@ -78,7 +78,7 @@ static async getByUserName(message, args){
         try {
             await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
                 .then(response => response.json())
-                .then((object) => {
+                .then(async function setData(object){
                     console.log(object)
                     if (object.length == 0) {
                         message.channel.send("I didn't found any user. Bazinga.")
@@ -115,10 +115,11 @@ static async getByUserName(message, args){
                             bio = object[0]['bio']
                         }
 
+
                         let vrcEmbed = {
                             "content": params,
                             "title": object[0]['displayName'],
-                            "description": bio + " " + " | Rank: " + tagsort(tags),
+                            "description": bio + " " + " | Rank: " + await tagsort(tags),
                             "url": "https://vrchat.com/home/user/" + object[0]['id'],
                             "color": color,
                             "timestamp": dateTime,
@@ -129,7 +130,6 @@ static async getByUserName(message, args){
                                 "url": object[0]['currentAvatarThumbnailImageUrl']
                             }
                         }
-
                         //channel.send({ embed: cuddleEmbed })
                         message.channel.send({ embed: vrcEmbed })
 
@@ -150,7 +150,7 @@ static async getByUserName(message, args){
                         let vrcEmbed2 = {
                             "content": params1,
                             "title": object[0]['displayName'],
-                            "description": bio1 + " " + " | Rank: " + tagsort(tags2),
+                            "description": bio1 + " " + " | Rank: " + await tagsort(tags2),
                             "url": "https://vrchat.com/home/user/" + object[0]['id'],
                             "color": color,
                             "timestamp": dateTime,
@@ -183,7 +183,7 @@ static async getByUserName(message, args){
                         let vrcEmbed3 = {
                             "content": params2,
                             "title": object[2]['displayName'],
-                            "description": bio2 + " " + " | Rank: " + tagsort(tags3),
+                            "description": bio2 + " " + " | Rank: " + await tagsort(tags3),
                             "url": "https://vrchat.com/home/user/" + object[0]['id'],
                             "color": color,
                             "timestamp": dateTime,

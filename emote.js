@@ -3,7 +3,7 @@ const {
     prefix,
     giphy_apiKey
 
-} = require('./config.json');
+} = require('./config.json')
 
 let fetch = require('node-fetch')
 const headers = { 'Content-Type': 'application/json' }
@@ -46,10 +46,10 @@ class Emote {
         let extra = ""
         let apiKey = giphy_apiKey
 
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date + ' ' + time;
+        var today = new Date()
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        var dateTime = date + ' ' + time
 
         console.log("my content is currently" + message.content)
         if (message.content.startsWith(`${prefix}cuddle`)) {
@@ -108,13 +108,13 @@ class Emote {
             //let user = getUserFromMention(args)
         console.log(apiURL)
 
-        if (!args) return;
+        if (!args) return
 
         if (args.startsWith('<@') && args.endsWith('>')) {
-            args = args.slice(2, -1);
+            args = args.slice(2, -1)
 
             if (args.startsWith('!')) {
-                args = args.slice(1);
+                args = args.slice(1)
             }
         }
 
@@ -127,22 +127,22 @@ class Emote {
 
 
 
-                let random = Math.floor(Math.random() * 21);
+                let random = Math.floor(Math.random() * 21)
 
                 if (object['data'].length < 20) {
                     random = Math.floor(Math.random() * (object['data'].length))
                 }
 
-                let coderun = false;
+                let coderun = false
                 while (coderun == false) {
                     if (object['data'][random]['embed_url'] === undefined) {
-                        console.log("Something was wrong");
-                        random = Math.floor(Math.random() * 21);
+                        console.log("Something was wrong")
+                        random = Math.floor(Math.random() * 21)
                     } else if (object['data'][random]['images']['original']['url'] != undefined) {
-                        coderun = true;
+                        coderun = true
                     } else {
-                        coderun = true;
-                        break;
+                        coderun = true
+                        break
                     }
                 }
 
@@ -158,7 +158,7 @@ class Emote {
                         //    .addField(client.user.username + " cuddles with " + args)
                         //    .setImage(object['data'][random]['embed_url'])
 
-                    //message.channel.send({ myEmbed });
+                    //message.channel.send({ myEmbed })
                     let url = object['data'][random]['images']['original']['url']
 
 
@@ -172,7 +172,7 @@ class Emote {
                         case null:
                             message.channel.send("Please enter a correct username")
                         default:
-                            break;
+                            break
                     }
 
                     let cuddleEmbed = {
@@ -187,11 +187,11 @@ class Emote {
                         }
                     }
 
-                    //channel.send({ embed: cuddleEmbed });
-                    message.channel.send({ embed: cuddleEmbed });
+                    //channel.send({ embed: cuddleEmbed })
+                    message.channel.send({ embed: cuddleEmbed })
 
                 } catch (error) {
-                    message.channel.send(error.message);
+                    message.channel.send(error.message)
                 }
             })
 

@@ -49,14 +49,14 @@ const {
     prefix,
     token,
 
-} = require('./config.json');
+} = require('./config.json')
 
 const apiKey = "&api_key=6OUrndBG5G4nPWopJ50HhCq5y9j5IiQz"
 
-const client = new Discord.Client();
+const client = new Discord.Client()
 
 
-//const weirdchamp = client.emojis.get("305818615712579584");
+//const weirdchamp = client.emojis.get("305818615712579584")
 
 
 
@@ -64,7 +64,7 @@ function tagsort(tags) {
     console.log("Mein wert ist " + tags)
         // Check for null or undefined in IndexOf tags //
     if (tags == "undefined" && tags == null) {
-        console.log("Can't show tags for unknown user.");
+        console.log("Can't show tags for unknown user.")
         globalrank = "Rank Unknown"
     }
 
@@ -94,7 +94,7 @@ function tagsort(tags) {
 
 async function getByUserName(message, args) {
     let apiURL = "https://api.vrchat.cloud/api/1/"
-    let end = false;
+    let end = false
     username = ""
     password = ""
     let headers = { 'Authorization': 'Basic ' + btoa(username + ':' + password), 'Content-Type': 'raw' }
@@ -110,7 +110,7 @@ async function getByUserName(message, args) {
                     console.log(object)
                     if (object.length == 0) {
                         message.channel.send("I didn't found any user. Bazinga.")
-                        end = true;
+                        end = true
                     } else {
 
 
@@ -129,8 +129,8 @@ async function getByUserName(message, args) {
                                             }
                                         }
 
-                                        //channel.send({ embed: cuddleEmbed });
-                                        message.channel.send({ embed: cuddleEmbed });
+                                        //channel.send({ embed: cuddleEmbed })
+                                        message.channel.send({ embed: cuddleEmbed })
 
                         */
 
@@ -153,12 +153,12 @@ async function getByUserName(message, args) {
                         tagsort(tags3)
 
                         message.channel.send("This peson has the following rank: " + globalrank)
-                        end = true;
+                        end = true
                     }
                 })
         } catch (ex) {
-            message.channel.send(ex.message, "User not found. Please try again.");
-            end = false;
+            message.channel.send(ex.message, "User not found. Please try again.")
+            end = false
         }
     }
     while (end == false)
@@ -179,28 +179,28 @@ async function getRandomImage(message, params) {
 
 
 
-            let random = Math.floor(Math.random() * 21);
+            let random = Math.floor(Math.random() * 21)
 
             if (object['data'].length < 20) {
                 random = Math.floor(Math.random() * (object['data'].length))
             }
 
-            let coderun = false;
+            let coderun = false
             while (coderun == false) {
                 if (object['data'][random]['embed_url'] === undefined) {
-                    console.log("Something was wrong");
-                    random = Math.floor(Math.random() * 21);
+                    console.log("Something was wrong")
+                    random = Math.floor(Math.random() * 21)
                 } else if (object['data'][random]['embed_url'] != undefined) {
-                    coderun = true;
+                    coderun = true
                 } else {
-                    coderun = true;
-                    break;
+                    coderun = true
+                    break
                 }
             }
             try {
                 message.channel.send("I found the following image with a reference to " + params + " : " + "\n" + object['data'][random]['embed_url'])
             } catch (error) {
-                message.channel.send(error);
+                message.channel.send(error)
             }
         })
 }
@@ -228,28 +228,28 @@ async function dobruh(message) {
 
 
 
-            let random = Math.floor(Math.random() * 21);
+            let random = Math.floor(Math.random() * 21)
 
             if (object['data'].length < 20) {
                 random = Math.floor(Math.random() * (object['data'].length))
             }
 
-            let coderun = false;
+            let coderun = false
             while (coderun == false) {
                 if (object['data'][random]['embed_url'] === undefined) {
-                    console.log("Something was wrong");
-                    random = Math.floor(Math.random() * 21);
+                    console.log("Something was wrong")
+                    random = Math.floor(Math.random() * 21)
                 } else if (object['data'][random]['embed_url'] != undefined) {
-                    coderun = true;
+                    coderun = true
                 } else {
-                    coderun = true;
-                    break;
+                    coderun = true
+                    break
                 }
             }
             try {
                 message.channel.send(object['data'][random]['embed_url'])
             } catch (error) {
-                message.channel.send(error);
+                message.channel.send(error)
             }
         })
 }
@@ -277,28 +277,28 @@ async function dotrigger(message) {
 
 
 
-            let random = Math.floor(Math.random() * 21);
+            let random = Math.floor(Math.random() * 21)
 
             if (object['data'].length < 20) {
                 random = Math.floor(Math.random() * (object['data'].length))
             }
 
-            let coderun = false;
+            let coderun = false
             while (coderun == false) {
                 if (object['data'][random]['embed_url'] === undefined) {
-                    console.log("Something was wrong");
-                    random = Math.floor(Math.random() * 21);
+                    console.log("Something was wrong")
+                    random = Math.floor(Math.random() * 21)
                 } else if (object['data'][random]['embed_url'] != undefined) {
-                    coderun = true;
+                    coderun = true
                 } else {
-                    coderun = true;
-                    break;
+                    coderun = true
+                    break
                 }
             }
             try {
                 message.channel.send(object['data'][random]['embed_url'])
             } catch (error) {
-                message.channel.send(error);
+                message.channel.send(error)
             }
         })
 }
@@ -311,7 +311,7 @@ client.on('message', async message => {
         "ayy": "Ayy, lmao!",
         "wat": "Say what?",
         "lol": "rofl"
-    };
+    }
 
     if (message.author.bot) return
     if (message.content === "bruh") {
@@ -329,12 +329,12 @@ client.on('message', async message => {
 
     if (message.content.startsWith(`${prefix}play`)) {
         message.channel.send("Searching for youtube video to play..")
-        const command = message.content.split(/[ \n]/)[0].trim();
+        const command = message.content.split(/[ \n]/)[0].trim()
         const suffix = message.content.substring(prefix.length + command.length).trim()
         console.log("message: " + message)
         console.log("suffix: " + suffix)
         try {
-            await playVideo(message, suffix);
+            await playVideo(message, suffix)
         } catch (ex) {
             console.log(ex.message)
         }
@@ -344,30 +344,30 @@ client.on('message', async message => {
         const image = message.content.split(' ')
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}emojilist`)) {
-        const emojiList = message.guild.emojis.map(e=>e.toString()).join(" ");
-        message.channel.send(`${emojiList}`);
+        const emojiList = message.guild.emojis.map(e=>e.toString()).join(" ")
+        message.channel.send(`${emojiList}`)
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {
-        purgeMessages(message);
+        purgeMessages(message)
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {
-        let cont = message.content.slice(prefix.length).split(" ");
-        let args = cont.slice(1);
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
         message.reply("this function is temporary deactivated")
 	//getByUserName(message, args[0])
     } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`) || message.content.startsWith(`${prefix}warn`)) {
-        let cont = message.content.slice(prefix.length).split(" ");
-        let args = cont.slice(1);
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
         MOD.moderation(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}cry`)) {
             params = "cry"
             action = " is crying "
             extra = "why "
 
-            var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var dateTime = date + ' ' + time;
+            var today = new Date()
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+            var dateTime = date + ' ' + time
 
             let offsetRandomize = Math.floor(Math.random() * 10)
 
@@ -381,7 +381,7 @@ client.on('message', async message => {
             colorRandomize = Math.floor(Math.random() * 24)
             }
 
-            let random = Math.floor(Math.random() * 21);
+            let random = Math.floor(Math.random() * 21)
             let color = discordColors[colorRandomize]
             let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
 
@@ -399,16 +399,16 @@ client.on('message', async message => {
                     random = Math.floor(Math.random() * (object['data'].length))
                 }
 
-                let coderun = false;
+                let coderun = false
                 while (coderun == false) {
                     if (object['data'][random]['embed_url'] === undefined) {
-                        console.log("Something was wrong");
-                        random = Math.floor(Math.random() * 21);
+                        console.log("Something was wrong")
+                        random = Math.floor(Math.random() * 21)
                     } else if (object['data'][random]['images']['original']['url'] != undefined) {
-                        coderun = true;
+                        coderun = true
                     } else {
-                        coderun = true;
-                        break;
+                        coderun = true
+                        break
                     }
                 }
 
@@ -428,8 +428,8 @@ client.on('message', async message => {
                 }
             }
 
-            //channel.send({ embed: cuddleEmbed });
-            message.channel.send({ embed: cuddleEmbed });
+            //channel.send({ embed: cuddleEmbed })
+            message.channel.send({ embed: cuddleEmbed })
                 }catch(error){
                     message.channel.send(error.message)
                 }
@@ -440,10 +440,10 @@ client.on('message', async message => {
             extra = "yo i'm fkin angry.."
 
 
-            var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var dateTime = date + ' ' + time;
+            var today = new Date()
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+            var dateTime = date + ' ' + time
 
             let offsetRandomize = Math.floor(Math.random() * 10)
 
@@ -457,7 +457,7 @@ client.on('message', async message => {
             colorRandomize = Math.floor(Math.random() * 24)
             }
 
-            let random = Math.floor(Math.random() * 21);
+            let random = Math.floor(Math.random() * 21)
             let color = discordColors[colorRandomize]
             let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
 
@@ -475,16 +475,16 @@ client.on('message', async message => {
                     random = Math.floor(Math.random() * (object['data'].length))
                 }
 
-                let coderun = false;
+                let coderun = false
                 while (coderun == false) {
                     if (object['data'][random]['embed_url'] === undefined) {
-                        console.log("Something was wrong");
-                        random = Math.floor(Math.random() * 21);
+                        console.log("Something was wrong")
+                        random = Math.floor(Math.random() * 21)
                     } else if (object['data'][random]['images']['original']['url'] != undefined) {
-                        coderun = true;
+                        coderun = true
                     } else {
-                        coderun = true;
-                        break;
+                        coderun = true
+                        break
                     }
                 }
 
@@ -504,8 +504,8 @@ client.on('message', async message => {
                 }
             }
 
-            //channel.send({ embed: cuddleEmbed });
-            message.channel.send({ embed: cuddleEmbed });
+            //channel.send({ embed: cuddleEmbed })
+            message.channel.send({ embed: cuddleEmbed })
                 }catch(error){
                     message.channel.send(error.message)
                 }
@@ -518,57 +518,57 @@ client.on('message', async message => {
         message.content.startsWith(`${prefix}gay`) ||
         message.content.startsWith(`${prefix}kiss`)||
         message.content.startsWith(`${prefix}rape`)) {
-        let cont = message.content.slice(prefix.lenght).split(" ");
-        let args = cont.slice(1);
+        let cont = message.content.slice(prefix.lenght).split(" ")
+        let args = cont.slice(1)
         console.log(args[0])
-        Emote.emotetype(client, message, args[0]);
+        Emote.emotetype(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}blockinfo`)) {
-        let cont = message.content.slice(prefix.length).split(" ");
-        let args = cont.slice(1);
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
         BLOCK.halving(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}help`)) {
-        message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif");
+        message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif")
     } else {
         message.channel.send('Your command is not valid brah.')
     }
 
-});
+})
 
 
-client.login(token);
+client.login(token)
 
 client.once('ready', () => {
-    console.log('Ready!');
-});
+    console.log('Ready!')
+})
 client.once('reconnecting', () => {
-    console.log('Reconnecting!');
-});
+    console.log('Reconnecting!')
+})
 client.once('disconnect', () => {
-    console.log('Disconnect!');
-});
+    console.log('Disconnect!')
+})
 
 
 async function purgeMessages(message) {
-    let cont = message.content.slice(prefix.length).split(" ");
-    let args = cont.slice(1);
-    message.delete();
+    let cont = message.content.slice(prefix.length).split(" ")
+    let args = cont.slice(1)
+    message.delete()
 
     /*if (!message.member.roles.find("name", "bot-commander")) {
-        message.channel.send("Ich brauch die \`bot-commander\` Rolle um diesen befehl zu benutzen.");
-        return;
+        message.channel.send("Ich brauch die \`bot-commander\` Rolle um diesen befehl zu benutzen.")
+        return
     }
 */
 
     if (isNaN(args[0])) {
-        message.channel.send("Bitte nutze eine nummer als parameter. \n Benutzung: " + prefix + "delete <anzahl>");
-        return;
+        message.channel.send("Bitte nutze eine nummer als parameter. \n Benutzung: " + prefix + "delete <anzahl>")
+        return
     }
 
 
-    const fetched = await message.channel.messages.fetch({ limit: args[0] });
+    const fetched = await message.channel.messages.fetch({ limit: args[0] })
     console.log("I've found " + fetched.size + " messages, deleting...")
     message.channel.bulkDelete(fetched)
-        .catch(error => message.channel.send(`Error: Es gibt nichts mehr zu löschen. Nerv mich nich.`));
+        .catch(error => message.channel.send(`Error: Es gibt nichts mehr zu löschen. Nerv mich nich.`))
 }
 // DISCORD JS EMBED COLORS 
 /*

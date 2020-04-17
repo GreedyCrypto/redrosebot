@@ -3,7 +3,7 @@ const {
     prefix,
     giphy_apiKey
 
-} = require('./config.json');
+} = require('./config.json')
 
 let fetch = require('node-fetch')
 const headers = { 'Content-Type': 'application/json' }
@@ -49,10 +49,10 @@ class BLOCK {
             .then((object) => {
             
 
-                var today = new Date();
-                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                var dateTime = date + ' ' + time;
+                var today = new Date()
+                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                var dateTime = date + ' ' + time
 
                 let currentBlock = object['n_blocks_total']
                 let blocksLeft = (630000 - currentBlock)
@@ -96,22 +96,22 @@ class BLOCK {
             
             
             
-                    let random = Math.floor(Math.random() * 21);
+                    let random = Math.floor(Math.random() * 21)
             
                     if (object['data'].length < 20) {
                         random = Math.floor(Math.random() * (object['data'].length))
                     }
             
-                    let coderun = false;
+                    let coderun = false
                     while (coderun == false) {
                         if (object['data'][random]['embed_url'] === undefined) {
-                            console.log("Something was wrong");
-                            random = Math.floor(Math.random() * 21);
+                            console.log("Something was wrong")
+                            random = Math.floor(Math.random() * 21)
                         } else if (object['data'][random]['images']['original']['url'] != undefined) {
-                            coderun = true;
+                            coderun = true
                         } else {
-                            coderun = true;
-                            break;
+                            coderun = true
+                            break
                         }
                     }
             
@@ -127,7 +127,7 @@ class BLOCK {
                             //    .addField(client.user.username + " cuddles with " + args)
                             //    .setImage(object['data'][random]['embed_url'])
             
-                        //message.channel.send({ myEmbed });
+                        //message.channel.send({ myEmbed })
                         let url = object['data'][random]['images']['original']['url']
             
             
@@ -144,15 +144,15 @@ class BLOCK {
                             }
                         }
             
-                        //channel.send({ embed: cuddleEmbed });
-                        message.channel.send({ embed: BlockEmbed });
+                        //channel.send({ embed: cuddleEmbed })
+                        message.channel.send({ embed: BlockEmbed })
             
             
             
             
             
                     } catch (error) {
-                        message.channel.send(error.message);
+                        message.channel.send(error.message)
                     }
                 })
                 }

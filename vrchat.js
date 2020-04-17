@@ -158,7 +158,7 @@ static async getByUserName(message, args){
                             "content": params1,
                             "title": object[0]['displayName'],
                             "description": bio1 + " " + " | Rank: " + await tagsort(tags2),
-                            "url": "https://vrchat.com/home/user/" + object[0]['id'],
+                            "url": "https://vrchat.com/home/user/" + object[1]['id'],
                             "color": color,
                             "timestamp": dateTime,
                             "image": {
@@ -196,7 +196,7 @@ static async getByUserName(message, args){
                             "content": params2,
                             "title": object[2]['displayName'],
                             "description": bio2 + " " + " | Rank: " + await tagsort(tags3),
-                            "url": "https://vrchat.com/home/user/" + object[0]['id'],
+                            "url": "https://vrchat.com/home/user/" + object[2]['id'],
                             "color": color,
                             "timestamp": dateTime,
                             "image": {

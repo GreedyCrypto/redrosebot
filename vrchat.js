@@ -31,47 +31,43 @@ let endpoint = ""
 class VRC{
 
 
-async tagsort(tags) {
-    console.log("Mein wert ist " + tags)
-            // Check for null or undefined in IndexOf tags //
-    if (tags == "undefined" && tags == null) {
-        console.log("Can't show tags for unknown user.")
-        return "Rank Unknown"
-    }
-    
-    if (tags.indexOf("troll") != -1) {
-        console.log("This Person is a confirmed troll.".red)
-        return "This Person is a confirmed troll."
-    } else if (tags.indexOf("system_legend") != -1) {
-        console.log("Legendary User and appears as" + " Trusted User".magenta)
-        return "Legendary User and appears as Trusted User"
-    } else if (tags.indexOf("system_trust_legend") != -1) {
-        console.log("Veteran User and appears as" + " Trusted User".magenta)
-        return "Veteran User and appears as Trusted User"
-    } else if (tags.indexOf("system_trust_veteran") != -1) {
-        console.log("Trusted User".magenta)
-        return "Trusted User"
-    } else if (tags.indexOf("system_trust_trusted") != -1) {
-        console.log("Known User".yellow)
-        return "Known User"
-    } else if (tags.indexOf("system_trust_known") != -1) {
-        console.log("User".green)
-        return "User"
-    } else if (tags.indexOf("system_trust_basic") != -1) {
-        console.log("New User".blue)
-        return "New User"
-    }
-}
-    
-
-
-
-
-
-
-
 
 static async getByUserName(message, args){
+
+
+
+
+
+    async function tagsort(tags){
+        console.log("Mein wert ist " + tags)
+                // Check for null or undefined in IndexOf tags //
+        if (tags == "undefined" && tags == null) {
+            console.log("Can't show tags for unknown user.")
+            return "Rank Unknown"
+        }
+        
+        if (tags.indexOf("troll") != -1) {
+            return "This Person is a confirmed troll."
+        } else if (tags.indexOf("system_legend") != -1) {
+            return "Legendary User and appears as Trusted User"
+        } else if (tags.indexOf("system_trust_legend") != -1) {
+            return "Veteran User and appears as Trusted User"
+        } else if (tags.indexOf("system_trust_veteran") != -1) {
+            return "Trusted User"
+        } else if (tags.indexOf("system_trust_trusted") != -1) {
+            return "Known User"
+        } else if (tags.indexOf("system_trust_known") != -1) {
+            return "User"
+        } else if (tags.indexOf("system_trust_basic") != -1) {
+            return "New User"
+        }
+    }
+        
+    
+    
+
+
+
     let apiURL = "https://api.vrchat.cloud/api/1/"
     let end = false
     let headers = { 'Authorization': 'Basic ' + btoa(vrc_username + ':' + vrc_password), 'Content-Type': 'raw' }

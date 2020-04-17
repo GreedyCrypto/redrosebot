@@ -74,7 +74,6 @@ static async getByUserName(message, args){
     let end = false
     let headers = { 'Authorization': 'Basic ' + btoa(vrc_username + ':' + vrc_password), 'Content-Type': 'raw' }
     do {
-        console.log("Please enter username: ")
         let searchuser = args
         let apiKey = "&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
         endpoint = "users" + "?search=" + searchuser
@@ -105,7 +104,7 @@ static async getByUserName(message, args){
                         
     
 
-
+                        console.log("here")
                         let tags = object[0]['tags']
 
                         let bio = "";

@@ -98,9 +98,11 @@ static async getByUserName(message, args){
                         let color = discordColors[colorRandomize]
 
                         
-    
+                        if(object[0] == -1){
+                            return
+                        }
 
-                        console.log("here")
+                        
                         let tags = object[0]['tags']
 
                         let bio = "";
@@ -131,6 +133,9 @@ static async getByUserName(message, args){
                         //channel.send({ embed: cuddleEmbed })
                         message.channel.send({ embed: vrcEmbed })
 
+                        if(object[1] == -1){
+                            return
+                        }
 
 
                         let tags2 = object[1]['tags']
@@ -163,6 +168,9 @@ static async getByUserName(message, args){
                         //channel.send({ embed: cuddleEmbed })
                         message.channel.send({ embed: vrcEmbed2 })
 
+                        if(object[2] == -1){
+                            return
+                        }
 
 
 

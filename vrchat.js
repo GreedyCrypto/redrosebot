@@ -98,7 +98,9 @@ static async getByUserName(message, args){
                         let color = discordColors[colorRandomize]
 
                         
-                        if(object[0] == -1){
+                        if(object[0] == null){
+                            console.log("im undefined")
+                            end = true
                             return
                         }
 
@@ -133,7 +135,9 @@ static async getByUserName(message, args){
                         //channel.send({ embed: cuddleEmbed })
                         message.channel.send({ embed: vrcEmbed })
 
-                        if(object[1] == -1){
+                        if(object[1] == null){
+                            console.log("im undefined")
+                            end = true
                             return
                         }
 
@@ -168,7 +172,9 @@ static async getByUserName(message, args){
                         //channel.send({ embed: cuddleEmbed })
                         message.channel.send({ embed: vrcEmbed2 })
 
-                        if(object[2] == -1){
+                        if(object[2] == null){
+                            console.log("im undefined")
+                            end = true
                             return
                         }
 

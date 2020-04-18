@@ -78,7 +78,7 @@ async function getRandomImage(message, params) {
 async function dobruh(message) {
     let offsetRandomize = Math.floor(Math.random() * 10)
 
-    while(offsetRandomize > 5) {
+    while (offsetRandomize > 5) {
         offsetRandomize = Math.floor(Math.random() * 10)
     }
 
@@ -127,7 +127,7 @@ async function dobruh(message) {
 async function dotrigger(message) {
     let offsetRandomize = Math.floor(Math.random() * 10)
 
-    while(offsetRandomize > 5) {
+    while (offsetRandomize > 5) {
         offsetRandomize = Math.floor(Math.random() * 10)
     }
 
@@ -176,6 +176,14 @@ async function dotrigger(message) {
 
 
 client.on('message', async message => {
+
+
+    let current_userperms = message.channel.permissionsFor(message.member).serialize(false)
+
+
+    let sender = message.author.username
+
+
     const responseObject = {
         "ayy": "Ayy, lmao!",
         "wat": "Say what?",
@@ -183,78 +191,82 @@ client.on('message', async message => {
     }
 
     if (message.author.bot) return
-    if (message.content === "bruh") {
-    dobruh(message)
-    return
+
+
+    switch (message.content) {
+        case "bruh":
+            dobruh(message)
+            return
     }
 
-    if(message.content.indexOf('triggered') != -1){
-    dotrigger(message)
-    return
+
+
+    if (message.content === "bruh") {
+        dobruh(message)
+        return
+    }
+
+    if (message.content.indexOf('triggered') != -1) {
+        dotrigger(message)
+        return
     }
 
 
     if (!message.content.startsWith(prefix) && (!responseObject[message.content])) return
 
-    if (message.content.startsWith(`${prefix}play`)) {
-        message.channel.send("Searching for youtube video to play..")
-        const command = message.content.split(/[ \n]/)[0].trim()
-        const suffix = message.content.substring(prefix.length + command.length).trim()
-        console.log("message: " + message)
-        console.log("suffix: " + suffix)
-        try {
-            await playVideo(message, suffix)
-        } catch (ex) {
-            console.log(ex.message)
-        }
-    } else if (message.content.startsWith(`${prefix}utc`)) {
-        message.channel.send("The UTC time is : " + Date.UTC(0, 0, 0, 0, 0, 0))
-    } else if (message.content.startsWith(`${prefix}image`)) {
+
+    /* DEBUG INFORMATION GATHERING */
+    if (message.content.startsWith(prefix)) {
+        console.log('Command send by ' + sender)
+        console.log('He has the following permissions: \n' + current_userperms)
+    }
+
+    if (message.content.startsWith(`${prefix}image`)) {
         const image = message.content.split(' ')
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}emojilist`)) {
-        const emojiList = message.guild.emojis.map(e=>e.toString()).join(" ")
+        const emojiList = message.guild.emojis.map(e => e.toString()).join(" ")
         message.channel.send(`${emojiList}`)
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {
-        purgeMessages(message)
+        MOD.purgeMessages(message)
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
-        //message.reply("this function is temporary deactivated")
-	    VRC.getByUserName(message, args[0])
-    } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`) || message.content.startsWith(`${prefix}warn`)) {
+            //message.reply("this function is temporary deactivated")
+        VRC.getByUserName(message, args[0])
+    } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
         MOD.moderation(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}cry`)) {
-            params = "cry"
-            action = " is crying "
-            extra = "why "
+        params = "cry"
+        action = " is crying "
+        extra = "why "
 
-            var today = new Date()
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-            var dateTime = date + ' ' + time
+        var today = new Date()
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        var dateTime = date + ' ' + time
 
-            let offsetRandomize = Math.floor(Math.random() * 10)
+        let offsetRandomize = Math.floor(Math.random() * 10)
 
-            while(offsetRandomize > 5) {
-                offsetRandomize = Math.floor(Math.random() * 10)
-            }
-    
-    
-            let colorRandomize = Math.floor(Math.random() * 24)
-            while(colorRandomize > 23){
+        while (offsetRandomize > 5) {
+            offsetRandomize = Math.floor(Math.random() * 10)
+        }
+
+
+        let colorRandomize = Math.floor(Math.random() * 24)
+        while (colorRandomize > 23) {
             colorRandomize = Math.floor(Math.random() * 24)
-            }
+        }
 
-            let random = Math.floor(Math.random() * 21)
-            let color = discordColors[colorRandomize]
-            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
+        let random = Math.floor(Math.random() * 21)
+        let color = discordColors[colorRandomize]
+        let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
 
-            await fetch(apiURL, { method: "GET", headers: headers })
+        await fetch(apiURL, { method: "GET", headers: headers })
             .then((resp) => resp.json())
             .then((object) => {
 
@@ -283,54 +295,54 @@ client.on('message', async message => {
 
                 try {
 
-            let url = object['data'][random]['images']['original']['url']
+                    let url = object['data'][random]['images']['original']['url']
 
-            let cuddleEmbed = {
-                "content": params,
-                "title": message.member.user.tag + action,
-                "description": extra,
-                "url": "",
-                "color": color,
-                "timestamp": dateTime,
-                "image": {
-                    "url": url
-                }
-            }
+                    let cuddleEmbed = {
+                        "content": params,
+                        "title": message.member.user.tag + action,
+                        "description": extra,
+                        "url": "",
+                        "color": color,
+                        "timestamp": dateTime,
+                        "image": {
+                            "url": url
+                        }
+                    }
 
-            //channel.send({ embed: cuddleEmbed })
-            message.channel.send({ embed: cuddleEmbed })
-                }catch(error){
+                    //channel.send({ embed: cuddleEmbed })
+                    message.channel.send({ embed: cuddleEmbed })
+                } catch (error) {
                     message.channel.send(error.message)
                 }
             })
-        } else if (message.content.startsWith(`${prefix}rage`)) {
-            params = "rage"
-            action = " is raging "
-            extra = "yo i'm fkin angry.."
+    } else if (message.content.startsWith(`${prefix}rage`)) {
+        params = "rage"
+        action = " is raging "
+        extra = "yo i'm fkin angry.."
 
 
-            var today = new Date()
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-            var dateTime = date + ' ' + time
+        var today = new Date()
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        var dateTime = date + ' ' + time
 
-            let offsetRandomize = Math.floor(Math.random() * 10)
+        let offsetRandomize = Math.floor(Math.random() * 10)
 
-            while(offsetRandomize > 5) {
-                offsetRandomize = Math.floor(Math.random() * 10)
-            }
-    
-    
-            let colorRandomize = Math.floor(Math.random() * 24)
-            while(colorRandomize > 23){
+        while (offsetRandomize > 5) {
+            offsetRandomize = Math.floor(Math.random() * 10)
+        }
+
+
+        let colorRandomize = Math.floor(Math.random() * 24)
+        while (colorRandomize > 23) {
             colorRandomize = Math.floor(Math.random() * 24)
-            }
+        }
 
-            let random = Math.floor(Math.random() * 21)
-            let color = discordColors[colorRandomize]
-            let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
+        let random = Math.floor(Math.random() * 21)
+        let color = discordColors[colorRandomize]
+        let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + apiKey
 
-            await fetch(apiURL, { method: "GET", headers: headers })
+        await fetch(apiURL, { method: "GET", headers: headers })
             .then((resp) => resp.json())
             .then((object) => {
 
@@ -359,23 +371,23 @@ client.on('message', async message => {
 
                 try {
 
-            let url = object['data'][random]['images']['original']['url']
+                    let url = object['data'][random]['images']['original']['url']
 
-            let cuddleEmbed = {
-                "content": params,
-                "title": message.member.user.tag + action,
-                "description": extra,
-                "url": "",
-                "color": color,
-                "timestamp": dateTime,
-                "image": {
-                    "url": url
-                }
-            }
+                    let cuddleEmbed = {
+                        "content": params,
+                        "title": message.member.user.tag + action,
+                        "description": extra,
+                        "url": "",
+                        "color": color,
+                        "timestamp": dateTime,
+                        "image": {
+                            "url": url
+                        }
+                    }
 
-            //channel.send({ embed: cuddleEmbed })
-            message.channel.send({ embed: cuddleEmbed })
-                }catch(error){
+                    //channel.send({ embed: cuddleEmbed })
+                    message.channel.send({ embed: cuddleEmbed })
+                } catch (error) {
                     message.channel.send(error.message)
                 }
             })
@@ -385,7 +397,7 @@ client.on('message', async message => {
         message.content.startsWith(`${prefix}lewd`) ||
         message.content.startsWith(`${prefix}bite`) ||
         message.content.startsWith(`${prefix}gay`) ||
-        message.content.startsWith(`${prefix}kiss`)||
+        message.content.startsWith(`${prefix}kiss`) ||
         message.content.startsWith(`${prefix}rape`)) {
         let cont = message.content.slice(prefix.lenght).split(" ")
         let args = cont.slice(1)
@@ -417,28 +429,6 @@ client.once('disconnect', () => {
 })
 
 
-async function purgeMessages(message) {
-    let cont = message.content.slice(prefix.length).split(" ")
-    let args = cont.slice(1)
-    message.delete()
-
-    /*if (!message.member.roles.find("name", "bot-commander")) {
-        message.channel.send("Ich brauch die \`bot-commander\` Rolle um diesen befehl zu benutzen.")
-        return
-    }
-*/
-
-    if (isNaN(args[0])) {
-        message.channel.send("Bitte nutze eine nummer als parameter. \n Benutzung: " + prefix + "delete <anzahl>")
-        return
-    }
-
-
-    const fetched = await message.channel.messages.fetch({ limit: args[0] })
-    console.log("I've found " + fetched.size + " messages, deleting...")
-    message.channel.bulkDelete(fetched)
-        .catch(error => message.channel.send(`Error: Es gibt nichts mehr zu löschen. Nerv mich nich.`))
-}
 // DISCORD JS EMBED COLORS 
 /*
 DEFAULT: 0,

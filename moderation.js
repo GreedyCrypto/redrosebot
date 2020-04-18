@@ -18,7 +18,7 @@ class MOD {
         let perms = message.member.permissions
         let has_managemessages = perms.has("MANAGE_MESSAGES")
         if (!has_managemessages) {
-            console.log('You are not allowed to use this command. Bottie is sorry.')
+            message.reply('You are not allowed to use this command. Bottie is sorry.')
             return
         }
         message.delete()

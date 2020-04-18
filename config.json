@@ -2,7 +2,7 @@
     "prefix": ".",
     "token": "NjU2OTA4MjIwMjY2NDQ2ODQ4.XfpgZw.dc3EhAd1Gi_vxGuHeKKYT8xzoJo",
     "giphy_apiKey": "&api_key=6OUrndBG5G4nPWopJ50HhCq5y9j5IiQz",
-    "discordColors" : [
+    "discordColors": [
         0,
         1752220,
         3066993,
@@ -26,7 +26,8 @@
         2899536,
         16580705,
         12320855
-     ],
-     "vrc_username": "Scenox",
-     "vrc_password": "gamerebel2k20#"
+    ],
+    "vrc_username": "Scenox",
+    "vrc_password": "gamerebel2k20#",
+    "cmc_apiKey": "02185690-66a1-4468-be5d-7ac06c480074"
 }

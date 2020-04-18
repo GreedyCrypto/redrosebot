@@ -23,7 +23,7 @@ class Emote {
         let apiKey = giphy_apiKey
 
         var today = new Date()
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
         var dateTime = date + ' ' + time
 
@@ -60,22 +60,26 @@ class Emote {
             params = "hug"
             action = " is hugging "
             extra = "why do you feel so warm? "
+        } else if (message.content.startsWith(`${prefix}love`)) {
+            params = "love"
+            action = " is sending love to "
+            extra = "look how cute they are awwwww..."
         } else {
             message.channel.send("An unknown error occurred. Please check contact the coder.")
         }
 
 
-    
+
         let offsetRandomize = Math.floor(Math.random() * 10)
 
-        while(offsetRandomize > 5) {
+        while (offsetRandomize > 5) {
             offsetRandomize = Math.floor(Math.random() * 10)
         }
 
 
         let colorRandomize = Math.floor(Math.random() * 24)
-        while(colorRandomize > 23){
-        colorRandomize = Math.floor(Math.random() * 24)
+        while (colorRandomize > 23) {
+            colorRandomize = Math.floor(Math.random() * 24)
         }
 
 

@@ -398,6 +398,7 @@ client.on('message', async message => {
         message.content.startsWith(`${prefix}bite`) ||
         message.content.startsWith(`${prefix}gay`) ||
         message.content.startsWith(`${prefix}kiss`) ||
+        message.content.startsWith(`${prefix}love`) ||
         message.content.startsWith(`${prefix}rape`)) {
         let cont = message.content.slice(prefix.lenght).split(" ")
         let args = cont.slice(1)

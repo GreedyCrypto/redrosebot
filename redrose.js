@@ -408,6 +408,8 @@ client.on('message', async message => {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
         BLOCK.halving(client, message, args[0])
+    } else if (message.content.startsWith(`${prefix}vrcactive`)) {
+        VRC.getActivePlayers(message)
     } else if (message.content.startsWith(`${prefix}help`)) {
         message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif")
     } else {

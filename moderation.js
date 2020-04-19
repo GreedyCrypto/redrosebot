@@ -101,7 +101,7 @@ class MOD {
                         }
                     }
                     if (user === message.author) return message.channel.send('You can\'t kick yourself')
-                    if (!message.guild.member(user).kickable) return message.reply('You can\'t kick this user because you the bot has not sufficient permissions!')
+                    if (!message.guild.member(user).kickable) return message.reply('You can\'t kick this user because you don\'t have sufficient permissions!')
                     await message.guild.member(user).kick() // Bans the user
                 }
                 if (params == "ban") {

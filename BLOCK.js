@@ -28,7 +28,7 @@ class BLOCK {
         .then((resp) => resp.json())
         .then((object) => {
             try{
-                message.reply('Current Bitcoin price: ' + object['data']['1']['quote']['USD']['price'].toFixed(2))
+                message.reply('Current Bitcoin price: ' + object['data']['1']['quote']['USD']['price'].toFixed(2) + ' USD')
             }catch(err){
                 message.reply(err.message)
             }

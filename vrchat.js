@@ -31,7 +31,7 @@ class VRC {
             await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
                 .then(response => response.json())
                 .then(async function setData(object) {
-                    return message.reply('Currently active players in VRChat:' + object)
+                    return message.reply('Currently active players in VRChat: ' + object)
                 })
         } catch (ex) {
             return message.reply(ex.message)

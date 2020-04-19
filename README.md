@@ -1,5 +1,12 @@
 # redrosebot
 
+Installation:
+
+1. Download
+2. npm install
+3. node redrose.js
+
+
 redrose.js - mainfile
 
 moderation.js - handles the ban/kick system

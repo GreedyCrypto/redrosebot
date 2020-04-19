@@ -13,7 +13,7 @@ vrchat.js - vrchat api getting returned in discord
 Your config.json should look like this:
 
 
-
+```
 {
     "prefix": ".",
     "token": "YOURDISCORDTOKEN",
@@ -47,3 +47,4 @@ Your config.json should look like this:
     "vrc_password": "YOURVRCPASSWORD",
     "cmc_apiKey": "YOURCOINMARKETCAP_APIKEY"
 }
+```

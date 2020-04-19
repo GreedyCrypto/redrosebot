@@ -1,4 +1,4 @@
-// This software is part of the RedRose Discord Server | https://discord.gg/82WPuFm //
+// This software is part of the RedRose Discord Server | https://discord.gg/jT3XRkD //
 
 // || RedRose Discord Bot v0.1 || //
 

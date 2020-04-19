@@ -242,6 +242,8 @@ client.on('message', async message => {
         let args = cont.slice(1)
         MOD.moderation(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}btc`)) {
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
         BLOCK.btc_current_price(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}cry`)) {
         params = "cry"

@@ -22,11 +22,12 @@ const {
 
     prefix,
     token,
-    discordColors
+    discordColors,
+    giphy_apiKey
 
 } = require('./config.json')
 
-const apiKey = "&api_key=6OUrndBG5G4nPWopJ50HhCq5y9j5IiQz"
+const apiKey = giphy_apiKey
 
 const client = new Discord.Client()
 

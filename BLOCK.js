@@ -2,7 +2,8 @@ const {
 
     prefix,
     giphy_apiKey,
-    discordColors
+    discordColors,
+    cmc_apiKey
 
 } = require('./config.json')
 
@@ -14,6 +15,30 @@ const Discord = require('discord.js')
 let APIURL = "https://blockchain.info/stats?format=json"
 
 class BLOCK {
+
+
+
+
+    static async btc_current_price(client, message, args){
+        let headersCMC = { 'Content-Type': 'application/json' }
+        let endpoint = "cryptocurrency/quotes/latest"
+        let query = "?id=1"
+        let apiURLCMC = "https://pro-api.coinmarketcap.com/v1/" + endpoint  + query + "&CMC_PRO_API_KEY=" + cmc_apiKey 
+        headers = 
+        await fetch(apiURLCMC, {method: "GET", headers: headersCMC})
+        .then((resp) => resp.json())
+        .then((object) => {
+            try{
+                message.reply('Current Bitcoin price: ' + object[0]['quote']['USD']['price'])
+            }catch(err){
+                message.reply(err.message)
+            }
+        })
+    }
+
+
+
+
 
     static async halving(client, message, args) {
 

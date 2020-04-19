@@ -1,5 +1,7 @@
 # redrosebot
 
+Join our Discord: https://discord.gg/jT3XRkD
+
 Installation:
 
 1. Download

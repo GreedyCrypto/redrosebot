@@ -156,7 +156,7 @@ static async getByUserName(message, args){
 
                         let vrcEmbed2 = {
                             "content": params1,
-                            "title": object[0]['displayName'],
+                            "title": object[1]['displayName'],
                             "description": bio1 + " " + " | Rank: " + await tagsort(tags2),
                             "url": "https://vrchat.com/home/user/" + object[1]['id'],
                             "color": color,

@@ -10,7 +10,7 @@ const {
 
 
 let fetch = require('node-fetch')
-const headers = { 'Content-Type': 'application/json' }
+    //const headers = { 'Content-Type': 'application/json' }
 let btoa = require("btoa")
 let headers = { 'Authorization': 'Basic ' + btoa(vrc_username + ':' + vrc_password), 'Content-Type': 'raw' }
 let globalrank = null

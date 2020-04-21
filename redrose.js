@@ -245,6 +245,10 @@ client.on('message', async message => {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
         BLOCK.btc_current_price(client, message, args[0])
+    } else if (message.content.startsWith(`${prefix}invite`)) {
+        client.generateInvite(['ADMINISTRATOR'])
+            .then(link => message.reply(`Bottie generated an invite link for you, uwu: ${link}`))
+            .catch(console.error)
     } else if (message.content.startsWith(`${prefix}cry`)) {
         params = "cry"
         action = " is crying "

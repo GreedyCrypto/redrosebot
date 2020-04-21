@@ -433,7 +433,7 @@ client.login(token)
 client.once('ready', () => {
     console.log('Ready!')
     setTimeout(function() {
-        var list = client.guilds.array().sort()
+        var list = client.guilds.array().map(g => g.id)
         console.log(list)
     }, 500);
 })

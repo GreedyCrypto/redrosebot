@@ -433,8 +433,8 @@ client.login(token)
 client.once('ready', () => {
     console.log('Ready!')
     setTimeout(function() {
-        var list = client.guilds.array().map(g => g.id)
-        console.log(list)
+        const guildNames = client.guilds.map(g => g.name).join("\n")
+        console.log(guildNames)
     }, 500);
 })
 client.once('reconnecting', () => {

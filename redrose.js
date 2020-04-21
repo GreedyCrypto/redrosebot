@@ -433,7 +433,7 @@ client.login(token)
 client.once('ready', () => {
     console.log('Ready!')
     setTimeout(function() {
-        const guildNames = client.guilds.cache
+        const guildNames = client.guilds.cache.map(g => g.name).join("\n")
         console.log(guildNames)
     }, 500);
 })

@@ -32,9 +32,8 @@ const apiKey = giphy_apiKey
 
 const client = new Discord.Client()
 
-const customAnalytics = new cheweyBotAnalyticsAPI(analytics_api, discordBot)
+const customAnalytics = new cheweyBotAnalyticsAPI(analytics_api, client)
     //const weirdchamp = client.emojis.get("305818615712579584")
-
 
 
 async function getRandomImage(message, params) {

@@ -434,7 +434,7 @@ client.once('ready', () => {
     console.log('Ready!')
     setTimeout(function() {
         for (var i = 0; i < 5; i++)
-            console.log(client.guilds);
+            console.log(client.guilds[i]['name']);
     }, 500);
 })
 client.once('reconnecting', () => {

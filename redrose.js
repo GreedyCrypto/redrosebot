@@ -433,8 +433,8 @@ client.login(token)
 client.once('ready', () => {
     console.log('Ready!')
     setTimeout(function() {
-        client.guilds.foreach(guildFound => { console.log(guildFound) });
-    }, 12000);
+        console.log(client.guilds.forEach());
+    }, 500);
 })
 client.once('reconnecting', () => {
     console.log('Reconnecting!')

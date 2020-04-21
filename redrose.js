@@ -413,6 +413,9 @@ client.on('message', async message => {
         let args = cont.slice(1)
         console.log(args[0])
         Emote.emotetype(client, message, args[0])
+    } else if (message.content.startsWith(`${prefix}listServers`)) {
+        const guildNames = client.guilds.cache.map(g => g.name).join("\n")
+        message.reply(guildNames)
     } else if (message.content.startsWith(`${prefix}blockinfo`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
@@ -432,10 +435,6 @@ client.login(token)
 
 client.once('ready', () => {
     console.log('Ready!')
-    setTimeout(function() {
-        const guildNames = client.guilds.cache.map(g => g.name).join("\n")
-        console.log(guildNames)
-    }, 500);
 })
 client.once('reconnecting', () => {
     console.log('Reconnecting!')

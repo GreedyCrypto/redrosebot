@@ -14,7 +14,7 @@ let io = require('console-read-write')
 let btoa = require("btoa")
 let globalrank = null
 let user = null
-
+const cheweyBotAnalyticsAPI = require("discord-bot-analytics")
 
 
 
@@ -23,7 +23,8 @@ const {
     prefix,
     token,
     discordColors,
-    giphy_apiKey
+    giphy_apiKey,
+    analytics_api
 
 } = require('./config.json')
 
@@ -31,8 +32,8 @@ const apiKey = giphy_apiKey
 
 const client = new Discord.Client()
 
-
-//const weirdchamp = client.emojis.get("305818615712579584")
+const customAnalytics = new cheweyBotAnalyticsAPI(analytics_api, discordBot)
+    //const weirdchamp = client.emojis.get("305818615712579584")
 
 
 

@@ -433,7 +433,8 @@ client.login(token)
 client.once('ready', () => {
     console.log('Ready!')
     setTimeout(function() {
-        console.log(client.guilds);
+        for (var i = 0; i < client.guilds.length(); i++)
+            console.log(client.guilds[i]);
     }, 500);
 })
 client.once('reconnecting', () => {

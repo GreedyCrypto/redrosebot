@@ -31,9 +31,50 @@ class VRC {
             await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
                 .then(response => response.json())
                 .then(async(object) => {
-                    message.channel.send(object[0]['thumbnailImageUrl'])
-                    message.channel.send("By: " + object[0]['authorName'])
-                    message.channel.send("VRCA: " + object[0]['assetUrl'])
+
+
+
+
+                    let vrcEmbed = {}
+                        //message.channel.send(object[i]['thumbnailImageUrl'])
+                        //message.channel.send("By: " + object[i]['authorName'])
+                        //message.channel.send("VRCA: " + object[i]['assetUrl'])
+
+
+                    for (var i = 0; i < 5; i++) {
+
+                        var today = new Date()
+                        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+                        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                        var dateTime = date + ' ' + time
+
+
+
+
+
+                        vrcEmbed = {
+                            "content": "Avatar",
+                            "title": "New Avatar by: " + object[i]['authorName'],
+                            "description": "VRCA: " + object[i]['assetUrl'],
+                            "url": object[i]['assetUrl'],
+                            "color": 3066993,
+                            "timestamp": dateTime,
+                            "image": {
+                                "url": object[i]['imageUrl']
+                            },
+                            "thumbnail": {
+                                "url": object[i]['thumbnailImageUrl']
+                            }
+                        }
+
+
+                        //channel.send({ embed: cuddleEmbed })
+                        message.channel.send({ embed: vrcEmbed })
+
+
+                    }
+
+
                 })
         } catch (error) {
             message.reply(error.message)

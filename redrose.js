@@ -416,6 +416,8 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}listServers`)) {
         const guildNames = client.guilds.cache.map(g => g.name).join("\n")
         message.reply(guildNames)
+    } else if (message.content.startsWith(`${prefix}latestVRC`)) {
+        VRC.getLastestUploadedAvatars(message)
     } else if (message.content.startsWith(`${prefix}blockinfo`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)

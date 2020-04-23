@@ -24,6 +24,26 @@ class VRC {
 
 
 
+    static async getLastestUploadedAvatars(message) {
+        let apiKey = "&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
+        endpoint = "avatars"
+        try {
+            await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
+                .then(response => response.json())
+                .then(async(object) => {
+                    message.channel.send(object[0]['thumbnailImageUrl'])
+                    message.channel.send("By: " + object[0]['authorName'])
+                    message.channel.send("VRCA: " + object[0]['assetUrl'])
+                })
+        } catch (error) {
+            message.reply(error.message)
+        }
+
+        //https://api.vrchat.cloud/api/1/avatars?order=descending&sort=_created_at&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26
+    }
+
+
+
     static async getActivePlayers(message) {
         let apiKey = "?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
         endpoint = "visits"

@@ -26,7 +26,7 @@ class VRC {
 
     static async getLastestUploadedAvatars(message) {
         let apiKey = "&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
-        endpoint = "avatars"
+        endpoint = "avatars?order=descending&sort=_created_at"
         try {
             await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
                 .then(response => response.json())

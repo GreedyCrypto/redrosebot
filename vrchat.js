@@ -25,18 +25,19 @@ class VRC {
 
 
 
- static async getLastestUploadedAvatars(message) {
+    static async getLastestUploadedAvatars(message) {
 
 
-Object.defineProperty(Array.prototype, 'flat', {
-    value: function(depth = 1) {
-      return this.reduce(function (flat, toFlatten) {
-        return flat.concat((Array.isArray(toFlatten) && (depth>1)) ? toFlatten.flat(depth-1) : toFlatten);
-      }, []);
-    }, configurable: true
-});
+        Object.defineProperty(Array.prototype, 'flat', {
+            value: function(depth = 1) {
+                return this.reduce(function(flat, toFlatten) {
+                    return flat.concat((Array.isArray(toFlatten) && (depth > 1)) ? toFlatten.flat(depth - 1) : toFlatten);
+                }, []);
+            },
+            configurable: true
+        });
 
-//static async getLatestUploadedAvatars(message){
+        //static async getLatestUploadedAvatars(message){
 
 
 
@@ -62,7 +63,8 @@ Object.defineProperty(Array.prototype, 'flat', {
                     let pages = []
                     let emojiList = []
 
-                    for (var i = 0; i < 20; i++) {
+                    //for (var i = 0; i < 20; i++) {
+                    object.forEach(() => {
 
                         var today = new Date()
                         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
@@ -106,13 +108,14 @@ Object.defineProperty(Array.prototype, 'flat', {
                         //message.channel.send({ embed: vrcEmbed })
                         pages.join()
                         pages.push(embed1)
-                    }
+
+                    })
 
                     console.log(pages)
                         //emojiList = ['⏪', '⏩']
 
                     paginationEmbed(message, pages)
-		return;
+                    return;
                 })
         } catch (error) {
             message.reply(error.message)

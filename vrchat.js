@@ -25,11 +25,18 @@ class VRC {
 
 
 
-    static async getLastestUploadedAvatars(message) {
+ static async getLastestUploadedAvatars(message) {
 
 
+Object.defineProperty(Array.prototype, 'flat', {
+    value: function(depth = 1) {
+      return this.reduce(function (flat, toFlatten) {
+        return flat.concat((Array.isArray(toFlatten) && (depth>1)) ? toFlatten.flat(depth-1) : toFlatten);
+      }, []);
+    }, configurable: true
+});
 
-
+//static async getLatestUploadedAvatars(message){
 
 
 
@@ -55,7 +62,7 @@ class VRC {
                     let pages = []
                     let emojiList = []
 
-                    for (var i = 0; i < 5; i++) {
+                    for (var i = 0; i < 20; i++) {
 
                         var today = new Date()
                         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
@@ -105,7 +112,7 @@ class VRC {
                         //emojiList = ['⏪', '⏩']
 
                     paginationEmbed(message, pages)
-
+		return;
                 })
         } catch (error) {
             message.reply(error.message)

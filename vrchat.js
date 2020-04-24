@@ -65,7 +65,7 @@ class VRC {
 
 
 
-
+                        /*
                         vrcEmbed = {
                             "content": "Avatar",
                             "title": "New Avatar by: " + object[i]['authorName'],
@@ -80,13 +80,25 @@ class VRC {
                                 "url": object[i]['thumbnailImageUrl']
                             }
                         }
+                        */
+
+                        const embed1 = new MessageEmbed()
+                            .setColor('#0099ff')
+                            .setTitle('New Uploaded Avatar!')
+                            .setURL(object[i]['assetUrl'])
+                            .setAuthor(object[i]['authorName'])
+                            .setDescription('VRCA: ' + object[i]['assetUrl'])
+                            .setThumbnail(object[i]['thumbnailImageUrl'])
+                            .setImage(object[i]['imageUrl'])
+                            .setTimestamp(dateTime)
+
 
 
                         //
                         //channel.send({ embed: cuddleEmbed })
                         //message.channel.send({ embed: vrcEmbed })
                         pages.join(',')
-                        pages.push(vrcEmbed)
+                        pages.push(embed1)
                     }
 
                     console.log(pages)

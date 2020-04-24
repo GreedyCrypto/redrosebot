@@ -104,7 +104,7 @@ class VRC {
                     console.log(pages)
                         //emojiList = ['⏪', '⏩']
 
-                    paginationEmbed('', pages)
+                    paginationEmbed(message, pages)
 
                 })
         } catch (error) {

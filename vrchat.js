@@ -94,11 +94,11 @@ class VRC {
                         const embed1 = new MessageEmbed()
                             .setColor('#0099ff')
                             .setTitle('New Uploaded Avatar!')
-                            .setURL(this.object['assetUrl'])
-                            .setAuthor(this.object['authorName'])
-                            .setDescription('VRCA: ' + this.object['assetUrl'])
-                            .setThumbnail(this.object['thumbnailImageUrl'])
-                            .setImage(this.object['imageUrl'])
+                            .setURL(object['assetUrl'])
+                            .setAuthor(object['authorName'])
+                            .setDescription('VRCA: ' + object['assetUrl'])
+                            .setThumbnail(object['thumbnailImageUrl'])
+                            .setImage(object['imageUrl'])
                             .setTimestamp(dateTime)
 
 

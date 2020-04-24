@@ -8,7 +8,7 @@ const {
 
 } = require('./config.json')
 
-const paginationEmbed = reuire('discord.js-pagination')
+const paginationEmbed = require('discord.js-pagination')
 const { MessageEmbed } = require('discord.js');
 let fetch = require('node-fetch')
     //const headers = { 'Content-Type': 'application/json' }

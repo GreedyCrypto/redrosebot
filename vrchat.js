@@ -63,8 +63,8 @@ class VRC {
                     let pages = []
                     let emojiList = []
 
-                    //for (var i = 0; i < 20; i++) {
-                    object.forEach(() => {
+                    for (var i = 0; i < object.length; i++) {
+                        //object.forEach((assetUrl, authorName, thumbnailImageUrl, imageUrl) => {
 
                         var today = new Date()
                         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
@@ -94,12 +94,12 @@ class VRC {
                         const embed1 = new MessageEmbed()
                             .setColor('#0099ff')
                             .setTitle('New Uploaded Avatar!')
-                            .setURL(object['assetUrl'])
-                            .setAuthor(object['authorName'])
-                            .setDescription('VRCA: ' + object['assetUrl'])
-                            .setThumbnail(object['thumbnailImageUrl'])
-                            .setImage(object['imageUrl'])
-                            .setTimestamp(dateTime)
+                            .setURL(object[i]['assetUrl'])
+                            .setAuthor(object[i]['authorName'])
+                            .setDescription('VRCA: ' + object[i]['assetUrl'])
+                            .setThumbnail(object[i]['thumbnailImageUrl'])
+                            .setImage(object[i]['imageUrl'])
+                            .setTimestamp(object[i]['dateTime'])
 
 
 
@@ -108,14 +108,13 @@ class VRC {
                         //message.channel.send({ embed: vrcEmbed })
                         pages.join()
                         pages.push(embed1)
-
-                    })
+                    }
 
                     console.log(pages)
                         //emojiList = ['⏪', '⏩']
 
                     paginationEmbed(message, pages)
-                    return;
+                    return
                 })
         } catch (error) {
             message.reply(error.message)

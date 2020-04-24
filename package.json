@@ -5,6 +5,7 @@
     "console-read-write": "^0.1.1",
     "discord-bot-analytics": "^1.0.13",
     "discord.js": "^12.2.0",
+    "discord.js-pagination": "^1.0.2",
     "node-fetch": "^2.6.0"
   }
 }

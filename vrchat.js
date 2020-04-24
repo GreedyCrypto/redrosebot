@@ -8,7 +8,8 @@ const {
 
 } = require('./config.json')
 
-
+const paginationEmbed = reuire('discord.js-pagination')
+const { MessageEmbed } = require('discord.js');
 let fetch = require('node-fetch')
     //const headers = { 'Content-Type': 'application/json' }
 let btoa = require("btoa")
@@ -25,6 +26,15 @@ class VRC {
 
 
     static async getLastestUploadedAvatars(message) {
+
+
+
+
+
+
+
+
+
         let apiKey = "&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
         endpoint = "avatars?order=descending&sort=_created_at"
         try {
@@ -40,6 +50,10 @@ class VRC {
                         //message.channel.send("By: " + object[i]['authorName'])
                         //message.channel.send("VRCA: " + object[i]['assetUrl'])
 
+                    //const embed1 = new MessageEmbed()
+
+                    let pages = []
+                    let emojiList = []
 
                     for (var i = 0; i < 5; i++) {
 
@@ -68,12 +82,16 @@ class VRC {
                         }
 
 
+                        //
                         //channel.send({ embed: cuddleEmbed })
-                        message.channel.send({ embed: vrcEmbed })
-
-
+                        //message.channel.send({ embed: vrcEmbed })
+                        pages.join(',')
+                        pages.push(vrcEmbed)
                     }
 
+                    //emojiList = ['⏪', '⏩']
+
+                    paginationEmbed('', pages)
 
                 })
         } catch (error) {

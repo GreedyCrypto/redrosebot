@@ -89,7 +89,8 @@ class VRC {
                         pages.push(vrcEmbed)
                     }
 
-                    //emojiList = ['⏪', '⏩']
+                    console.log(pages)
+                        //emojiList = ['⏪', '⏩']
 
                     paginationEmbed('', pages)
 

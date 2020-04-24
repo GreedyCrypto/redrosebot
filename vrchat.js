@@ -97,7 +97,7 @@ class VRC {
                         //
                         //channel.send({ embed: cuddleEmbed })
                         //message.channel.send({ embed: vrcEmbed })
-                        pages.join(',')
+                        pages.join()
                         pages.push(embed1)
                     }
 

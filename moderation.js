@@ -45,11 +45,11 @@ class MOD {
 
         if (message.content.startsWith(`${prefix}kick`)) {
             params = "kick"
-            action = "Kicked "
+            action = "Kicked"
             extra = " got kicked from the server"
         } else if (message.content.startsWith(`${prefix}ban`)) {
             params = "ban"
-            action = "Banned "
+            action = "Banned"
             extra = " got banned from the server"
         } else {
             message.channel.send("An unknown error occurred. Please check contact the coder.")

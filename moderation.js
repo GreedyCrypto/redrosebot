@@ -40,11 +40,11 @@ class MOD {
         console.log("My content is currently" + message.content)
         if (message.content.startsWith(`${prefix}kick`)) {
             params = "kick"
-            action = " kicked "
+            action = "Kicked "
             extra = " got kicked from the server"
         } else if (message.content.startsWith(`${prefix}ban`)) {
             params = "ban"
-            action = " banned "
+            action = "Banned "
             extra = " got banned from the server"
         } else {
             message.channel.send("An unknown error occurred. Please check contact the coder.")
@@ -170,17 +170,17 @@ class MOD {
                             */
 
 
-                        let action = null
+                        let action2 = null
 
                         switch (params) {
                             case 'kick':
-                                action = 'The Holy Banhammer has spoken!'
+                                action2 = 'The Holy Banhammer has spoken!'
                                 break
                             case 'ban':
-                                action = '360 Roundhouse Kick!'
+                                action2 = '360 Roundhouse Kick!'
                                 break
                             default:
-                                action = null
+                                action2 = null
                                 break
                         }
 
@@ -206,10 +206,10 @@ class MOD {
 
 
                         let moderationEmbed = new Discord.MessageEmbed()
-                            .setTitle(params)
-                            .setDescription(`Banned ${target} (${targetID})`)
+                            .setTitle(action2)
+                            .setDescription(`${action} ${target} (${targetID})`)
                             .setColor("#ff2050")
-                            .setFooter(`Banned by ${message.author.username}`)
+                            .setFooter(`${action} by ${message.author.username}`)
                             .setImage(url)
                         message.channel.send(moderationEmbed)
                     })

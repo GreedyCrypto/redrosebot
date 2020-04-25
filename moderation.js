@@ -38,6 +38,11 @@ class MOD {
         let extra = ""
         let apiKey = giphy_apiKey
         console.log("My content is currently" + message.content)
+
+        let cont = message.content.slice(prefix.length).split(" ").slice(1)
+        let reason = cont.slice(1).join(' ')
+
+
         if (message.content.startsWith(`${prefix}kick`)) {
             params = "kick"
             action = "Kicked "
@@ -80,13 +85,13 @@ class MOD {
                 message.reply("You do not have permission to kick someone.")
                 return
             } else {
-                await BanRequest(params, action, extra)
+                await BanRequest(params, action, extra, reason)
             }
         } catch (error) {
             message.channel.send(error.message)
         }
 
-        async function BanRequest(params, action, extra) {
+        async function BanRequest(params, action, extra, reason) {
             try {
 
 
@@ -102,7 +107,9 @@ class MOD {
                             return message.reply('Couldn\' get a Discord user with this userID!')
                         }
                     }
+
                     if (user === message.author) return message.channel.send('You can\'t kick yourself')
+                    if (!reason) return message.reply('You maggot forgot to add a kick reason!')
                     if (!message.guild.member(user).kickable) return message.reply('You can\'t kick this user because you don\'t have sufficient permissions!')
                     await message.guild.member(user).kick() // Bans the user
                 }
@@ -117,7 +124,7 @@ class MOD {
                         }
                     }
                     if (user === message.author) return message.channel.send('You can\'t ban yourself')
-
+                    if (!reason) return message.reply('You maggot forgot to add a ban reason!')
                     if (!message.guild.member(user).bannable) return message.reply('You can\'t ban this user because you don\'t have sufficient permissions!')
 
                     await message.guild.member(user).ban()

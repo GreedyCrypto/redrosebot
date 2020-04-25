@@ -152,6 +152,7 @@ class MOD {
                         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
                         var dateTime = date + ' ' + time
 
+                        /*
                         let url = object['data'][random]['images']['original']['url']
                         let moderationEmbed = {
                             "content": params,
@@ -165,6 +166,40 @@ class MOD {
                             }
                         }
                         message.channel.send({ embed: moderationEmbed })
+                        */
+
+
+                        let action = null
+
+                        switch (params) {
+                            case 'kick':
+                                action = 'The Holy Banhammer has spoken!'
+                                break
+                            case 'ban':
+                                action = '360 Roundhouse Kick!'
+                                break
+                            default:
+                                action = null
+                                break
+                        }
+
+                        if (action == null) {
+                            message.reply('An error occurred. Please contact Coder')
+                        }
+
+                        let user = client.users.cache.get(args) // for debugging
+                        console.log(user)
+
+                        let target = client.users.cache.get(args)['username']
+                        let targetID = client.users.cache.get(args)['tag']
+
+                        let moderationEmbed = new Discord.MessageEmbed()
+                            .setTitle(params)
+                            .setDescription(`Banned ${target} (${targetID})`)
+                            .setCollor("#ff2050")
+                            .setFooter(`Banned by ${message.author.username}`)
+
+                        message.channel.send(moderationEmbed)
                     })
             } catch (error) {
                 message.channel.send(error.message)

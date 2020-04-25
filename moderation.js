@@ -88,6 +88,8 @@ class MOD {
 
         async function BanRequest(params, action, extra) {
             try {
+
+
                 const user = message.mentions.users.first()
                 console.log("current user: " + user)
                 if (params == "kick") {
@@ -143,6 +145,13 @@ class MOD {
                                 break
                             }
                         }
+
+
+                        var today = new Date()
+                        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+                        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                        var dateTime = date + ' ' + time
+
                         let url = object['data'][random]['images']['original']['url']
                         let moderationEmbed = {
                             "content": params,
@@ -150,7 +159,7 @@ class MOD {
                             "description": client.users.cache.get(args)['username'] + extra,
                             "url": "",
                             "color": 15844367,
-                            "timestamp": "2020-01-25T21:38:40.648Z",
+                            "timestamp": dateTime,
                             "image": {
                                 "url": url
                             }

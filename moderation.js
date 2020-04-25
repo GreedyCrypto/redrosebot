@@ -197,7 +197,7 @@ class MOD {
                         let moderationEmbed = new Discord.MessageEmbed()
                             .setTitle(params)
                             .setDescription(`Banned ${target} (${targetID})`)
-                            .setCollor("#ff2050")
+                            .setColor("#ff2050")
                             .setFooter(`Banned by ${message.author.username}`)
                             .setImage(url)
                         message.channel.send(moderationEmbed)

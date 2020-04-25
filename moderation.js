@@ -216,7 +216,7 @@ class MOD {
                             .setTitle(action2)
                             .setDescription(`${action} ${target} (${targetID})`)
                             .setColor("#ff2050")
-                            .setFooter(`${action} by ${message.author.username}`)
+                            .setFooter(`${action} by ${message.author.username} | Reason: ${reason}`)
                             .setImage(url)
                         message.channel.send(moderationEmbed)
                     })

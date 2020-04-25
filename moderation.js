@@ -152,21 +152,22 @@ class MOD {
                         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
                         var dateTime = date + ' ' + time
 
-                        /*
+
                         let url = object['data'][random]['images']['original']['url']
-                        let moderationEmbed = {
-                            "content": params,
-                            "title": message.member.user.tag + action + client.users.cache.get(args)['username'],
-                            "description": client.users.cache.get(args)['username'] + extra,
-                            "url": "",
-                            "color": 15844367,
-                            "timestamp": dateTime,
-                            "image": {
-                                "url": url
+                            /*
+                            let moderationEmbed = {
+                                "content": params,
+                                "title": message.member.user.tag + action + client.users.cache.get(args)['username'],
+                                "description": client.users.cache.get(args)['username'] + extra,
+                                "url": "",
+                                "color": 15844367,
+                                "timestamp": dateTime,
+                                "image": {
+                                    "url": url
+                                }
                             }
-                        }
-                        message.channel.send({ embed: moderationEmbed })
-                        */
+                            message.channel.send({ embed: moderationEmbed })
+                            */
 
 
                         let action = null
@@ -198,7 +199,7 @@ class MOD {
                             .setDescription(`Banned ${target} (${targetID})`)
                             .setCollor("#ff2050")
                             .setFooter(`Banned by ${message.author.username}`)
-
+                            .setImage(url)
                         message.channel.send(moderationEmbed)
                     })
             } catch (error) {

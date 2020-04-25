@@ -417,7 +417,11 @@ client.on('message', async message => {
         const guildNames = client.guilds.cache.map(g => g.name).join("\n")
         message.reply(guildNames)
     } else if (message.content.startsWith(`${prefix}latestVRC`)) {
-        VRC.getLastestUploadedAvatars(message)
+        if (message.member.roles.cache.find(r => r.name === "Server Booster")) {
+            VRC.getLastestUploadedAvatars(message)
+        } else {
+            message.reply(" This command is only for Server-Booster. Please ask a booster to execute it or boost yourself. Thank you :)")
+        }
     } else if (message.content.startsWith(`${prefix}blockinfo`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)

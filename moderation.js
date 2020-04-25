@@ -174,10 +174,10 @@ class MOD {
 
                         switch (params) {
                             case 'kick':
-                                action2 = 'The Holy Banhammer has spoken!'
+                                action2 = '360 Roundhouse Kick!'
                                 break
                             case 'ban':
-                                action2 = '360 Roundhouse Kick!'
+                                action2 = 'The Holy Banhammer has spoken!'
                                 break
                             default:
                                 action2 = null

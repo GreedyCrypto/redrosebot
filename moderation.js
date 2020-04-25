@@ -194,6 +194,17 @@ class MOD {
                         let target = client.users.cache.get(args)['username']
                         let targetID = client.users.cache.get(args)['tag']
 
+
+                        Object.defineProperty(Array.prototype, 'flat', {
+                            value: function(depth = 1) {
+                                return this.reduce(function(flat, toFlatten) {
+                                    return flat.concat((Array.isArray(toFlatten) && (depth > 1)) ? toFlatten.flat(depth - 1) : toFlatten);
+                                }, []);
+                            },
+                            configurable: true
+                        });
+
+
                         let moderationEmbed = new Discord.MessageEmbed()
                             .setTitle(params)
                             .setDescription(`Banned ${target} (${targetID})`)

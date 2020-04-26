@@ -10,7 +10,6 @@ var VRC = require("./vrchat")
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
-const richClient = require('discord-rich-presence')('703349368090132601')
 let io = require('console-read-write')
 let btoa = require("btoa")
 let globalrank = null
@@ -442,15 +441,6 @@ client.login(token)
 
 client.once('ready', () => {
     console.log('Ready!')
-    richClient.updatePresence({
-        state: 'discord.gg/jT3XRkD',
-        details: '🧡 RedRose 🧡',
-        startTimestamp: Date.now(),
-        endTimestamp: Date.now() + 1337,
-        largeImageKey: 'rose',
-        smallImageKey: 'rose',
-        instance: true
-    })
 })
 client.once('reconnecting', () => {
     console.log('Reconnecting!')

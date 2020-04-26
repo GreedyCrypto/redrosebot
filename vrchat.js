@@ -11,7 +11,6 @@ const {
 const paginationEmbed = require('discord.js-pagination')
 const { MessageEmbed } = require('discord.js');
 let fetch = require('node-fetch')
-    //const headers = { 'Content-Type': 'application/json' }
 let btoa = require("btoa")
 let headers = { 'Authorization': 'Basic ' + btoa(vrc_username + ':' + vrc_password), 'Content-Type': 'raw' }
 let globalrank = null
@@ -37,9 +36,6 @@ class VRC {
             configurable: true
         });
 
-        //static async getLatestUploadedAvatars(message){
-
-
 
 
 
@@ -54,42 +50,14 @@ class VRC {
 
 
                     let vrcEmbed = {}
-                        //message.channel.send(object[i]['thumbnailImageUrl'])
-                        //message.channel.send("By: " + object[i]['authorName'])
-                        //message.channel.send("VRCA: " + object[i]['assetUrl'])
-
-                    //const embed1 = new MessageEmbed()
-
                     let pages = []
                     let emojiList = []
 
                     for (var i = 0; i < object.length; i++) {
-                        //object.forEach((assetUrl, authorName, thumbnailImageUrl, imageUrl) => {
-
                         var today = new Date()
                         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
                         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
                         var dateTime = date + ' ' + time
-
-
-
-
-                        /*
-                        vrcEmbed = {
-                            "content": "Avatar",
-                            "title": "New Avatar by: " + object[i]['authorName'],
-                            "description": "VRCA: " + object[i]['assetUrl'],
-                            "url": object[i]['assetUrl'],
-                            "color": 3066993,
-                            "timestamp": dateTime,
-                            "image": {
-                                "url": object[i]['imageUrl']
-                            },
-                            "thumbnail": {
-                                "url": object[i]['thumbnailImageUrl']
-                            }
-                        }
-                        */
 
                         const embed1 = new MessageEmbed()
                             .setColor('#0099ff')
@@ -101,17 +69,11 @@ class VRC {
                             .setImage(object[i]['imageUrl'])
                             .setTimestamp(object[i]['dateTime'])
 
-
-
-                        //
-                        //channel.send({ embed: cuddleEmbed })
-                        //message.channel.send({ embed: vrcEmbed })
                         pages.join()
                         pages.push(embed1)
                     }
 
                     console.log(pages)
-                        //emojiList = ['⏪', '⏩']
 
                     paginationEmbed(message, pages)
                     return
@@ -120,7 +82,6 @@ class VRC {
             message.reply(error.message)
         }
 
-        //https://api.vrchat.cloud/api/1/avatars?order=descending&sort=_created_at&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26
     }
 
 
@@ -143,7 +104,6 @@ class VRC {
     static async getByUserName(message, args) {
         async function tagsort(tags) {
             console.log("Mein wert ist " + tags)
-                // Check for null or undefined in IndexOf tags //
 
             if (tags.indexOf("troll") != -1) {
                 return "Confirmed troll."
@@ -212,20 +172,19 @@ class VRC {
 
 
                         let vrcEmbed = {
-                                "content": params,
-                                "title": object[0]['displayName'],
-                                "description": bio + " " + " | Rank: " + await tagsort(tags),
-                                "url": "https://vrchat.com/home/user/" + object[0]['id'],
-                                "color": color,
-                                "timestamp": dateTime,
-                                "image": {
-                                    "url": object[0]['currentAvatarImageUrl']
-                                },
-                                "thumbnail": {
-                                    "url": object[0]['currentAvatarThumbnailImageUrl']
-                                }
+                            "content": params,
+                            "title": object[0]['displayName'],
+                            "description": bio + " " + " | Rank: " + await tagsort(tags),
+                            "url": "https://vrchat.com/home/user/" + object[0]['id'],
+                            "color": color,
+                            "timestamp": dateTime,
+                            "image": {
+                                "url": object[0]['currentAvatarImageUrl']
+                            },
+                            "thumbnail": {
+                                "url": object[0]['currentAvatarThumbnailImageUrl']
                             }
-                            //channel.send({ embed: cuddleEmbed })
+                        }
                         message.channel.send({ embed: vrcEmbed })
 
                         if (object[1] == null) {
@@ -261,15 +220,12 @@ class VRC {
                             }
                         }
 
-                        //channel.send({ embed: cuddleEmbed })
                         message.channel.send({ embed: vrcEmbed2 })
 
                         if (object[2] == null) {
                             console.log("im undefined")
                             return
                         }
-
-
 
                         let tags3 = object[2]['tags']
 
@@ -297,8 +253,6 @@ class VRC {
                                 "url": object[2]['currentAvatarThumbnailImageUrl']
                             }
                         }
-
-                        //channel.send({ embed: cuddleEmbed })
                         message.channel.send({ embed: vrcEmbed3 })
                     }
                 })

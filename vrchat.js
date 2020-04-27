@@ -216,8 +216,8 @@ class VRC {
                                                     }
                                                 }
                         */
-
-                        message.channel.send({ embed: vrcEmbed })
+                        paginationEmbed(message, pages)
+                        return
                     }
                 })
         } catch (ex) {

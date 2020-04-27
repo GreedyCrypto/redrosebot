@@ -456,7 +456,7 @@ client.login(token)
 client.once('ready', () => {
     console.log('Ready!')
 
-    client.user.setActivity('discord.js', { type: 'WATCHING', url: 'https://www.youtube.com/watch?v=XHA-QM-q-3E' })
+    client.user.setActivity('RedRose', { type: 'STREAMING', url: 'https://www.youtube.com/watch?v=XHA-QM-q-3E' })
         .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
         .catch(console.error);
 })

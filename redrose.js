@@ -187,10 +187,11 @@ client.on('message', async message => {
         "ayy": "Ayy, lmao!",
         "wat": "Say what?",
         "lol": "rofl",
-        "hi": "hello sir.",
-        "Hi": "Hello Sir!",
-        "Hello": "Hey :)",
-        "morning": "Good morning " + message.author.cache.username,
+        "hi": "Hey " + message.author.username,
+        "Hi": "Hello " + message.author.username,
+        "Hello": "Hey :) " + message.author.username,
+	"hello": "Hello " + message.author.username,
+        "morning": "Good morning " + message.author.username,
         "lul": "lol",
         "moaning": "goood moooaaaning.."
     }

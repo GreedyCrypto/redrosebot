@@ -224,9 +224,8 @@ client.on('message', async message => {
     if (message.content.startsWith(prefix)) {
         console.log('Command send by ' + sender)
         console.log('He has the following permissions: \n')
-        current_userperms.forEach((o) => {
-            console.log(o)
-        }, false)
+        let thisuserperms = await JSON.stringify(current_userperms)
+        console.log(thisuserperms)
     }
 
 

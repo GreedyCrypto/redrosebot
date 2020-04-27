@@ -178,7 +178,7 @@ async function dotrigger(message) {
 
 client.on('message', async message => {
 
-
+    let current_userperms = message.channel.permissionsFor(message.member).serialize(false)
 
     let sender = message.author.username
 

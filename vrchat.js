@@ -196,7 +196,7 @@ class VRC {
                                 .setTimestamp(dateTime)
 
                             pages.join()
-                            pages.push(embed1)
+                            pages.push(vrcEmbed)
                         }
 
 

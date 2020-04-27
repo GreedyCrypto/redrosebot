@@ -16,6 +16,7 @@ let headers = { 'Authorization': 'Basic ' + btoa(vrc_username + ':' + vrc_passwo
 let globalrank = null
 let user = null
 
+
 let endpoint = ""
 
 let apiURL = "https://api.vrchat.cloud/api/1/"
@@ -162,98 +163,61 @@ class VRC {
 
                         let bio = "";
 
-                        let params = "vrchat"
+                        let params = "Vrchat User Search v2.0"
 
                         if (object[0]['bio'] == "" || object[0]['bio'] == null || object[0]['bio'] == undefined) {
-                            bio = ""
+                            bio = "none"
                         } else {
                             bio = object[0]['bio']
                         }
 
 
-                        let vrcEmbed = {
-                            "content": params,
-                            "title": object[0]['displayName'],
-                            "description": bio + " " + " | Rank: " + await tagsort(tags),
-                            "url": "https://vrchat.com/home/user/" + object[0]['id'],
-                            "color": color,
-                            "timestamp": dateTime,
-                            "image": {
-                                "url": object[0]['currentAvatarImageUrl']
-                            },
-                            "thumbnail": {
-                                "url": object[0]['currentAvatarThumbnailImageUrl']
-                            }
+
+                        let vrcEmbed = {}
+                        let pages = []
+                        let emojiList = []
+
+                        message.channel.send('Yoo, i found ' + object.length + ' users.')
+
+                        for (var i = 0; i < object.length; i++) {
+                            var today = new Date()
+                            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+                            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                            var dateTime = date + ' ' + time
+
+                            const vrcEmbed = new MessageEmbed()
+                                .setColor(color)
+                                .setTitle(params)
+                                .setURL("https://vrchat.com/home/user/" + object[i]['id'])
+                                .setAuthor(object[i]['displayName'])
+                                .setDescription('Bio: ' + bio + ' ' + '|' + ' Rank: ' + await tagsort(tags))
+                                .setThumbnail(object[i]['currentAvatarThumbnailImageUrl'])
+                                .setImage(object[i]['currentAvatarImageUrl'])
+                                .setTimestamp(dateTime)
+
+                            pages.join()
+                            pages.push(embed1)
                         }
+
+
+                        /*
+                                                let vrcEmbed = {
+                                                    "content": params,
+                                                    "title": object[0]['displayName'],
+                                                    "description": bio + " " + " | Rank: " + await tagsort(tags),
+                                                    "url": "https://vrchat.com/home/user/" + object[0]['id'],
+                                                    "color": color,
+                                                    "timestamp": dateTime,
+                                                    "image": {
+                                                        "url": object[0]['currentAvatarImageUrl']
+                                                    },
+                                                    "thumbnail": {
+                                                        "url": object[0]['currentAvatarThumbnailImageUrl']
+                                                    }
+                                                }
+                        */
+
                         message.channel.send({ embed: vrcEmbed })
-
-                        if (object[1] == null) {
-                            console.log("im undefined")
-                            return
-                        }
-
-
-                        let tags2 = object[1]['tags']
-
-                        let bio1 = "";
-
-                        let params1 = "vrchat"
-
-                        if (object[1]['bio'] == "" || object[1]['bio'] == null || object[1]['bio'] == undefined) {
-                            bio1 = ""
-                        } else {
-                            bio1 = object[1]['bio']
-                        }
-
-                        let vrcEmbed2 = {
-                            "content": params1,
-                            "title": object[1]['displayName'],
-                            "description": bio1 + " " + " | Rank: " + await tagsort(tags2),
-                            "url": "https://vrchat.com/home/user/" + object[1]['id'],
-                            "color": color,
-                            "timestamp": dateTime,
-                            "image": {
-                                "url": object[1]['currentAvatarImageUrl']
-                            },
-                            "thumbnail": {
-                                "url": object[1]['currentAvatarThumbnailImageUrl']
-                            }
-                        }
-
-                        message.channel.send({ embed: vrcEmbed2 })
-
-                        if (object[2] == null) {
-                            console.log("im undefined")
-                            return
-                        }
-
-                        let tags3 = object[2]['tags']
-
-                        let bio2 = "";
-
-                        let params2 = "vrchat"
-
-                        if (object[2]['bio'] == "" || object[2]['bio'] == null || object[2]['bio'] == undefined) {
-                            bio2 = ""
-                        } else {
-                            bio2 = object[2]['bio']
-                        }
-
-                        let vrcEmbed3 = {
-                            "content": params2,
-                            "title": object[2]['displayName'],
-                            "description": bio2 + " " + " | Rank: " + await tagsort(tags3),
-                            "url": "https://vrchat.com/home/user/" + object[2]['id'],
-                            "color": color,
-                            "timestamp": dateTime,
-                            "image": {
-                                "url": object[2]['currentAvatarImageUrl']
-                            },
-                            "thumbnail": {
-                                "url": object[2]['currentAvatarThumbnailImageUrl']
-                            }
-                        }
-                        message.channel.send({ embed: vrcEmbed3 })
                     }
                 })
         } catch (ex) {

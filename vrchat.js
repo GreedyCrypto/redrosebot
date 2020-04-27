@@ -193,7 +193,7 @@ class VRC {
                                 .setDescription('Bio: ' + bio + ' ' + '|' + ' Rank: ' + await tagsort(tags))
                                 .setThumbnail(object[i]['currentAvatarThumbnailImageUrl'])
                                 .setImage(object[i]['currentAvatarImageUrl'])
-                                .setTimestamp(dateTime)
+                                .setTimestamp(object[i]['dateTime'])
 
                             pages.join()
                             pages.push(vrcEmbed)

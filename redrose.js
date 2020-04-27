@@ -215,10 +215,20 @@ client.on('message', async message => {
 
 
     /* DEBUG INFORMATION GATHERING */
+    /*
     if (message.content.startsWith(prefix)) {
         console.log('Command send by ' + sender)
         console.log('He has the following permissions: \n' + current_userperms)
     }
+*/
+    if (message.content.startsWith(prefix)) {
+        console.log('Command send by ' + sender)
+        console.log('He has the following permissions: \n')
+        current_userperms.forEach((o) => {
+            console.log(o)
+        }, false)
+    }
+
 
     if (message.content.startsWith(`${prefix}image`)) {
         const image = message.content.split(' ')

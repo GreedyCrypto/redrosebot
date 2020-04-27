@@ -167,17 +167,11 @@ class VRC {
                         }
 
 
-                        let tags = object[0]['tags']
+
 
                         let bio = "";
 
                         let params = "Vrchat User Search v2.0"
-
-                        if (object[0]['bio'] == "" || object[0]['bio'] == null || object[0]['bio'] == undefined) {
-                            bio = "none"
-                        } else {
-                            bio = object[0]['bio']
-                        }
 
 
 
@@ -192,6 +186,17 @@ class VRC {
                             var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
                             var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
                             var dateTime = date + ' ' + time
+
+                            let tags = object[i]['tags']
+
+                            if (object[i]['bio'] == "" || object[i]['bio'] == null || object[i]['bio'] == undefined) {
+                                bio = "none"
+                            } else {
+                                bio = object[i]['bio']
+                            }
+
+
+
 
                             const vrcEmbed = new MessageEmbed()
                                 .setColor(color)

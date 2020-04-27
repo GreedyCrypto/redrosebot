@@ -190,7 +190,7 @@ class VRC {
                                 .setTitle(params)
                                 .setURL("https://vrchat.com/home/user/" + object[i]['id'])
                                 .setAuthor(object[i]['displayName'])
-                                .setDescription('Bio: ' + bio + ' ' + '|' + ' Rank: ' + await tagsort(tags))
+                                .setDescription('Bio: ' + bio + ' ' + '\n' + ' Rank: ' + await tagsort(tags))
                                 .setThumbnail(object[i]['currentAvatarThumbnailImageUrl'])
                                 .setImage(object[i]['currentAvatarImageUrl'])
                                 .setTimestamp(object[i]['dateTime'])

@@ -186,7 +186,13 @@ client.on('message', async message => {
     const responseObject = {
         "ayy": "Ayy, lmao!",
         "wat": "Say what?",
-        "lol": "rofl"
+        "lol": "rofl",
+        "hi": "hello sir.",
+        "Hi": "Hello Sir!",
+        "Hello": "Hey :)",
+        "morning": "Good morning " + message.author.cache.username,
+        "lul": "lol",
+        "moaning": "goood moooaaaning.."
     }
 
     if (message.author.bot) return

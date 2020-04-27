@@ -190,7 +190,7 @@ client.on('message', async message => {
         "hi": "Hey " + message.author.username,
         "Hi": "Hello " + message.author.username,
         "Hello": "Hey :) " + message.author.username,
-	"hello": "Hello " + message.author.username,
+        "hello": "Hello " + message.author.username,
         "morning": "Good morning " + message.author.username,
         "lul": "lol",
         "moaning": "goood moooaaaning.."
@@ -455,6 +455,10 @@ client.login(token)
 
 client.once('ready', () => {
     console.log('Ready!')
+
+    client.user.setActivity('discord.js', { type: 'WATCHING', url: 'https://www.youtube.com/watch?v=XHA-QM-q-3E' })
+        .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+        .catch(console.error);
 })
 client.once('reconnecting', () => {
     console.log('Reconnecting!')

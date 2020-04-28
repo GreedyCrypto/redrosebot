@@ -218,7 +218,10 @@ client.on('message', async message => {
         return
     }
 
-    if (message.content.indexOf('erp')) message.reply("NO ERP!")
+    if (message.content.indexOf('erp') != -1) {
+        message.reply("NO ERP!")
+        return
+    }
 
     if (!message.content.startsWith(prefix) && (!responseObject[message.content])) return
 

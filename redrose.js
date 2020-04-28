@@ -193,7 +193,8 @@ client.on('message', async message => {
         "hello": "Hello " + message.author.username,
         "morning": "Good morning " + message.author.username,
         "lul": "lol",
-        "moaning": "goood moooaaaning.."
+        "moaning": "goood moooaaaning..",
+        "erp": "No ERP!"
     }
 
     if (message.author.bot) return
@@ -242,6 +243,8 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}emojilist`)) {
         const emojiList = message.guild.emojis.map(e => e.toString()).join(" ")
         message.channel.send(`${emojiList}`)
+    } else if (message.content.contains('erp')) {
+        message.reply("NO ERP!")
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {

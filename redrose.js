@@ -30,10 +30,17 @@ const {
 
 const apiKey = giphy_apiKey
 
-const client = new Discord.Client()
+const client = new Discord.Client({ partials: ['MESSAGE', 'REACTION'] })
 
 const customAnalytics = new cheweyBotAnalyticsAPI(analytics_api, client)
     //const weirdchamp = client.emojis.get("305818615712579584")
+
+global.globalStoreReaction = null;
+global.globalStoreReactionAuthor = null;
+global.emojiUser = null;
+global.iterator = 0;
+global.reactionUsername = null;
+
 
 
 async function getRandomImage(message, params) {
@@ -173,10 +180,45 @@ async function dotrigger(message) {
         })
 }
 
+const filter = (reaction, user) => {
+    return reaction.emoji.name === '👌' && user.id === message.author.id;
+};
 
+client.on('messageReactionAdd', async(reaction, user) => {
+
+    // When we receive a reaction we check if the reaction is partial or not
+    if (reaction.partial) {
+        // If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+        try {
+            await reaction.fetch();
+        } catch (error) {
+            console.log('Something went wrong when fetching the message: ', error);
+            // Return as `reaction.message.author` may be undefined/null
+            return;
+        }
+    }
+
+    // Now the message has been cached and is fully available
+    if (iterator > 3) {
+        if (reaction.message.content === `.vote ${emojiUser}` && reaction.emoji.name === '👍' && emojiUser != null) {
+            reaction.message.channel.send(`${user.username} voted with ✅!`)
+        } else if (reaction.message.content === `.vote ${emojiUser}` && reaction.emoji.name === '👎' && emojiUser != null) {
+            reaction.message.channel.send(`${user.username} voted with ❌!`)
+        }
+    }
+
+    iterator = iterator + 1;
+
+    //reaction.message.channel.reply(`${reaction.message.author}'s voted "${reaction.message.content}" gained a reaction!`)
+    //console.log(`${reaction.message.author}'s message "${reaction.message.content}" gained a reaction!`);
+    // The reaction is now also fully available and the properties will be reflected accurately:
+    //console.log(`${reaction.count} user(s) have given the same reaction to this message!`);
+});
 
 
 client.on('message', async message => {
+
+
 
     let current_userperms = message.channel.permissionsFor(message.member).serialize(false)
 
@@ -256,6 +298,30 @@ client.on('message', async message => {
         let args = cont.slice(1)
             //message.reply("this function is temporary deactivated")
         VRC.getByUserName(message, args[0])
+    } else if (message.content.startsWith(`${prefix}vote`)) {
+
+        const filter = (reaction, user) => {
+            return reaction.emoji.name === '👌' && user.id === message.author.id;
+        };
+
+        const collector = message.createReactionCollector(filter, { time: 15000 });
+        message.react('👍').then(() => message.react('👎'));
+
+        collector.on('collect', (reaction, reactionCollector) => {
+            console.log(`Collected ${reaction.emoji.name}`);
+        });
+
+        collector.on('end', collected => {
+            console.log(`Collected ${collected.size} items`);
+        });
+
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
+
+        emojiUser = args[0]
+        message.channel.send(message.author.username + " started a new Vote! Should " + args[0] + " get access on the Asset Server?")
+        message.channel.send("VOTE NOW!!!!")
+
     } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)

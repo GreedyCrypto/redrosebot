@@ -40,7 +40,7 @@ global.globalStoreReactionAuthor = null;
 global.emojiUser = null;
 global.iterator = 0;
 global.reactionUsername = null;
-
+global.tempUser = null;
 
 
 async function getRandomImage(message, params) {
@@ -186,6 +186,13 @@ const filter = (reaction, user) => {
 
 client.on('messageReactionAdd', async(reaction, user) => {
 
+
+
+    if (tempUser === null || tempUser != emojiUser) {
+        iterator = 0
+        tempUser = emojiUser
+    }
+
     // When we receive a reaction we check if the reaction is partial or not
     if (reaction.partial) {
         // If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -299,6 +306,9 @@ client.on('message', async message => {
             //message.reply("this function is temporary deactivated")
         VRC.getByUserName(message, args[0])
     } else if (message.content.startsWith(`${prefix}vote`)) {
+
+
+
 
         const filter = (reaction, user) => {
             return reaction.emoji.name === '👌' && user.id === message.author.id;

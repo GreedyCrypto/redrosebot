@@ -218,7 +218,7 @@ client.on('message', async message => {
         return
     }
 
-    if (message.content.indexOf('erp') != -1) {
+    if (message.content.toLowerCase().indexOf('erp') != -1) {
         message.reply("NO ERP!")
         return
     }

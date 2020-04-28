@@ -218,6 +218,7 @@ client.on('message', async message => {
         return
     }
 
+    if (message.content.indexOf('erp')) message.reply("NO ERP!")
 
     if (!message.content.startsWith(prefix) && (!responseObject[message.content])) return
 
@@ -243,8 +244,6 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}emojilist`)) {
         const emojiList = message.guild.emojis.map(e => e.toString()).join(" ")
         message.channel.send(`${emojiList}`)
-    } else if (message.content.contains('erp')) {
-        message.reply("NO ERP!")
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {

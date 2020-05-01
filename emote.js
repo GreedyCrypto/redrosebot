@@ -64,6 +64,10 @@ class Emote {
             params = "hug"
             action = " is hugging "
             extra = "why do you feel so warm? "
+        } else if (message.content.startsWith(`${prefix}oniichan`)) {
+            params = "oniichan"
+            action = " summons oniichan "
+            extra = "UwU? ONIICHAAAN! "
         } else if (message.content.startsWith(`${prefix}love`)) {
             params = "love"
             action = " is sending love to "

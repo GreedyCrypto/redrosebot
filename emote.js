@@ -31,11 +31,15 @@ class Emote {
         if (message.content.startsWith(`${prefix}cuddle`)) {
             params = "cuddle"
             action = " cuddles with "
-            extra = "that's so cozy :=)"
+            extra = "that's so cozy :=) "
         } else if (message.content.startsWith(`${prefix}lick`)) {
             params = "lick"
             action = " is licking "
             extra = "hmmm smells goood"
+        } else if (message.content.startsWith(`${prefix}slap`)) {
+            params = "slap"
+            action = " slaps "
+            extra = "Oof that hurt a bit "
         } else if (message.content.startsWith(`${prefix}kiss`)) {
             params = "kiss"
             action = " is kissing "

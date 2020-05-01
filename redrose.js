@@ -227,6 +227,12 @@ client.on('message', async message => {
 
 
 
+
+
+
+
+
+
     let current_userperms = message.channel.permissionsFor(message.member).serialize(false)
 
     let sender = message.author.username
@@ -272,6 +278,16 @@ client.on('message', async message => {
         return
     }
 
+    /*
+    if (message.content.startsWith(`${prefix}bombneko`)) {
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
+        for (var i = 0; i < 40; i++) {
+            message.channel.send(args[0] + ' when video?')
+        }
+        message.channel.send('Bombing successful. Thank you for using Cryptobomber 1.0')
+    }
+    */
     if (!message.content.startsWith(prefix) && (!responseObject[message.content])) return
 
 
@@ -503,6 +519,7 @@ client.on('message', async message => {
         message.content.startsWith(`${prefix}gay`) ||
         message.content.startsWith(`${prefix}kiss`) ||
         message.content.startsWith(`${prefix}love`) ||
+        message.content.startsWith(`${prefix}slap`) ||
         message.content.startsWith(`${prefix}rape`)) {
         let cont = message.content.slice(prefix.lenght).split(" ")
         let args = cont.slice(1)

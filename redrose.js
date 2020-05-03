@@ -552,6 +552,17 @@ client.on('message', async message => {
 
 client.login(token)
 
+client.on('ready', () => {
+
+
+    setTimeout(async function() {
+        await BLOCK.halving(client, null, 'IAMBOT')
+    }, 10000)
+
+})
+
+
+
 client.once('ready', () => {
     console.log('Ready!')
 

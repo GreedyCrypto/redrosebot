@@ -144,7 +144,7 @@ class BLOCK {
 
                         //channel.send({ embed: cuddleEmbed })
                         if (args === 'IAMBOT') {
-                            client.channels.cachel.get('698561456354099250').send({ embed: BlockEmbed })
+                            client.channels.cache.get('698561456354099250').send({ embed: BlockEmbed })
                         } else {
                             message.channel.send({ embed: BlockEmbed })
                         }

@@ -552,12 +552,12 @@ client.on('message', async message => {
 
 client.login(token)
 
-client.on('ready', () => {
+client.on('ready', async () => {
 
+await setInterval(async function() {
+  await BLOCK.halving(client, null, 'IAMBOT')
+}, 10800000)
 
-    setTimeout(async function() {
-        await BLOCK.halving(client, null, 'IAMBOT')
-    }, 10000)
 
 })
 

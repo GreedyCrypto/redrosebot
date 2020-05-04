@@ -59,6 +59,16 @@ class BLOCK {
                 let hoursLeft = (minutesleft / 60)
                 let daysLeft = (hoursLeft / 24)
 
+		if(daysLeft <= 5){
+		message.channel.send('**WARNING**: LESS THEN 5 DAYS LEFT UNTIL HALVENING!')
+		}else if(daysLeft <= 3){
+		message.channel.send('**WARNING**: LESS THEN 3 DAYS LEFT UNTIL HALVENING!, MAKE SURE YOU ARE INVESTED NOW')
+		}else if(daysLeft <= 1){
+		message.channel.send('**GET READY**: BITCOIN HALVENING INCOMING!!')
+		}else if(daysLeft < 1 && hoursLeft < 5){
+		message.channel.send('**ITS HAPPENING**: BITCOIN HALVENING IN UNDER A DAY / UNDER 5 HOURS LEFT!!')
+		}
+
                 let params = "BLOCKINFORMATION"
 
                 let offsetRandomize = Math.floor(Math.random() * 10)

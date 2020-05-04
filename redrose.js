@@ -557,7 +557,7 @@ client.on('ready', async() => {
 
 
     setInterval(async function() {
-        await client.user.setActivity(`VRChat (${await VRC.getActivePlayersForBot()})`, { type: 'PLAYING' })
+        await client.user.setActivity(`VRChat (${await VRC.getActivePlayersForBot()} Players)`, { type: 'PLAYING' })
             .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
             .catch(console.error);
     }, 30000)

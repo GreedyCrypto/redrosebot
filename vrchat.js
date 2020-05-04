@@ -87,6 +87,28 @@ class VRC {
 
 
 
+    static async setPlayerCount(object) {
+        return object
+    }
+
+
+    static async getActivePlayersForBot(object) {
+        let apiKey = "?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
+        endpoint = "visits"
+        try {
+            let myObject = null
+            await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
+                .then(response => response.json())
+                .then(async(object) => {
+                    this.object = await object
+                })
+        } catch (err) {
+            console.log(err.message)
+        }
+        return this.object
+    }
+
+
     static async getActivePlayers(message) {
         let apiKey = "?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
         endpoint = "visits"

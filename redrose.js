@@ -552,11 +552,22 @@ client.on('message', async message => {
 
 client.login(token)
 
-client.on('ready', async () => {
+client.on('ready', async() => {
 
-await setInterval(async function() {
-  await BLOCK.halving(client, null, 'IAMBOT')
-}, 10800000)
+
+
+    setInterval(async function() {
+        await client.user.setActivity(`VRChat (${await VRC.getActivePlayersForBot()})`, { type: 'PLAYING' })
+            .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+            .catch(console.error);
+    }, 30000)
+
+
+    await setInterval(async function() {
+        await BLOCK.halving(client, null, 'IAMBOT')
+    }, 10800000)
+
+
 
 
 })
@@ -566,9 +577,7 @@ await setInterval(async function() {
 client.once('ready', () => {
     console.log('Ready!')
 
-    client.user.setActivity('RedRose', { type: 'STREAMING', url: 'https://www.youtube.com/watch?v=2zToEPpFEN8' })
-        .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-        .catch(console.error);
+
 })
 client.once('reconnecting', () => {
     console.log('Reconnecting!')

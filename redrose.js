@@ -7,6 +7,7 @@ var Emote = require("./emote")
 var MOD = require("./moderation")
 var BLOCK = require("./BLOCK")
 var VRC = require("./vrchat")
+var EVENTS = require("./events")
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
@@ -312,6 +313,8 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}emojilist`)) {
         const emojiList = message.guild.emojis.map(e => e.toString()).join(" ")
         message.channel.send(`${emojiList}`)
+    } else if (message.content.startsWith(`${prefix}event`)) {
+        EVENTS.triggerEvent(message)
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {

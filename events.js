@@ -13,6 +13,19 @@ const Discord = require('discord.js')
 class EVENTS {
 
     static async triggerEvent(message) {
+
+
+
+        Object.defineProperty(Array.prototype, 'flat', {
+            value: function(depth = 1) {
+                return this.reduce(function(flat, toFlatten) {
+                    return flat.concat((Array.isArray(toFlatten) && (depth > 1)) ? toFlatten.flat(depth - 1) : toFlatten);
+                }, []);
+            },
+            configurable: true
+        });
+
+
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
 

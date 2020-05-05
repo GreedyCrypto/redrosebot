@@ -25,8 +25,8 @@ class EVENTS {
         message.channel.send(`I've set the next event for the Game ${args[0]} at ${args[1]}.`)
 
         let eventEmbed = new Discord.MessageEmbed()
-            .setTitle(`EVENT`)
-            .setDescription(`-- EVENT: ${args[0]} -- REDROSE -- WHEN?: ${args[1]} --`)
+            .setTitle(`**EVENT**`)
+            .setDescription(`EVENT: ${args[0]} ** REDROSE ** WHEN?: ${args[1]}`)
             .setColor("#ff2050")
             .setFooter(`Event planned by ${message.author.username}`)
 

@@ -547,7 +547,7 @@ client.on('message', async message => {
         VRC.getActivePlayers(message)
     } else if (message.content.startsWith(`${prefix}help`)) {
         message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif")
-    } else if (message.content.startsWith(`${prefix}`))
+    } else if (message.content.startsWith(`${prefix}`)){
         message.channel.send('Your command is not valid.')
     }
 

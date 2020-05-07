@@ -26,10 +26,48 @@ class MOD {
             message.channel.send("Please use a number as parameter. \n Usage: " + prefix + "delete <count>")
             return
         }
-        const fetched = await message.channel.messages.fetch({ limit: args[0] })
-        console.log("I've found " + fetched.size + " messages, deleting...")
-        message.channel.bulkDelete(fetched)
-            .catch(error => message.channel.send(`Error: There is nothing more left to delete. Chill.`))
+
+        if (args[0] === 1) {
+            let deleteCount = parseInt(args[0])
+            deleteCount = deleteCount + 1
+            let deldescription = deleteCount - 1
+        } else if (args[0] > 1) {
+            deleteCount = args[0]
+            let deldescription = deleteCount
+        }
+
+        const fetched = await message.channel.messages.fetch({ limit: deleteCount })
+
+
+
+
+        let deleteEmbed = {
+            color: 15158332,
+            title: 'Message Deleted',
+            author: {
+                name: message.channel.author,
+                icon_url: 'https://www.freeiconspng.com/uploads/remove-icon-png-15.png',
+            },
+            description: `I've deleted ${deldescription} messages.`,
+            thumbnail: {
+                url: 'https://media.tenor.com/images/f4f6d8a289cdaa5325b1257b3ac566ff/tenor.gif'
+            },
+            fields: [{
+                name: 'Amount:',
+                value: deldescription,
+            }, ],
+            timestamp: new Date(),
+            footer: {
+                text: 'Thank you for using the RedRose purge system.'
+            },
+        };
+        try {
+            message.channel.bulkDelete(fetched)
+            message.channel.send({ embed: deleteEmbed })
+        } catch (err) {
+            message.channel.send(err.message)
+        }
+
     }
 
     static async moderation(client, message, args) {

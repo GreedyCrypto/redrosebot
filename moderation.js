@@ -23,51 +23,77 @@ class MOD {
         }
         message.delete()
         if (isNaN(args[0])) {
-            message.channel.send("Please use a number as parameter. \n Usage: " + prefix + "delete <count>")
+            message.channel.send("Please use a number as parameter. \n Usage: " + prefix + "delete <count> reason <reason>")
             return
         }
+	
 
-        if (args[0] === 1) {
-            let deleteCount = parseInt(args[0])
+
+	let deleteCount = args[0]
+	let deldescription = deleteCount
+	
+	let reason = 'no reason specified'
+
+	if(args[1] != null || args[1] != undefined){
+	reason = cont.slice(2).join(' ')
+	}
+
+        if (args[0] === '1') {
+            deleteCount = parseInt(args[0])
             deleteCount = deleteCount + 1
-            let deldescription = deleteCount - 1
+            deldescription = deleteCount - 1
         } else if (args[0] > 1) {
             deleteCount = args[0]
-            let deldescription = deleteCount
+            deldescription = deleteCount
         }
 
+	if (deleteCount < 1){
+	message.reply(`Amount must be a number and can't be 0`)
+	return	
+	}else{
+	try{
         const fetched = await message.channel.messages.fetch({ limit: deleteCount })
-
-
-
+	
 
         let deleteEmbed = {
             color: 15158332,
-            title: 'Message Deleted',
+            title: 'Message Purged',
             author: {
-                name: message.channel.author,
+                name: message.author.username,
                 icon_url: 'https://www.freeiconspng.com/uploads/remove-icon-png-15.png',
             },
-            description: `I've deleted ${deldescription} messages.`,
+            description: `${deldescription} messages got deleted`,
             thumbnail: {
-                url: 'https://media.tenor.com/images/f4f6d8a289cdaa5325b1257b3ac566ff/tenor.gif'
+                url: 'https://media.tenor.com/images/f4f6d8a289cdaa5325b1257b3ac566ff/tenor.gif',
             },
             fields: [{
                 name: 'Amount:',
                 value: deldescription,
-            }, ],
+		inline: true},
+		{
+		name: 'Author:',
+		value: message.author.username,
+	    	inline: true
+	    },
+		{
+		name: 'Reason:',
+		value: reason,
+		inline: true
+	    },],
             timestamp: new Date(),
             footer: {
                 text: 'Thank you for using the RedRose purge system.'
             },
         };
-        try {
-            message.channel.bulkDelete(fetched)
-            message.channel.send({ embed: deleteEmbed })
-        } catch (err) {
-            message.channel.send(err.message)
-        }
 
+	if(args[0] > 0){
+	message.channel.bulkDelete(fetched)
+	message.channel.send({ embed: deleteEmbed })
+	}
+	}catch (err) {
+	    message.reply(err.message)
+	}
+	}
     }
 
     static async moderation(client, message, args) {

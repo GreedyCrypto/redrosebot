@@ -193,7 +193,7 @@ class VRC {
 
                         let bio = "";
 
-                        let params = "Vrchat User Search v2.0"
+                        let params = "Vrchat User Search v3.0"
 
 
 
@@ -216,22 +216,52 @@ class VRC {
                             } else {
                                 bio = object[i]['bio']
                             }
+				
+			    console.log('His Tags: ' + tags)
+			    console.log('His devrank: ' + object[i]['developerType'])
+			    
+			    let lastPlatform = null
+				
+		            if(object[i]['last_platform'] == 'standalonewindows'){
+			    lastPlatform = 'Windows'
+			    }else{
+			    lastPlatform = 'Oculus Quest'
+			    }
+			
+			    let devtype = null	
+			    if(object[i]['developerType'] == 'none' || object[i]['developerType'] == none)
+			    {
+			    devtype = 'No'
+			    }else{
+			    devtype = object[i]['developerType']
+			    }
+				
+			    console.log('Devtype: ' + devtype)
+			    let trustrank = await tagsort(tags)
+                            let thisTagsArray = []
+			     
+		            if(object[i]['tags'] === undefined || object[i]['tags'].length == 0)
+			    {
+			    thisTagsArray = thisTagsArray.push('Visitor')
+			    }else{
+		            thisTagsArray = tags
+			    }
 
 
-
-
-                            const vrcEmbed = new MessageEmbed()
+			    const vrcEmbed = new MessageEmbed()
                                 .setColor(color)
                                 .setTitle(params)
                                 .setURL("https://vrchat.com/home/user/" + object[i]['id'])
                                 .setAuthor(object[i]['displayName'])
-                                .setDescription('Bio: ' + bio)
                                 .setThumbnail(object[i]['currentAvatarThumbnailImageUrl'])
                                 .setImage(object[i]['currentAvatarImageUrl'])
-                                .addField('Tags', tags)
-                                .addField('TrustRank', await tagsort(tags), true)
-                                .addField('Developer Type', object[i]['developerType'], true)
-                                .addField('Last Platform', object[i]['last_platform'], true)
+                                .addFields(
+				{name: 'Bio', value: bio, inline: false},
+				{name: 'Tags', value: thisTagsArray, inline: false},
+                                {name: 'TrustRank', value: trustrank, inline: true},
+                                {name: 'Developer Type', value: devtype, inline: true},
+                                {name: 'Last Platform', value: lastPlatform, inline: true},
+				)
                                 .setTimestamp(object[i]['dateTime'])
 
                             pages.join()

@@ -63,10 +63,11 @@ async function getRandomImage(message, params) {
                 random = Math.floor(Math.random() * (object['data'].length))
             }
 
+	    try{
             let coderun = false
             while (coderun == false) {
-                if (object['data'][random]['embed_url'] === undefined) {
-                    console.log("Something was wrong")
+                if (object['data'][random]['embed_url'] == undefined) {
+                    message.reply("No image found")
                     random = Math.floor(Math.random() * 21)
                 } else if (object['data'][random]['embed_url'] != undefined) {
                     coderun = true
@@ -75,7 +76,7 @@ async function getRandomImage(message, params) {
                     break
                 }
             }
-            try {
+           
                 message.channel.send("I found the following image with a reference to " + params + " : " + "\n" + object['data'][random]['embed_url'])
             } catch (error) {
                 message.channel.send(error)
@@ -546,8 +547,8 @@ client.on('message', async message => {
         VRC.getActivePlayers(message)
     } else if (message.content.startsWith(`${prefix}help`)) {
         message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif")
-    } else {
-        message.channel.send('Your command is not valid brah.')
+    } else if (message.content.startsWith(`${prefix}`))
+        message.channel.send('Your command is not valid.')
     }
 
 })

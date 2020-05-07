@@ -130,6 +130,8 @@ class VRC {
 
             if (tags.indexOf("troll") != -1) {
                 return "Confirmed troll."
+	    } else if (tags.indexOf("admin_moderator") != -1) {
+		return "Administrator"
             } else if (tags.indexOf("system_legend") != -1) {
                 return "Legendary User and appears as Trusted User"
             } else if (tags.indexOf("system_trust_legend") != -1) {
@@ -193,7 +195,7 @@ class VRC {
 
                         let bio = "";
 
-                        let params = "Vrchat User Search v3.0"
+                        let params = "RedRose User Search v3.0"
 
 
 
@@ -228,8 +230,8 @@ class VRC {
 			    lastPlatform = 'Oculus Quest'
 			    }
 			
-			    let devtype = null	
-			    if(object[i]['developerType'] == 'none' || object[i]['developerType'] == none)
+			    let devtype = null
+			    if(object[i]['developerType'] == 'none')
 			    {
 			    devtype = 'No'
 			    }else{
@@ -242,11 +244,10 @@ class VRC {
 			     
 		            if(object[i]['tags'] === undefined || object[i]['tags'].length == 0)
 			    {
-			    thisTagsArray = thisTagsArray.push('Visitor')
+			    thisTagsArray = 'none'
 			    }else{
 		            thisTagsArray = tags
 			    }
-
 
 			    const vrcEmbed = new MessageEmbed()
                                 .setColor(color)
@@ -258,7 +259,7 @@ class VRC {
                                 .addFields(
 				{name: 'Bio', value: bio, inline: false},
 				{name: 'Tags', value: thisTagsArray, inline: false},
-                                {name: 'TrustRank', value: trustrank, inline: true},
+                                {name: 'Trust Rank', value: trustrank, inline: true},
                                 {name: 'Developer Type', value: devtype, inline: true},
                                 {name: 'Last Platform', value: lastPlatform, inline: true},
 				)

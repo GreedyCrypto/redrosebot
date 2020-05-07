@@ -39,7 +39,7 @@ class EVENTS {
 
         let eventEmbed = new Discord.MessageEmbed()
             .setTitle(`**EVENT**`)
-            .setDescription(`EVENT: ${args[0]} ** REDROSE ** WHEN?: ${args[1]}`)
+            .setDescription(`EVENT: ${args[0]} WHEN?: ${args[1]}`)
             .setColor("#ff2050")
             .setFooter(`Event planned by ${message.author.username}`)
 

@@ -250,8 +250,7 @@ client.on('message', async message => {
         "hello": "Hello " + message.author.username,
         "morning": "Good morning " + message.author.username,
         "lul": "lol",
-        "moaning": "goood moooaaaning..",
-        "erp": "No ERP!"
+        "moaning": "goood moooaaaning.."
     }
 
     if (message.author.bot) return

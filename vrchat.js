@@ -65,7 +65,7 @@ class VRC {
                             .setTitle('New Uploaded Avatar!')
                             .setURL(object[i]['assetUrl'])
                             .setAuthor(object[i]['authorName'])
-                            .setDescription('VRCA: ' + object[i]['assetUrl'])
+                            .addField('VRCA', object[i]['assetUrl'], true)
                             .setThumbnail(object[i]['thumbnailImageUrl'])
                             .setImage(object[i]['imageUrl'])
                             .setTimestamp(object[i]['dateTime'])

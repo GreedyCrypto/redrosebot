@@ -63,20 +63,20 @@ async function getRandomImage(message, params) {
                 random = Math.floor(Math.random() * (object['data'].length))
             }
 
-	    try{
-            let coderun = false
-            while (coderun == false) {
-                if (object['data'][random]['embed_url'] == undefined) {
-                    message.reply("No image found")
-                    random = Math.floor(Math.random() * 21)
-                } else if (object['data'][random]['embed_url'] != undefined) {
-                    coderun = true
-                } else {
-                    coderun = true
-                    break
+            try {
+                let coderun = false
+                while (coderun == false) {
+                    if (object['data'][random]['embed_url'] == undefined) {
+                        message.reply("No image found")
+                        random = Math.floor(Math.random() * 21)
+                    } else if (object['data'][random]['embed_url'] != undefined) {
+                        coderun = true
+                    } else {
+                        coderun = true
+                        break
+                    }
                 }
-            }
-           
+
                 message.channel.send("I found the following image with a reference to " + params + " : " + "\n" + object['data'][random]['embed_url'])
             } catch (error) {
                 message.channel.send(error)
@@ -274,6 +274,12 @@ client.on('message', async message => {
         return
     }
 
+    if (message.content.indexOf('yikes') != -1) {
+        let yikes = message.guild.emojis.cache.get('701890977106886717')
+        message.channel.send(`${yikes}`)
+    }
+
+
     if (message.content.toLowerCase().indexOf('erp') != -1) {
         message.reply("NO ERP!")
         return
@@ -306,13 +312,37 @@ client.on('message', async message => {
         console.log(thisuserperms)
     }
 
+    if (message.content.startsWith(`${prefix}emojilist`)) {
+        //let iterator = message.guild.emojis.cache.keys()
+
+        //let emojioutput = []
+        //let id = []
+        ///emojioutput.push([message.guild.emojis.cache.map(g => g.name)])
+        //id.push([message.guild.emojis.cache.map(g => g.id)])
+        //console.log(emojioutput + id)
+
+        message.guild.emojis.cache.forEach(element => {
+            let emojiID = element.id
+            let emojiFinal = message.guild.emojis.cache.get(`${element.id}`)
+            let emojiName = element.name
+            message.channel.send(`ID: ${emojiID} \nName: ${emojiName} \nEmoji: ${emojiFinal}`)
+        })
+
+        /*
+                for (var i = 0; i < message.guild.emojis.cache.size; i++) {
+                    let thisEmoji = iterator.next().value
+                    let emojiFinal = message.guild.emojis.cache.get(`${thisEmoji}`)
+                        //message.channel.send(`Name: ${emojiName} + ID: ${thisEmoji} ` + `Emoji: ` + `${emojiFinal}`)
+                        //let yikes = message.guild.emojis.cache.get('701890977106886717')
+                        //message.channel.send(`${yikes}`)
+                }
+        */
+    }
+
 
     if (message.content.startsWith(`${prefix}image`)) {
         const image = message.content.split(' ')
         getRandomImage(message, image[1])
-    } else if (message.content.startsWith(`${prefix}emojilist`)) {
-        const emojiList = message.guild.emojis.map(e => e.toString()).join(" ")
-        message.channel.send(`${emojiList}`)
     } else if (message.content.startsWith(`${prefix}event`)) {
         EVENTS.triggerEvent(message)
     } else if (responseObject[message.content]) {
@@ -546,7 +576,7 @@ client.on('message', async message => {
         VRC.getActivePlayers(message)
     } else if (message.content.startsWith(`${prefix}help`)) {
         message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif")
-    } else if (message.content.startsWith(`${prefix}`)){
+    } else if (message.content.startsWith(`${prefix}`)) {
         message.channel.send('Your command is not valid.')
     }
 

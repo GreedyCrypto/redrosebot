@@ -320,15 +320,109 @@ client.on('message', async message => {
         ///emojioutput.push([message.guild.emojis.cache.map(g => g.name)])
         //id.push([message.guild.emojis.cache.map(g => g.id)])
         //console.log(emojioutput + id)
+        let emojiArray = []
+        let muchiArray = []
+        let thirdArray = []
+
+        let temparray = []
+        let fourthArray = []
+        let fifthArray = []
+        let sixthArray = []
+        let seventhArray = []
 
         message.guild.emojis.cache.forEach(element => {
             let emojiID = element.id
             let emojiFinal = message.guild.emojis.cache.get(`${element.id}`)
             let emojiName = element.name
-            message.channel.send(`ID: ${emojiID} \nName: ${emojiName} \nEmoji: ${emojiFinal}`)
+            let emojiString = `ID: ${emojiID} \nName: ${emojiName} \nEmoji: ${emojiFinal}\n`
+            temparray.push(emojiString)
         })
 
-        /*
+        temparray.join(",")
+
+        for (var i = 0; i < 15; i++) {
+            await emojiArray.push(temparray[i])
+        }
+
+        for (var i = 15; i < 30; i++) {
+            await muchiArray.push(temparray[i])
+        }
+
+        for (var i = 30; i < 45; i++) {
+            await thirdArray.push(temparray[i])
+        }
+
+        for (var i = 45; i < 60; i++) {
+            await fourthArray.push(temparray[i])
+        }
+
+        for (var i = 60; i < 75; i++) {
+            await fifthArray.push(temparray[i])
+        }
+
+        for (var i = 75; i < 90; i++) {
+            await sixthArray.push(temparray[i])
+        }
+
+        for (var i = 90; i <= 100; i++) {
+            await seventhArray.push(temparray[i])
+        }
+
+        if (temparray.length > 100) {
+            message.reply(`Your Server has to much emojis? More then 100? How? Can't run command. Please contact coder.`)
+        }
+
+        if (temparray.length > 0 && temparray < 15) {
+            message.channel.send(emojiArray)
+        } else if (temparray.length >= 15 && temparray.length < 30) {
+            message.channel.send(emojiArray)
+            message.channel.send(muchiArray)
+        } else if (temparray.length >= 30 && temparray.length < 45) {
+            message.channel.send(emojiArray)
+            message.channel.send(muchiArray)
+            message.channel.send(thirdArray)
+        } else if (temparray.length >= 45 && temparray.length < 60) {
+            message.channel.send(emojiArray)
+            message.channel.send(muchiArray)
+            message.channel.send(thirdArray)
+            message.channel.send(fourthArray)
+        } else if (temparray.length >= 60 && temparray.length < 75) {
+            message.channel.send(emojiArray)
+            message.channel.send(muchiArray)
+            message.channel.send(thirdArray)
+            message.channel.send(fourthArray)
+            message.channel.send(fifthArray)
+        } else if (temparray.length >= 75 && temparray.length < 90) {
+            message.channel.send(emojiArray)
+            message.channel.send(muchiArray)
+            message.channel.send(thirdArray)
+            message.channel.send(fourthArray)
+            message.channel.send(fifthArray)
+            message.channel.send(sixthArray)
+        } else if (temparray.length >= 90 && temparray.length < 100) {
+            message.channel.send(emojiArray)
+            message.channel.send(muchiArray)
+            message.channel.send(thirdArray)
+            message.channel.send(fourthArray)
+            message.channel.send(fifthArray)
+            message.channel.send(sixthArray)
+            message.channel.send(seventhArray)
+        } else if (temparray.length > 100) {
+            message.reply(`Your Server has more then 100 Emoji's? How? Can't execute Command. Please contact coder.`)
+        } else {
+            message.reply(`Something went wrong. Make sure that you have custom Emoji's on your Server.`)
+        }
+
+        muchiArray = []
+        emojiArray = []
+        thirdArray = []
+        fourthArray = []
+
+
+
+    }
+
+    /*
                 for (var i = 0; i < message.guild.emojis.cache.size; i++) {
                     let thisEmoji = iterator.next().value
                     let emojiFinal = message.guild.emojis.cache.get(`${thisEmoji}`)
@@ -337,7 +431,7 @@ client.on('message', async message => {
                         //message.channel.send(`${yikes}`)
                 }
         */
-    }
+
 
 
     if (message.content.startsWith(`${prefix}image`)) {
@@ -349,6 +443,19 @@ client.on('message', async message => {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {
         MOD.purgeMessages(message)
+    } else if (message.content.startsWith(`${prefix}partner`)) {
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
+        if (args[0] == null) {
+            message.reply('Please enter Partner')
+        }
+        let partner = message.mentions.users.first().id
+        client.users.cache.get(partner).send(`Hey ${args[0]},\nRedRose wants to partner with your Discord Server! Do you accept?\nPlease send your answer to Crypto#5842\n\n -------------------------------------------------------------\n╔═════❁ ✛ ❁═════╗\n |         :rose: Red Rose :rose:       |\n╚═════❁ ✛ ❁═════╝\nInvite discord.gg/jT3XRkD\nBanner https://cdn.discordapp.com/attachments/697935278945468477/705369661109436446/Red_Rose_Black_Background.jpg\n╔                                                           ╗\n   Nice & Wholesome Community.\n   Assets Unity/Blender Sharing.\n   Helpful members and staff.\n   VRChat Pics & Vids.\n   Windex inside.\n   Own Discordbot.\n   Many Commands.\n   VRC User Search.\n   Custom Emotes.\n╰                                                          ┛\n-------------------------------------------------------------`).catch(() => message.reply("Can't send DM to your user!"))
+    } else if (message.content.startsWith(`${prefix}sendToCrucifix`)) {
+        let channel = client.channels.cache.get('692098886927515649')
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
+        channel.send(`Message from Redrose: ${args[0]}`)
     } else if (message.content.startsWith(`${prefix}vrcuser`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
@@ -561,6 +668,17 @@ client.on('message', async message => {
         Emote.emotetype(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}listServers`)) {
         const guildNames = client.guilds.cache.map(g => g.name).join("\n")
+
+        client.guilds.cache.forEach(g => {
+            let guildName = g.name
+            let guildID = g.id
+            let guildregion = g.region
+            let guildOwnerID = g.ownerID
+
+            message.channel.send(`GuildName: ${guildName} \nGuildID: ${guildID}\nGuildRegion: ${guildregion}\nGuildOwnerID:${guildOwnerID}`)
+        })
+
+        console.log(client.guilds.cache)
         message.reply(guildNames)
     } else if (message.content.startsWith(`${prefix}latestVRC`)) {
         if (message.member.roles.cache.find(r => r.name === "Server Booster")) {
@@ -574,9 +692,24 @@ client.on('message', async message => {
         BLOCK.halving(client, message, args[0])
     } else if (message.content.startsWith(`${prefix}vrcactive`)) {
         VRC.getActivePlayers(message)
+    } else if (message.content.startsWith(`${prefix}getinvite`)) {
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
+        if (args[0] == null) {
+            message.reply('Please enter the GuildID')
+        }
+
+        let guildID = args[0]
+        let guild = client.guilds.cache.get(`${guildID}`)
+        if (!guild) return message.reply(`The bot isn't in the guild with this ID`)
+
+        guild.fetchInvites()
+            .then(invites => message.channel.send('Found Invites:\n' + invites.map(invite => invite).join('\n')))
+            .catch(err => message.reply(err.message))
+
     } else if (message.content.startsWith(`${prefix}help`)) {
         message.channel.send("Available Commands: " + "\n" + ".play <music> - spielt musik | .delete <anzahl> löscht die letzten bot nachrichten | .image <bild> - holt nen passendes gif")
-    } else if (message.content.startsWith(`${prefix}`)) {
+    } else if (message.content.startsWith(`${prefix}`) && message.content.indexOf('emojilist') != 1) {
         message.channel.send('Your command is not valid.')
     }
 

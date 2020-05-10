@@ -130,8 +130,8 @@ class VRC {
 
             if (tags.indexOf("troll") != -1) {
                 return "Confirmed troll."
-	    } else if (tags.indexOf("admin_moderator") != -1) {
-		return "Administrator"
+            } else if (tags.indexOf("admin_moderator") != -1) {
+                return "Administrator"
             } else if (tags.indexOf("system_legend") != -1) {
                 return "Legendary User and appears as Trusted User"
             } else if (tags.indexOf("system_trust_legend") != -1) {
@@ -218,51 +218,43 @@ class VRC {
                             } else {
                                 bio = object[i]['bio']
                             }
-				
-			    console.log('His Tags: ' + tags)
-			    console.log('His devrank: ' + object[i]['developerType'])
-			    
-			    let lastPlatform = null
-				
-		            if(object[i]['last_platform'] == 'standalonewindows'){
-			    lastPlatform = 'Windows'
-			    }else{
-			    lastPlatform = 'Oculus Quest'
-			    }
-			
-			    let devtype = null
-			    if(object[i]['developerType'] == 'none')
-			    {
-			    devtype = 'No'
-			    }else{
-			    devtype = object[i]['developerType']
-			    }
-				
-			    console.log('Devtype: ' + devtype)
-			    let trustrank = await tagsort(tags)
-                            let thisTagsArray = []
-			     
-		            if(object[i]['tags'] === undefined || object[i]['tags'].length == 0)
-			    {
-			    thisTagsArray = 'none'
-			    }else{
-		            thisTagsArray = tags
-			    }
 
-			    const vrcEmbed = new MessageEmbed()
+                            console.log('His Tags: ' + tags)
+                            console.log('His devrank: ' + object[i]['developerType'])
+
+                            let lastPlatform = null
+
+                            if (object[i]['last_platform'] == 'standalonewindows') {
+                                lastPlatform = 'Windows'
+                            } else {
+                                lastPlatform = 'Oculus Quest'
+                            }
+
+                            let devtype = null
+                            if (object[i]['developerType'] == 'none') {
+                                devtype = 'No'
+                            } else {
+                                devtype = object[i]['developerType']
+                            }
+
+                            console.log('Devtype: ' + devtype)
+                            let trustrank = await tagsort(tags)
+                            let thisTagsArray = []
+
+                            if (object[i]['tags'] === undefined || object[i]['tags'].length == 0) {
+                                thisTagsArray = 'none'
+                            } else {
+                                thisTagsArray = tags
+                            }
+
+                            const vrcEmbed = new MessageEmbed()
                                 .setColor(color)
                                 .setTitle(params)
                                 .setURL("https://vrchat.com/home/user/" + object[i]['id'])
                                 .setAuthor(object[i]['displayName'])
                                 .setThumbnail(object[i]['currentAvatarThumbnailImageUrl'])
                                 .setImage(object[i]['currentAvatarImageUrl'])
-                                .addFields(
-				{name: 'Bio', value: bio, inline: false},
-				{name: 'Tags', value: thisTagsArray, inline: false},
-                                {name: 'Trust Rank', value: trustrank, inline: true},
-                                {name: 'Developer Type', value: devtype, inline: true},
-                                {name: 'Last Platform', value: lastPlatform, inline: true},
-				)
+                                .addFields({ name: 'Bio', value: bio, inline: false }, { name: 'Tags', value: thisTagsArray, inline: false }, { name: 'Trust Rank', value: trustrank, inline: true }, { name: 'Developer Type', value: devtype, inline: true }, { name: 'Last Platform', value: lastPlatform, inline: true }, )
                                 .setTimestamp(object[i]['dateTime'])
 
                             pages.join()

@@ -59,15 +59,15 @@ class BLOCK {
                 let hoursLeft = (minutesleft / 60)
                 let daysLeft = (hoursLeft / 24)
 
-		if(daysLeft <= 5){
-		message.channel.send('**WARNING**: LESS THEN 5 DAYS LEFT UNTIL HALVENING!')
-		}else if(daysLeft <= 3){
-		message.channel.send('**WARNING**: LESS THEN 3 DAYS LEFT UNTIL HALVENING!, MAKE SURE YOU ARE INVESTED NOW')
-		}else if(daysLeft <= 1){
-		message.channel.send('**GET READY**: BITCOIN HALVENING INCOMING!!')
-		}else if(daysLeft < 1 && hoursLeft < 5){
-		message.channel.send('**ITS HAPPENING**: BITCOIN HALVENING IN UNDER A DAY / UNDER 5 HOURS LEFT!!')
-		}
+                if (daysLeft <= 5) {
+                    message.channel.send('**WARNING**: LESS THEN 5 DAYS LEFT UNTIL HALVENING!')
+                } else if (daysLeft <= 3) {
+                    message.channel.send('**WARNING**: LESS THEN 3 DAYS LEFT UNTIL HALVENING!, MAKE SURE YOU ARE INVESTED NOW')
+                } else if (daysLeft <= 1) {
+                    message.channel.send('**GET READY**: BITCOIN HALVENING INCOMING!!')
+                } else if (daysLeft < 1 && hoursLeft < 5) {
+                    message.channel.send('**ITS HAPPENING**: BITCOIN HALVENING IN UNDER A DAY / UNDER 5 HOURS LEFT!!')
+                }
 
                 let params = "BLOCKINFORMATION"
 
@@ -138,12 +138,22 @@ class BLOCK {
                         //message.channel.send({ myEmbed })
                         let url = object['data'][random]['images']['original']['url']
 
+                        let timeLeft = daysLeft.toFixed(0)
+
+                        if (timeLeft === 0 || timeleft < 1) {
+                            timeLeft = hoursLeft.toFixed(0) + ' hours'
+                        }
+
+                        if (hoursLeft < 0) {
+                            timeleft = minutesleft.toFixed(0) + ' minutes'
+                        }
+
 
 
                         let BlockEmbed = {
                             "content": params,
                             "title": "Block Halving Countdown | Blocks left: " + blocksLeft,
-                            "description": "Estimated time left until 2020 halving: " + daysLeft.toFixed(0) + " days",
+                            "description": "Estimated time left until 2020 halving: " + timeleft,
                             "url": "https://www.bitcoinblockhalf.com/",
                             "color": color,
                             "timestamp": dateTime,

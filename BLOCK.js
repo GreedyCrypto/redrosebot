@@ -140,12 +140,12 @@ class BLOCK {
 
                         let timeLeft = daysLeft.toFixed(0)
 
-                        if (timeLeft === 0 || timeleft < 1) {
+                        if (timeLeft === 0 || timeLeft < 1) {
                             timeLeft = hoursLeft.toFixed(0) + ' hours'
                         }
 
                         if (hoursLeft < 0) {
-                            timeleft = minutesleft.toFixed(0) + ' minutes'
+                            timeLeft = minutesleft.toFixed(0) + ' minutes'
                         }
 
 
@@ -153,7 +153,7 @@ class BLOCK {
                         let BlockEmbed = {
                             "content": params,
                             "title": "Block Halving Countdown | Blocks left: " + blocksLeft,
-                            "description": "Estimated time left until 2020 halving: " + timeleft,
+                            "description": "Estimated time left until 2020 halving: " + timeLeft,
                             "url": "https://www.bitcoinblockhalf.com/",
                             "color": color,
                             "timestamp": dateTime,

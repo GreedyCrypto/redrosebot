@@ -234,6 +234,7 @@ client.on('message', async message => {
     let cryptosChannel = client.channels.cache.get('709509572607475742')
     let threeChannel = client.channels.cache.get('709529194157047868')
 
+    // anti https://cdn.discordapp.com/attachments/698561456354099250/709536153925320704/anti.PNG
 
     if (message.content.startsWith(`${prefix}`) != 1) {
         if (message.channel.id == snowsChannel) {
@@ -241,8 +242,22 @@ client.on('message', async message => {
             let channel1 = cryptosChannel
             let channel2 = threeChannel
             let cont = message.content
-            channel1.send(`Message from Snow's Avatar Discord by ${message.author.username}: ` + cont)
-            channel2.send(`Message from Snow's Avatar Discord by ${message.author.username}: ` + cont)
+
+            let messageEmbed = {
+                "content": 'RedRose Partner Network',
+                "title": `Redrose Partner Network | Message from ${message.author.username}\nSnow's Avatar Discord`,
+                "description": `${cont}`,
+                "url": "",
+                "color": 15844367,
+                "timestamp": Date.now(),
+                "thumbnail": {
+                    "url": 'https://cdn.discordapp.com/attachments/657316440109744128/709536860015165461/image0.jpg',
+                }
+            }
+
+
+            channel1.send({ embed: messageEmbed })
+            channel2.send({ embed: messageEmbed })
             snowsChannel = null
             return
         }
@@ -252,8 +267,19 @@ client.on('message', async message => {
             let channel1 = snowsChannel
             let channel2 = threeChannel
             let cont = message.content
-            channel1.send(`Message from Red Rose Discord by ${message.author.username}: ` + cont)
-            channel2.send(`Message from Red Rose Discord by ${message.author.username}: ` + cont)
+            let messageEmbed = {
+                "content": 'RedRose Partner Network',
+                "title": `Redrose Partner Network | Message from ${message.author.username}\nRed Rose Discord`,
+                "description": `${cont}`,
+                "url": "",
+                "color": 15844367,
+                "timestamp": Date.now(),
+                "thumbnail": {
+                    "url": 'https://cdn.discordapp.com/attachments/698561456354099250/709534313313468426/stock-red-rose-black-huawei-mate-rs-wallpaper-preview.jpg',
+                }
+            }
+            channel1.send({ embed: messageEmbed })
+            channel2.send({ embed: messageEmbed })
             cryptosChannel = null
             return
         }
@@ -263,8 +289,19 @@ client.on('message', async message => {
             let channel1 = cryptosChannel
             let channel2 = snowsChannel
             let cont = message.content
-            channel1.send(`Message from ANTI Discord by ${message.author.username}: ` + cont)
-            channel2.send(`Message from ANTI Discord by ${message.author.username}: ` + cont)
+            let messageEmbed = {
+                "content": 'RedRose Partner Network',
+                "title": `Redrose Partner Network | Message from ${message.author.username}\nANTI Discord`,
+                "description": `${cont}`,
+                "url": "",
+                "color": 15844367,
+                "timestamp": Date.now(),
+                "thumbnail": {
+                    "url": 'https://cdn.discordapp.com/attachments/698561456354099250/709536153925320704/anti.PNG',
+                }
+            }
+            channel1.send({ embed: messageEmbed })
+            channel2.send({ embed: messageEmbed })
             cryptosChannel = null
             return
         }

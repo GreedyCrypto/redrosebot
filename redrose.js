@@ -230,12 +230,51 @@ client.on('message', async message => {
 
 
 
+    let snowsChannel = client.channels.cache.get('709503032328585266')
+    let cryptosChannel = client.channels.cache.get('709509572607475742')
+    let threeChannel = client.channels.cache.get('709529194157047868')
 
 
+    if (message.content.startsWith(`${prefix}`) != 1) {
+        if (message.channel.id == snowsChannel) {
+            if (message.author.bot) return
+            let channel1 = cryptosChannel
+            let channel2 = threeChannel
+            let cont = message.content
+            channel1.send(`Message from Snow's Avatar Discord by ${message.author.username}: ` + cont)
+            channel2.send(`Message from Snow's Avatar Discord by ${message.author.username}: ` + cont)
+            snowsChannel = null
+            return
+        }
+
+        if (message.channel.id == cryptosChannel) {
+            if (message.author.bot) return
+            let channel1 = snowsChannel
+            let channel2 = threeChannel
+            let cont = message.content
+            channel1.send(`Message from Red Rose Discord by ${message.author.username}: ` + cont)
+            channel2.send(`Message from Red Rose Discord by ${message.author.username}: ` + cont)
+            cryptosChannel = null
+            return
+        }
+
+        if (message.channel.id == threeChannel) {
+            if (message.author.bot) return
+            let channel1 = cryptosChannel
+            let channel2 = snowsChannel
+            let cont = message.content
+            channel1.send(`Message from ANTI Discord by ${message.author.username}: ` + cont)
+            channel2.send(`Message from ANTI Discord by ${message.author.username}: ` + cont)
+            cryptosChannel = null
+            return
+        }
+        return
+    }
 
 
+    //let current_userperms = message.channel.cache.permissionsFor(message.member.cache).serialize(false)
 
-    let current_userperms = message.channel.permissionsFor(message.member).serialize(false)
+
 
     let sender = message.author.username
 
@@ -308,8 +347,9 @@ client.on('message', async message => {
     if (message.content.startsWith(prefix)) {
         console.log('Command send by ' + sender)
         console.log('He has the following permissions: \n')
-        let thisuserperms = await JSON.stringify(current_userperms)
-        console.log(thisuserperms)
+            //let thisuserperms = await JSON.stringify(current_userperms)
+            //console.log(thisuserperms)
+        console.log('temp disabled')
     }
 
     if (message.content.startsWith(`${prefix}emojilist`)) {
@@ -443,6 +483,18 @@ client.on('message', async message => {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {
         MOD.purgeMessages(message)
+    } else if (message.content.startsWith(`${prefix}sendToAll`)) {
+        if (message.author.id === '164382979550871553') {
+            let cont = message.content.slice(prefix.length).split(' ')
+            var args = cont.slice(1)
+            message.guild.members.cache.forEach(user => {
+                message.guild.members.cache.get(user.id).send(`${args.join(' ')}`).catch((error) => message.channel.send(`Can't send DM to ${user}!, ${error.message}`))
+                message.channel.send(`Send message to ${user}`)
+                    //console.log(user.id)
+            })
+        } else {
+            message.reply('You are not authorized to use this command.')
+        }
     } else if (message.content.startsWith(`${prefix}partner`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
@@ -696,7 +748,7 @@ client.on('message', async message => {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
         if (args[0] == null) {
-            message.reply('Please enter the GuildID')
+            args[0] = message.guild.id
         }
 
         let guildID = args[0]

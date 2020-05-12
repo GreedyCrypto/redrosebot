@@ -236,7 +236,7 @@ client.on('message', async message => {
 
     // anti https://cdn.discordapp.com/attachments/698561456354099250/709536153925320704/anti.PNG
 
-    if (message.content.startsWith(`${prefix}`) != 1) {
+    /*if (message.content.startsWith(`${prefix}`) != 1) {*/
         if (message.channel.id == snowsChannel) {
             if (message.author.bot) return
             let channel1 = cryptosChannel
@@ -305,8 +305,8 @@ client.on('message', async message => {
             cryptosChannel = null
             return
         }
-        return
-    }
+        /*return
+    }*/
 
 
     //let current_userperms = message.channel.cache.permissionsFor(message.member.cache).serialize(false)

@@ -850,7 +850,7 @@ client.on('ready', async() => {
         //get Channel to Change
         let testChannel = client.channels.cache.get('710171771365490734')
         await testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
-        await membercountchannel.setName(`Members┃${membercount}`)
+        await membercountchannel.setName(`Total Members: ${RedRoseDiscord.memberCount}`)
         i++
         if (i >= usersInBoosterRole.length) {
             i = 0

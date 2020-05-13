@@ -848,11 +848,9 @@ client.on('ready', async() => {
     let i = 0
     var boosterChannelChange = setInterval(async function() {
         //get Channel to Change
-        console.log(i)
         let testChannel = client.channels.cache.get('710171771365490734')
         await testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
         await membercountchannel.setName(`Members┃${membercount}`)
-        console.log(`here`)
         i++
         if (i >= usersInBoosterRole.length) {
             i = 0

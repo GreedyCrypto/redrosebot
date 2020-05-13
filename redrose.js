@@ -851,6 +851,7 @@ client.on('ready', async() => {
         console.log(i)
         let testChannel = client.channels.cache.get('710171771365490734')
         await testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
+        await membercountchannel.setName(`Members┃${membercount}`)
         console.log(`here`)
         i++
         if (i >= usersInBoosterRole.length) {
@@ -860,11 +861,6 @@ client.on('ready', async() => {
             console.log(boosterRole.members.cache)
         })*/
     }, 10000)
-
-    setInterval(async function() {
-        await membercountchannel.setName(`Members┃${membercount}`)
-    }, 600000)
-
 
 })
 

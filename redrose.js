@@ -32,7 +32,6 @@ const {
 const apiKey = giphy_apiKey
 
 const client = new Discord.Client({ partials: ['MESSAGE', 'REACTION'] })
-
 const customAnalytics = new cheweyBotAnalyticsAPI(analytics_api, client)
     //const weirdchamp = client.emojis.get("305818615712579584")
 
@@ -205,6 +204,7 @@ client.on('messageReactionAdd', async(reaction, user) => {
             // Return as `reaction.message.author` may be undefined/null
             return;
         }
+
     }
 
     // Now the message has been cached and is fully available
@@ -237,75 +237,75 @@ client.on('message', async message => {
     // anti https://cdn.discordapp.com/attachments/698561456354099250/709536153925320704/anti.PNG
 
     /*if (message.content.startsWith(`${prefix}`) != 1) {*/
-        if (message.channel.id == snowsChannel) {
-            if (message.author.bot) return
-            let channel1 = cryptosChannel
-            let channel2 = threeChannel
-            let cont = message.content
+    if (message.channel.id == snowsChannel) {
+        if (message.author.bot) return
+        let channel1 = cryptosChannel
+        let channel2 = threeChannel
+        let cont = message.content
 
-            let messageEmbed = {
-                "content": 'RedRose Partner Network',
-                "title": `Redrose Partner Network | Message from ${message.author.username}\nSnow's Avatar Discord`,
-                "description": `${cont}`,
-                "url": "",
-                "color": 15844367,
-                "timestamp": Date.now(),
-                "thumbnail": {
-                    "url": 'https://cdn.discordapp.com/attachments/657316440109744128/709536860015165461/image0.jpg',
-                }
+        let messageEmbed = {
+            "content": 'RedRose Partner Network',
+            "title": `Redrose Partner Network | Message from ${message.author.username}\nSnow's Avatar Discord`,
+            "description": `${cont}`,
+            "url": "",
+            "color": 15844367,
+            "timestamp": Date.now(),
+            "thumbnail": {
+                "url": 'https://cdn.discordapp.com/attachments/657316440109744128/709536860015165461/image0.jpg',
             }
-
-
-            channel1.send({ embed: messageEmbed })
-            channel2.send({ embed: messageEmbed })
-            snowsChannel = null
-            return
         }
 
-        if (message.channel.id == cryptosChannel) {
-            if (message.author.bot) return
-            let channel1 = snowsChannel
-            let channel2 = threeChannel
-            let cont = message.content
-            let messageEmbed = {
-                "content": 'RedRose Partner Network',
-                "title": `Redrose Partner Network | Message from ${message.author.username}\nRed Rose Discord`,
-                "description": `${cont}`,
-                "url": "",
-                "color": 15844367,
-                "timestamp": Date.now(),
-                "thumbnail": {
-                    "url": 'https://cdn.discordapp.com/attachments/698561456354099250/709534313313468426/stock-red-rose-black-huawei-mate-rs-wallpaper-preview.jpg',
-                }
-            }
-            channel1.send({ embed: messageEmbed })
-            channel2.send({ embed: messageEmbed })
-            cryptosChannel = null
-            return
-        }
 
-        if (message.channel.id == threeChannel) {
-            if (message.author.bot) return
-            let channel1 = cryptosChannel
-            let channel2 = snowsChannel
-            let cont = message.content
-            let messageEmbed = {
-                "content": 'RedRose Partner Network',
-                "title": `Redrose Partner Network | Message from ${message.author.username}\nANTI Discord`,
-                "description": `${cont}`,
-                "url": "",
-                "color": 15844367,
-                "timestamp": Date.now(),
-                "thumbnail": {
-                    "url": 'https://cdn.discordapp.com/attachments/698561456354099250/709536153925320704/anti.PNG',
-                }
+        channel1.send({ embed: messageEmbed })
+        channel2.send({ embed: messageEmbed })
+        snowsChannel = null
+        return
+    }
+
+    if (message.channel.id == cryptosChannel) {
+        if (message.author.bot) return
+        let channel1 = snowsChannel
+        let channel2 = threeChannel
+        let cont = message.content
+        let messageEmbed = {
+            "content": 'RedRose Partner Network',
+            "title": `Redrose Partner Network | Message from ${message.author.username}\nRed Rose Discord`,
+            "description": `${cont}`,
+            "url": "",
+            "color": 15844367,
+            "timestamp": Date.now(),
+            "thumbnail": {
+                "url": 'https://cdn.discordapp.com/attachments/698561456354099250/709534313313468426/stock-red-rose-black-huawei-mate-rs-wallpaper-preview.jpg',
             }
-            channel1.send({ embed: messageEmbed })
-            channel2.send({ embed: messageEmbed })
-            cryptosChannel = null
-            return
         }
-        /*return
+        channel1.send({ embed: messageEmbed })
+        channel2.send({ embed: messageEmbed })
+        cryptosChannel = null
+        return
+    }
+
+    if (message.channel.id == threeChannel) {
+        if (message.author.bot) return
+        let channel1 = cryptosChannel
+        let channel2 = snowsChannel
+        let cont = message.content
+        let messageEmbed = {
+            "content": 'RedRose Partner Network',
+            "title": `Redrose Partner Network | Message from ${message.author.username}\nANTI Discord`,
+            "description": `${cont}`,
+            "url": "",
+            "color": 15844367,
+            "timestamp": Date.now(),
+            "thumbnail": {
+                "url": 'https://cdn.discordapp.com/attachments/698561456354099250/709536153925320704/anti.PNG',
+            }
+        }
+        channel1.send({ embed: messageEmbed })
+        channel2.send({ embed: messageEmbed })
+        cryptosChannel = null
+        return
+    }
+    /*return
     }*/
 
 
@@ -349,6 +349,7 @@ client.on('message', async message => {
         dotrigger(message)
         return
     }
+
 
     if (message.content.indexOf('yikes') != -1) {
         let yikes = message.guild.emojis.cache.get('701890977106886717')
@@ -516,6 +517,21 @@ client.on('message', async message => {
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}event`)) {
         EVENTS.triggerEvent(message)
+    } else if (message.content.startsWith(`${prefix}channelcount`)) {
+        let thisGuildObject = await client.guilds.cache.get('698150099603161199')
+        let count = 0;
+        await thisGuildObject.channels.cache.forEach(g => {
+            count++
+            console.log(client.channels.cache.get(g.id).name)
+        })
+        console.log(count)
+
+        /*
+                    client.guild.channels.cache.forEach(g => {
+                        counter = couter + 1
+                        console.log(g)
+                    })
+                    */
     } else if (responseObject[message.content]) {
         message.channel.send(responseObject[message.content])
     } else if (message.content.startsWith(`${prefix}delete`)) {
@@ -809,7 +825,11 @@ client.login(token)
 
 client.on('ready', async() => {
 
+    let RedRoseDiscord = client.guilds.cache.get('698150099603161199')
+    let membercountchannel = client.channels.cache.get('710174438368477194')
+    let membercount = RedRoseDiscord.memberCount
 
+    await membercountchannel.setName(`Total Members: ${membercount}`)
 
     setInterval(async function() {
         await client.user.setActivity(`VRChat (${await VRC.getActivePlayersForBot()} Players)`, { type: 'PLAYING' })
@@ -817,12 +837,33 @@ client.on('ready', async() => {
             .catch(console.error);
     }, 30000)
 
+    let boosterRole = '702294533551030363'
+    let usersInBoosterRole = []
+    RedRoseDiscord.members.cache.forEach(async g => {
+        if (g._roles.includes(boosterRole)) {
+            await usersInBoosterRole.push(g.user.username)
+        }
+    })
 
-    await setInterval(async function() {
-        await BLOCK.halving(client, null, 'IAMBOT')
-    }, 10800000)
+    let i = 0
+    var boosterChannelChange = setInterval(async function() {
+        //get Channel to Change
+        console.log(i)
+        let testChannel = client.channels.cache.get('710171771365490734')
+        await testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
+        console.log(`here`)
+        i++
+        if (i >= usersInBoosterRole.length) {
+            i = 0
+        }
+        /*await client.usgit ers.cache.forEach(g => {
+            console.log(boosterRole.members.cache)
+        })*/
+    }, 10000)
 
-
+    setInterval(async function() {
+        await membercountchannel.setName(`Members┃${membercount}`)
+    }, 600000)
 
 
 })

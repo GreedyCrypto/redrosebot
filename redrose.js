@@ -828,14 +828,20 @@ client.on('ready', async() => {
     let RedRoseDiscord = client.guilds.cache.get('698150099603161199')
     let membercountchannel = client.channels.cache.get('710174438368477194')
     let membercount = RedRoseDiscord.memberCount
+    let boosterCount = 0
 
     await membercountchannel.setName(`Total Members: ${membercount}`)
 
+/*
     setInterval(async function() {
         await client.user.setActivity(`VRChat (${await VRC.getActivePlayersForBot()} Players)`, { type: 'PLAYING' })
             .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
             .catch(console.error);
-    }, 30000)
+    }, 30000)*/
+
+    await client.user.setActivity(`Roses`, { type: 'LISTENING', url: 'https://open.spotify.com/track/0easEmosKkPhksg0qidzXo?si=Nsjlk1afQB-_lIGsJTii_w' })
+	    .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+	    .catch(console.error);
 
     let boosterRole = '702294533551030363'
     let usersInBoosterRole = []
@@ -849,9 +855,11 @@ client.on('ready', async() => {
     var boosterChannelChange = setInterval(async function() {
         //get Channel to Change
         let testChannel = client.channels.cache.get('710171771365490734')
+	let boosterCountChannel = client.channels.cache.get('710187321122619508')
         await testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
         await membercountchannel.setName(`Total Members: ${RedRoseDiscord.memberCount}`)
-        i++
+        await boosterCountChannel.setName(`Boosts: ${usersInBoosterRole.length}`)
+	i++
         if (i >= usersInBoosterRole.length) {
             i = 0
         }

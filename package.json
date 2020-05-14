@@ -2,6 +2,7 @@
   "lockfileVersion": 1,
   "dependencies": {
     "btoa": "^1.2.1",
+    "canvas": "^2.6.1",
     "console-read-write": "^0.1.1",
     "discord-bot-analytics": "^1.0.14",
     "discord-rich-presence": "0.0.8",

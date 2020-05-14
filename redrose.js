@@ -17,6 +17,9 @@ const Canvas = require("canvas")
 let globalrank = null
 let user = null
 const cheweyBotAnalyticsAPI = require("discord-bot-analytics")
+var mysql = require('mysql')
+
+
 
 
 
@@ -26,9 +29,28 @@ const {
     token,
     discordColors,
     giphy_apiKey,
-    analytics_api
-
+    analytics_api,
+    sqlHost,
+    sqlUser,
+    sqlPW,
+    sqlDB
 } = require('./config.json')
+
+
+var con = mysql.createConnection({
+    host: sqlHost,
+    user: sqlUser,
+    password: sqlPW,
+    database: sqlDB
+});
+
+
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected to RedRose Database!");
+});
+
+
 
 const apiKey = giphy_apiKey
 

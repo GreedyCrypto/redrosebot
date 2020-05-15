@@ -880,6 +880,7 @@ client.on('message', async message => {
 
 client.on('guildMemberAdd', async member => {
 
+
     var con = mysql.createConnection({
         host: sqlHost,
         user: sqlUser,
@@ -913,6 +914,13 @@ client.on('guildMemberAdd', async member => {
 
     const channel = member.guild.channels.cache.get('698150099603161202');
     if (!channel) return;
+
+
+
+    let RedRoseDiscord = client.guilds.cache.get('698150099603161199')
+    let membercount = RedRoseDiscord.memberCount
+
+
     const canvas = Canvas.createCanvas(700, 250);
     const ctx = canvas.getContext('2d');
 
@@ -941,11 +949,18 @@ client.on('guildMemberAdd', async member => {
     ctx.drawImage(avatar, 25, 25, 200, 200);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'red.png');
+
+
     try {
         channel.send(`Welcome to RedRose, ${member}!`, attachment);
     } catch (err) {
         console.error(err)
     }
+
+    if (membercount = 100) {
+        channel.send(`Welcome ${member.user}, you are our 100th USER!!!!!!`)
+    }
+
 });
 
 

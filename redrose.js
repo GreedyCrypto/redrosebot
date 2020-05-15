@@ -887,24 +887,28 @@ client.on('guildMemberAdd', async member => {
         database: sqlDB
     });
 
-    con.connect(function(err) {
-        if (err) throw err;
-        let user = member.id
-        let messageCount = 0
-        let joinedAt = member.joinedAt
+    try {
+        con.connect(function(err) {
+            if (err) throw err;
+            let user = member.id
+            let messageCount = 0
+            let joinedAt = member.joinedAt
 
-        var date;
-        date = joinedAt
-        date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
+            var date;
+            date = joinedAt
+            date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
 
-        let cont = date.toString()
-        let args = cont.split(' ')
-        let username = member.user.username
-        console.log(date)
-        con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
-            .then(() => con.end()).catch((err) => console.log(err.message));
-        console.log("Connected to RedRose Database!");
-    })
+            let cont = date.toString()
+            let args = cont.split(' ')
+            let username = member.user.username
+            console.log(date)
+            con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
+            con.end()
+            console.log("Connected to RedRose Database!");
+        })
+    } catch (err) {
+        console.log(err.message)
+    }
 
 
     const channel = member.guild.channels.cache.get('698150099603161202');

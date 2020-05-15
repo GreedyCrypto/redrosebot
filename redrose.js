@@ -47,6 +47,10 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
     if (err) throw err;
+    let user = '164382979550871553'
+    let messageCount = '1000000000'
+    let joinedAt = Date.parse('01 Jan 2000 00:00:00 GMT');
+    con.query(`INSERT INTO user (userID, messageCount, joinedAt) VALUES (${user}, ${messageCount}, ${joinedAt})`)
     console.log("Connected to RedRose Database!");
 });
 

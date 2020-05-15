@@ -845,6 +845,7 @@ client.on('message', async message => {
                 let args = [null]
                 let username = null
                 let cont = null
+                let joinedAt = null
                 if (err) throw err;
                 console.log("Connected to RedRose Database!");
                 await client.users.cache.forEach(async u => {
@@ -854,6 +855,7 @@ client.on('message', async message => {
                     user = u.id
                     username = u.username
                     messageCount = 0
+                    joinedAt = u.joinedAt
 
                     var date;
                     date = joinedAt
@@ -861,6 +863,7 @@ client.on('message', async message => {
 
                     cont = date.toString()
                     args = cont.split(' ')
+
 
                     await con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
                     console.log(`User ${username} with id ${user} added to Database`)

@@ -902,8 +902,9 @@ client.on('guildMemberAdd', async member => {
         let username = member.user.username
         console.log(date)
         con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
+            .then(() => con.end()).catch((err) => console.log(err.message));
         console.log("Connected to RedRose Database!");
-    }).then(() => con.end()).catch((err) => console.log(err.message))
+    })
 
 
     const channel = member.guild.channels.cache.get('698150099603161202');

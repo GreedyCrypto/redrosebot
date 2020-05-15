@@ -845,31 +845,27 @@ client.on('message', async message => {
                 let args = [null]
                 let username = null
                 let cont = null
-                let joinedAt = null
                 if (err) throw err;
-                console.log("Connected to RedRose Database!");
                 await client.users.cache.forEach(async u => {
 
 
-
+                    console.log("Connected to RedRose Database!");
                     user = u.id
                     username = u.username
                     messageCount = 0
-                    joinedAt = u.joinedAt
 
                     var date;
-                    date = joinedAt
-                    date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
 
-                    cont = date.toString()
-                    args = cont.split(' ')
+                    args = '2020-05-15'
 
 
-                    await con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
+
+                    await con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args}", "${username}")`)
                     console.log(`User ${username} with id ${user} added to Database`)
                 }).catch(err => console.log(err))
 
 
+                if (err) throw err;
 
             })
             con.end()
@@ -947,10 +943,15 @@ client.on('guildMemberAdd', async member => {
             let messageCount = 0
             let joinedAt = member.joinedAt
 
-            let args = '2020-05-15'
+            var date;
+            date = joinedAt
+            date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
+
+            let cont = date.toString()
+            let args = cont.split(' ')
             let username = member.user.username
             console.log(date)
-            con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args}", "${username}")`)
+            con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
             con.end()
             console.log("Connected to RedRose Database!");
         })

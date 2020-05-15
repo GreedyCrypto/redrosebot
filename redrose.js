@@ -826,6 +826,55 @@ client.on('message', async message => {
 
         console.log(client.guilds.cache)
         message.reply(guildNames)
+    } else if (message.content.startsWith(`${prefix}writeAlltoDatabase`)) {
+
+        var con = mysql.createConnection({
+            host: sqlHost,
+            user: sqlUser,
+            password: sqlPW,
+            database: sqlDB
+        });
+
+        var date;
+
+        try {
+            con.connect(async function(err) {
+
+                let user = null
+                let messageCount = null
+                let args = [null]
+                let username = null
+                let cont = null
+                if (err) throw err;
+                console.log("Connected to RedRose Database!");
+                await client.users.cache.forEach(async u => {
+
+
+
+                    user = u.id
+                    username = u.username
+                    messageCount = 0
+
+                    var date;
+                    date = joinedAt
+                    date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
+
+                    cont = date.toString()
+                    args = cont.split(' ')
+
+                    await con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
+                    console.log(`User ${username} with id ${user} added to Database`)
+                }).catch(err => console.log(err))
+
+
+
+            })
+            con.end()
+        } catch (err) {
+            console.log(err.message)
+            con.end()
+        }
+
     } else if (message.content.startsWith(`${prefix}latestVRC`)) {
         if (message.member.roles.cache.find(r => r.name === "Server Booster")) {
             VRC.getLastestUploadedAvatars(message)

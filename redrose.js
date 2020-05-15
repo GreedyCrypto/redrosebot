@@ -947,15 +947,10 @@ client.on('guildMemberAdd', async member => {
             let messageCount = 0
             let joinedAt = member.joinedAt
 
-            var date;
-            date = joinedAt
-            date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
-
-            let cont = date.toString()
-            let args = cont.split(' ')
+            let args = '2020-05-15'
             let username = member.user.username
             console.log(date)
-            con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
+            con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args}", "${username}")`)
             con.end()
             console.log("Connected to RedRose Database!");
         })

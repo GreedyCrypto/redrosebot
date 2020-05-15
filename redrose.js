@@ -44,17 +44,15 @@ var con = mysql.createConnection({
     database: sqlDB
 });
 
-
+/*
 con.connect(function(err) {
     if (err) throw err;
     let user = '164382979550871553'
     let messageCount = '1000000000'
-    let joinedAt = Date.parse('2020-01-01');
-    console.log(joinedAt)
-    con.query(`INSERT INTO user (userID, messageCount, joinedAt) VALUES (${user}, ${messageCount}, ${joinedAt})`)
+    con.query(`INSERT INTO user (ID, userID, messageCount, joinedAt) VALUES (1, ${user}, ${messageCount}, null)`)
     console.log("Connected to RedRose Database!");
 });
-
+*/
 
 
 const apiKey = giphy_apiKey
@@ -887,6 +885,25 @@ client.on('message', async message => {
 
 
 client.on('guildMemberAdd', async member => {
+    
+    con.connect(function(err) {
+        if (err) throw err;
+        let user = member.id
+        let messageCount = 0
+        let joinedAt = member.joinedAt
+
+	var date;
+	date = joinedAt
+	date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
+
+
+	let cont = date.toString()
+	let args = cont.split(' ')
+	let username = member.user.username
+	console.log(date)
+        con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
+        console.log("Connected to RedRose Database!");
+    });
     const channel = member.guild.channels.cache.get('698150099603161202');
     if (!channel) return;
     const canvas = Canvas.createCanvas(700, 250);

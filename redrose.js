@@ -957,7 +957,7 @@ client.on('guildMemberAdd', async member => {
         console.error(err)
     }
 
-    if (membercount = 100) {
+    if (membercount == 100) {
         channel.send(`Welcome ${member.user}, you are our 100th USER!!!!!!`)
     }
 

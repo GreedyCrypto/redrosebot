@@ -49,7 +49,8 @@ con.connect(function(err) {
     if (err) throw err;
     let user = '164382979550871553'
     let messageCount = '1000000000'
-    let joinedAt = Date.parse('01 Jan 2000 00:00:00 GMT');
+    let joinedAt = Date.parse('2020-01-01');
+    console.log(joinedAt)
     con.query(`INSERT INTO user (userID, messageCount, joinedAt) VALUES (${user}, ${messageCount}, ${joinedAt})`)
     console.log("Connected to RedRose Database!");
 });

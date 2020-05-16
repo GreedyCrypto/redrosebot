@@ -577,6 +577,50 @@ client.on('message', async message => {
 
     } else if (message.content.startsWith(`${prefix}delete`)) {
         MOD.purgeMessages(message)
+    } else if (message.content.startsWith(`${prefix}rank`)) {
+
+        //SETUP SQL CONNECTION
+
+        var pool = mysql.createPool({
+            connectionLimit: 10, // default = 10
+            host: sqlHost,
+            user: sqlUser,
+            password: sqlPW,
+            database: sqlDB
+        });
+
+        let userID = message.author.id
+
+        try {
+            //First check if user exists in database
+
+            pool.getConnection(async function(err, con) {
+                if (err)
+                    console.log(err.message)
+
+
+                await con.query(`SELECT userRank FROM user WHERE userID = ${userID}`, function(err, result, fields) {
+                    if (err) {
+                        console.log(err)
+                        return
+                    }
+                    if (result > 0) {
+                        if (result)
+                            console.log("I got the Rank: " + result)
+                    }
+                })
+
+                con.release()
+                if (err) {
+                    console.log('error while releasing connection:' + err.message)
+                }
+            })
+
+        } catch (err) {
+            console.log(err.message)
+        }
+
+
     } else if (message.content.startsWith(`${prefix}sendToAll`)) {
         if (message.author.id === '164382979550871553') {
             let cont = message.content.slice(prefix.length).split(' ')
@@ -828,64 +872,64 @@ client.on('message', async message => {
         message.reply(guildNames)
     } else if (message.content.startsWith(`${prefix}writeAlltoDatabase`)) {
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
 
 
-var pool        = mysql.createPool({
-    connectionLimit : 10, // default = 10
-    host            : sqlHost,
-    user            : sqlUser,
-    password        : sqlPW,
-    database        : sqlDB
-});
+        var pool = mysql.createPool({
+            connectionLimit: 10, // default = 10
+            host: sqlHost,
+            user: sqlUser,
+            password: sqlPW,
+            database: sqlDB
+        });
 
         var date;
 
         try {
-            
 
 
-                let user = null
-                let messageCount = null
-                let args = [null]
-                let cont = null
 
-        
-                await client.users.cache.forEach(async u => {
-
- 		pool.getConnection(async function (err, con){
-
-	        	   	
+            let user = null
+            let messageCount = null
+            let args = [null]
+            let cont = null
 
 
-		    await sleep(2000)
+            await client.users.cache.forEach(async u => {
+
+                pool.getConnection(async function(err, con) {
+
+
+
+
+                    await sleep(2000)
                     user = u.id
-		    console.log(`Adding ${user} to RedRose Database!`);
-                    
+                    console.log(`Adding ${user} to RedRose Database!`);
+
                     messageCount = 0
 
                     var date;
 
                     args = '2020-05-15'
-		
 
 
-try{
-                    await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args}", 1)`)
-		    con.on('error', function(err){
-		    console.log(err)
-		    return
-		    })
-		    await con.release()
-    }catch(err){
-console.log(err)
-}                
-		    console.log(`User ${username} with id ${user} added to Database`)
-                
-            })
+
+                    try {
+                        await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args}", 1)`)
+                        con.on('error', function(err) {
+                            console.log(err)
+                            return
+                        })
+                        await con.release()
+                    } catch (err) {
+                        console.log(err)
+                    }
+                    console.log(`User ${username} with id ${user} added to Database`)
+
+                })
             })
         } catch (err) {
             console.log(err.message)
@@ -945,13 +989,13 @@ console.log(err)
 client.on('guildMemberAdd', async member => {
 
 
-    var pool        = mysql.createPool({
-    connectionLimit : 10, // default = 10
-    host            : sqlHost,
-    user            : sqlUser,
-    password        : sqlPW,
-    database        : sqlDB
-});
+    var pool = mysql.createPool({
+        connectionLimit: 10, // default = 10
+        host: sqlHost,
+        user: sqlUser,
+        password: sqlPW,
+        database: sqlDB
+    });
 
 
     try {
@@ -969,17 +1013,17 @@ client.on('guildMemberAdd', async member => {
             let args = cont.split(' ')
             console.log(date)
             await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args[0]}", 0)`)
-            con.on('error', function(err){
-	    console.log(err)
-	    return
-	    })
-	    await con.release()
+            con.on('error', function(err) {
+                console.log(err)
+                return
+            })
+            await con.release()
             console.log("Connection released!");
         })
     } catch (err) {
         console.log(err.message)
     }
-    
+
 
 
     const channel = member.guild.channels.cache.get('698150099603161202');

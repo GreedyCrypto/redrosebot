@@ -593,31 +593,48 @@ client.on('message', async message => {
 
         try {
             //First check if user exists in database
-
+            let returnedRank = null;
             pool.getConnection(async function(err, con) {
-                if (err)
-                    console.log(err.message)
+                    if (err)
+                        console.log(err.message)
 
 
-                await con.query(`SELECT userRank FROM user WHERE userID = ${userID}`, function(err, result, fields) {
+                    await con.query(`SELECT userRank FROM user WHERE userID = ${userID}`, function(err, result, fields) {
+                            //While query is active check if error occurrs
+                            if (err) {
+                                console.log(err)
+                                return
+                            }
+                            console.log(result[0])
+                                //When no error occurrs, set returnedRank on the Users rank
+                            returnedRank = result[0].userRank
+                        })
+                        //Release SQL Connection
+                    con.release()
+                        //Check on error after release
                     if (err) {
-                        console.log(err)
-                        return
+                        console.log('error while releasing connection:' + err.message)
                     }
-                    if (result > 0) {
-                        if (result)
-                            console.log("I got the Rank: " + result)
+
+
+                    //message reply with UserRank
+
+                    let embedRanks = {
+                        "content": "UserRanking",
+                        "title": `**RedRose Ranking** - ` + message.member.user.tag,
+                        "description": "You are currently on Rank: " + returnedRank,
+                        "url": "",
+                        "color": 15844367,
+                        "timestamp": dateTime,
                     }
+
+                    await message.channel.send({ embed: embedRanks })
+
                 })
-
-                con.release()
-                if (err) {
-                    console.log('error while releasing connection:' + err.message)
-                }
-            })
-
+                //Double check for errors
         } catch (err) {
             console.log(err.message)
+            return
         }
 
 

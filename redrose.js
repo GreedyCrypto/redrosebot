@@ -828,52 +828,68 @@ client.on('message', async message => {
         message.reply(guildNames)
     } else if (message.content.startsWith(`${prefix}writeAlltoDatabase`)) {
 
-        var con = mysql.createConnection({
-            host: sqlHost,
-            user: sqlUser,
-            password: sqlPW,
-            database: sqlDB
-        });
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+var pool        = mysql.createPool({
+    connectionLimit : 10, // default = 10
+    host            : sqlHost,
+    user            : sqlUser,
+    password        : sqlPW,
+    database        : sqlDB
+});
 
         var date;
 
         try {
-            con.connect(async function(err) {
+            
+
 
                 let user = null
                 let messageCount = null
                 let args = [null]
-                let username = null
                 let cont = null
-                if (err) throw err;
+
+        
                 await client.users.cache.forEach(async u => {
 
+ 		pool.getConnection(async function (err, con){
 
-                    console.log("Connected to RedRose Database!");
+	        	   	
+
+
+		    await sleep(2000)
                     user = u.id
-                    username = u.username
+		    console.log(`Adding ${user} to RedRose Database!`);
+                    
                     messageCount = 0
 
                     var date;
 
                     args = '2020-05-15'
+		
 
 
-
-                    await con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args}", "${username}")`)
-                    console.log(`User ${username} with id ${user} added to Database`)
-                }).catch(err => console.log(err))
-
-
-                if (err) throw err;
-
+try{
+                    await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args}", 1)`)
+		    con.on('error', function(err){
+		    console.log(err)
+		    return
+		    })
+		    await con.release()
+    }catch(err){
+console.log(err)
+}                
+		    console.log(`User ${username} with id ${user} added to Database`)
+                
             })
-            con.end()
+            })
         } catch (err) {
             console.log(err.message)
-            con.end()
         }
-
     } else if (message.content.startsWith(`${prefix}latestVRC`)) {
         if (message.member.roles.cache.find(r => r.name === "Server Booster")) {
             VRC.getLastestUploadedAvatars(message)
@@ -929,16 +945,18 @@ client.on('message', async message => {
 client.on('guildMemberAdd', async member => {
 
 
-    var con = mysql.createConnection({
-        host: sqlHost,
-        user: sqlUser,
-        password: sqlPW,
-        database: sqlDB
-    });
+    var pool        = mysql.createPool({
+    connectionLimit : 10, // default = 10
+    host            : sqlHost,
+    user            : sqlUser,
+    password        : sqlPW,
+    database        : sqlDB
+});
+
 
     try {
-        con.connect(function(err) {
-            if (err) throw err;
+        pool.getConnection(async function(err, con) {
+            if (err) console.log(err);
             let user = member.id
             let messageCount = 0
             let joinedAt = member.joinedAt
@@ -949,15 +967,19 @@ client.on('guildMemberAdd', async member => {
 
             let cont = date.toString()
             let args = cont.split(' ')
-            let username = member.user.username
             console.log(date)
-            con.query(`INSERT INTO user (userID, messageCount, joinedAt, username) VALUES (${user}, ${messageCount}, "${args[0]}", "${username}")`)
-            con.end()
-            console.log("Connected to RedRose Database!");
+            await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args[0]}", 0)`)
+            con.on('error', function(err){
+	    console.log(err)
+	    return
+	    })
+	    await con.release()
+            console.log("Connection released!");
         })
     } catch (err) {
         console.log(err.message)
     }
+    
 
 
     const channel = member.guild.channels.cache.get('698150099603161202');

@@ -63,6 +63,78 @@ global.reactionUsername = null;
 global.tempUser = null;
 
 
+async function getTopTen(pool, resultcallback)
+{
+
+await pool.getConnection(async function(err, con, result) {
+if(err)
+  console.log(err.message)
+
+console.log('SQL connection established')
+let thisUser = null
+await con.query(`SELECT * FROM user ORDER BY userRank DESC LIMIT 10`, thisUser, function(err, result, fields, row) {
+if(err){
+console.log(err.message)
+return
+}
+
+console.log('result: ' + result)
+
+return resultcallback(result)
+
+})
+con.release()
+
+
+})
+
+}
+
+
+async function getUserRank(pool, userID, resultcallback)
+            {
+            await pool.getConnection(async function(err, con, result) {
+                    if (err)
+                        console.log(err.message)
+
+                    console.log('SQL connection established')
+                    let thisUserRank = null
+
+                    var query_var = thisUserRank
+
+                    console.log('Query user Select')
+                    await con.query(`SELECT * FROM user WHERE userID = ${userID}`, query_var, function(err, result, fields, rows) {
+                            //While query is active check if error occurrs
+                            if (err) {
+
+                                console.log(err.message)
+                                return
+                            }
+
+                            // return callback
+
+                            return resultcallback(result)
+
+
+                                //When no error occurrs, set returnedRank on the Users rank
+                        })
+
+
+                        //Release SQL Connection
+                    await con.release()
+		    console.log('connection released')
+                        //Check on error after release
+                    if (err) {
+                        console.log('error while releasing connection:' + err.message)
+                    }
+
+                    })
+
+                   var stuff_i_want = '';
+
+}
+
+
 async function getRandomImage(message, params) {
     let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=0&q=" + params + apiKey
     console.log(apiURL)
@@ -261,6 +333,61 @@ client.on('messageReactionAdd', async(reaction, user) => {
 
 
 client.on('message', async message => {
+
+    // add message count for user
+    // create connection to database
+
+	var pool = mysql.createPool({
+            connectionLimit: 10, // default = 10
+            host: sqlHost,
+            user: sqlUser,
+            password: sqlPW,
+            database: sqlDB
+        });
+
+
+await pool.getConnection(async function (err,con, result){
+if(err){
+console.log(err.message)
+return
+}
+
+let thisuser = message.author.id
+try{
+await con.query(`UPDATE user SET messageCount = messageCount + 1 WHERE userID = ${thisuser}`)
+//
+if(err)
+console.log(`Error while selecting User: ` + err.message)
+
+let stuff_i_want = ''
+
+await getUserRank(pool, thisuser, async function(result){
+                   stuff_i_want = result[0].messageCount
+		   if(stuff_i_want == 30 || stuff_i_want == 50 || stuff_i_want == 70 || stuff_i_want == 100 || stuff_i_want == 150 || stuff_i_want == 200 || stuff_i_want == 300 || stuff_i_want == 400){
+                   message.channel.send(`Congratulations ${message.author} you've just ranked up! You current level is: ${result[0].userRank + 1}`)
+		   pool.getConnection(async function (err,con){
+		   if(err)
+		   console.log(err.message)
+		   
+                   con.query(`UPDATE user SET userRank = userRank + 1 WHERE userID = ${thisuser}`)
+		   await con.release()
+		   console.log('connection released')
+		   console.log('Update query Done')
+		   }) 
+		   }
+})
+
+}catch(err){
+console.log(err.message)
+}
+
+
+//release connnection
+
+await con.release()
+console.log('connection released')
+//end connection
+})
 
 
 
@@ -574,41 +701,258 @@ client.on('message', async message => {
         } else {
             return
         }
+    } else if (message.content.startsWith(`${prefix}top10`)){
+	let resultArray = []
+	await getTopTen(pool, async function(result){
+	console.log(`MyResults: ${result[0].userID}\n${result[1].userID}\n${result[2].userID}`)
+	resultArray = await result
 
+
+	let embedArrayID = []
+	let embedArrayNames = []
+	let embedArrayRanks = []
+	let user = null
+
+	await resultArray.forEach(async r => {
+	console.log('I GOT THE USERID: ' + r.userID)
+	await embedArrayID.push(r.userID)
+
+        // First check if user exists
+  
+	let antiguild = await client.guilds.cache.get('709126933190803486')
+	let snowsguild = await client.guilds.cache.get('709330557267476490')
+	let redroseguild = await client.guilds.cache.get('698150099603161199')
+	
+	if(!antiguild.member('r.userID') || !snowsguild.member('r.userID') || !redroseguild.member('r.userID'))
+	{
+	console.log('This user was not found.')
+	}else{
+		
+	user = await client.users.fetch(`${r.userID}`, false)
+	if(user.bot === true)
+	console.log('This user is a bot!')
+	
+	await console.log(user.tag)
+
+        await embedArrayNames.push(user.tag)
+        await embedArrayRanks.push(r.userRank)	
+	}	
+	})
+
+        
+
+	//create embed
+
+	let top10embed = {
+	title: "Red Rose Top 10 Ranking",
+	description: "Top 10 Users on the RedRose Ranking System:",
+	fields: [
+	{
+	  name: 'Username',
+	  value: await embedArrayNames[0],
+          inline: true,
+	},
+	{
+	  name: 'UserID',
+	  value: await embedArrayID[0],
+	  inline: true,
+        },
+        {
+	  name: 'Rank',
+          value: await embedArrayRanks[0] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[1],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[1],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[1] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[2],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[2],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[2] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[3],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[3],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[3] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[4],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[4],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[4] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[5],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[5],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[5] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[6],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[6],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[6] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[7],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[7],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[7] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[8],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[8],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[8] + `\n`,
+          inline: true,
+        },
+	{
+          name: 'Username',
+          value: await embedArrayNames[9],
+          inline: true,
+        },
+        {
+          name: 'UserID',
+          value: await embedArrayID[9],
+          inline: true,
+        },
+        {
+          name: 'Rank',
+          value: await embedArrayRanks[9],
+          inline: true,
+        },
+	],
+	timestamp: await new Date(),
+	}
+	
+	await message.channel.send({embed: top10embed})
+	})
     } else if (message.content.startsWith(`${prefix}delete`)) {
         MOD.purgeMessages(message)
     } else if (message.content.startsWith(`${prefix}rank`)) {
 
+	console.log('function rank started')
         //SETUP SQL CONNECTION
 
         var pool = mysql.createPool({
-            connectionLimit: 10, // default = 10
+            connectionLimit: 500, // default = 10
             host: sqlHost,
             user: sqlUser,
             password: sqlPW,
             database: sqlDB
         });
 
+	console.log('establishing SQL connection')
         let userID = message.author.id
 
         try {
             //First check if user exists in database
-            let returnedRank = null;
-            pool.getConnection(async function(err, con) {
+	    
+	    /*async function getUserRank(userID, resultcallback)
+	    {
+            pool.getConnection(async function(err, con, result) {
                     if (err)
                         console.log(err.message)
 
+		    console.log('SQL connection established')
+		    let thisUserRank = null
 
-                    await con.query(`SELECT userRank FROM user WHERE userID = ${userID}`, function(err, result, fields) {
+		    var query_var = thisUserRank
+
+		    console.log('Query user Select')
+                    await con.query(`SELECT * FROM user WHERE userID = ${userID}`, query_var, function(err, result, fields, rows) {
                             //While query is active check if error occurrs
                             if (err) {
+
                                 console.log(err)
                                 return
                             }
-                            console.log(result[0])
+
+			    // return callback
+
+			    return resultcallback(result)
+				
+
                                 //When no error occurrs, set returnedRank on the Users rank
-                            returnedRank = result[0].userRank
                         })
+		    
+
                         //Release SQL Connection
                     con.release()
                         //Check on error after release
@@ -616,21 +960,55 @@ client.on('message', async message => {
                         console.log('error while releasing connection:' + err.message)
                     }
 
+		    })
 
-                    //message reply with UserRank
+		   var stuff_i_want = '';
 
-                    let embedRanks = {
-                        "content": "UserRanking",
-                        "title": `**RedRose Ranking** - ` + message.member.user.tag,
-                        "description": "You are currently on Rank: " + returnedRank,
-                        "url": "",
-                        "color": 15844367,
-                        "timestamp": dateTime,
-                    }
+		}*/
+		   await getUserRank(pool, userID, async function(result){
+		   stuff_i_want = result
+			
 
-                    await message.channel.send({ embed: embedRanks })
+		   console.log('query done')
+		   // Drawing Ranking
 
-                })
+
+		   const canvas = Canvas.createCanvas(700,250)
+const ctx = canvas.getContext('2d')
+
+
+//const background = await Canvas.loadImage('./red.jpg');
+//ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+
+ctx.strokeStyle = '#74037b'
+ctx.strokeRect(0, 0, canvas.width, canvas.height)
+
+ctx.font = '28px sans-serif'
+ctx.fillStyle = '#ffffff'
+ctx.fillText(`${message.author.username}\nYour current level is: ${result[0].userRank}\nYou've send ${result[0].messageCount} messages`, canvas.width / 2.5, canvas.height / 1.8)
+
+ctx.beginPath()
+ctx.arc(125, 125 , 100, 0, Math.PI * 2, true)
+ctx.closePath()
+ctx.clip()
+
+const avatar = await Canvas.loadImage(message.author.displayAvatarURL({ format: 'jpg' }))
+ctx.drawImage(avatar, 25, 25, 200, 200)
+
+const attachment = new Discord.MessageAttachment(canvas.toBuffer())
+try{
+await message.channel.send(`Your current Rank is : ${result[0].userRank}, You've send ${result[0].messageCount} messages`, attachment)
+}catch(err){
+console.log(err.message)
+}
+})                  
+	//getUserRank('userRank').then(function(rows){
+	//console.log(rows)
+	//}).catch((err) => setImmediate(() => { throw err; }));
+
+
+
                 //Double check for errors
         } catch (err) {
             console.log(err.message)
@@ -896,7 +1274,7 @@ client.on('message', async message => {
 
 
         var pool = mysql.createPool({
-            connectionLimit: 10, // default = 10
+            connectionLimit: 500, // default = 10
             host: sqlHost,
             user: sqlUser,
             password: sqlPW,
@@ -945,9 +1323,10 @@ client.on('message', async message => {
                         console.log(err)
                     }
                     console.log(`User ${username} with id ${user} added to Database`)
-
+		
                 })
-            })
+ 
+           })
         } catch (err) {
             console.log(err.message)
         }
@@ -1028,7 +1407,7 @@ client.on('guildMemberAdd', async member => {
 
             let cont = date.toString()
             let args = cont.split(' ')
-            console.log(date)
+            console.log(`[${date}] adding ${member.username} to database`)
             await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args[0]}", 0)`)
             con.on('error', function(err) {
                 console.log(err)

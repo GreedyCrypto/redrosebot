@@ -55,6 +55,7 @@ global.reactionUsername = null;
 global.tempUser = null;
 
 
+
 async function getRandomImage(message, params) {
     let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=0&q=" + params + apiKey
     console.log(apiURL)
@@ -254,6 +255,24 @@ client.on('messageReactionAdd', async(reaction, user) => {
 
 client.on('message', async message => {
 
+    // add message count for user
+    // create connection to database
+
+
+
+    try {
+
+    } catch (err) {
+        console.log(err.message)
+    }
+
+
+    //release connnection
+
+    await con.release()
+    console.log('connection released')
+        //end connection
+
 
 
 
@@ -404,11 +423,11 @@ client.on('message', async message => {
 
     /* DEBUG INFORMATION GATHERING */
     /*
-    if (message.content.startsWith(prefix)) {
-        console.log('Command send by ' + sender)
-        console.log('He has the following permissions: \n' + current_userperms)
-    }
-*/
+        if (message.content.startsWith(prefix)) {
+            console.log('Command send by ' + sender)
+            console.log('He has the following permissions: \n' + current_userperms)
+        }
+    */
     if (message.content.startsWith(prefix)) {
         console.log('Command send by ' + sender)
         console.log('He has the following permissions: \n')
@@ -566,41 +585,190 @@ client.on('message', async message => {
         } else {
             return
         }
+    } else if (message.content.startsWith(`${prefix}top10`)) {
+        let resultArray = []
+
+        //create embed
+
+        let top10embed = {
+            title: "Red Rose Top 10 Ranking",
+            description: "Top 10 Users on the RedRose Ranking System:",
+            fields: [{
+                    name: 'Username',
+                    value: await embedArrayNames[0],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[0],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[0] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[1],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[1],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[1] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[2],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[2],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[2] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[3],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[3],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[3] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[4],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[4],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[4] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[5],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[5],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[5] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[6],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[6],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[6] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[7],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[7],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[7] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[8],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[8],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[8] + `\n`,
+                    inline: true,
+                },
+                {
+                    name: 'Username',
+                    value: await embedArrayNames[9],
+                    inline: true,
+                },
+                {
+                    name: 'UserID',
+                    value: await embedArrayID[9],
+                    inline: true,
+                },
+                {
+                    name: 'Rank',
+                    value: await embedArrayRanks[9],
+                    inline: true,
+                },
+            ],
+            timestamp: await new Date(),
+        }
+
+        await message.channel.send({ embed: top10embed })
 
     } else if (message.content.startsWith(`${prefix}delete`)) {
         MOD.purgeMessages(message)
     } else if (message.content.startsWith(`${prefix}rank`)) {
-        db.get()
 
-        let userID = message.author.id
-
-        try {
-            //First check if user exists in database
-            let returnedRank = null;
-
-
-
-            //QUICK DB HERE
-
-
-
-            //message reply with UserRank
-
-            let embedRanks = {
-                "content": "UserRanking",
-                "title": `**RedRose Ranking** - ` + message.member.user.tag,
-                "description": "You are currently on Rank: " + returnedRank,
-                "url": "",
-                "color": 15844367,
-                "timestamp": dateTime,
-            }
-
-            await message.channel.send({ embed: embedRanks })
-                //Double check for errors
-        } catch (err) {
-            console.log(err.message)
-            return
+        let embedRanks = {
+            "content": "UserRanking",
+            "title": `**RedRose Ranking** - ` + message.member.user.tag,
+            "description": "You are currently on Rank: " + returnedRank,
+            "url": "",
+            "color": 15844367,
+            "timestamp": dateTime,
         }
+
+        await message.channel.send({ embed: embedRanks })
+
+
+        //getUserRank('userRank').then(function(rows){
+        //console.log(rows)
+        //}).catch((err) => setImmediate(() => { throw err; }));
+
 
 
     } else if (message.content.startsWith(`${prefix}sendToAll`)) {
@@ -854,13 +1022,10 @@ client.on('message', async message => {
         message.reply(guildNames)
     } else if (message.content.startsWith(`${prefix}writeAlltoDatabase`)) {
 
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
+
 
 
         // writeAllToQuickDB
-
 
         var date;
 
@@ -895,6 +1060,7 @@ client.on('message', async message => {
                     await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args}", 1)`)
                     con.on('error', function(err) {
                         console.log(err)
+<<<<<<< HEAD
                         return
                     })
                     await con.release()
@@ -904,6 +1070,7 @@ client.on('message', async message => {
 
                 */
             })
+
         } catch (err) {
             console.log(err.message)
         }

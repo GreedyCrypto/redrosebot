@@ -16,6 +16,7 @@ let btoa = require("btoa")
 const Canvas = require("canvas")
 let globalrank = null
 let user = null
+const db = require('quick.db')
 const cheweyBotAnalyticsAPI = require("discord-bot-analytics")
 var mysql = require('mysql')
 
@@ -38,15 +39,6 @@ const {
 
 
 
-/*
-con.connect(function(err) {
-    if (err) throw err;
-    let user = '164382979550871553'
-    let messageCount = '1000000000'
-    con.query(`INSERT INTO user (ID, userID, messageCount, joinedAt) VALUES (1, ${user}, ${messageCount}, null)`)
-    console.log("Connected to RedRose Database!");
-});
-*/
 
 
 const apiKey = giphy_apiKey
@@ -578,59 +570,32 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}delete`)) {
         MOD.purgeMessages(message)
     } else if (message.content.startsWith(`${prefix}rank`)) {
-
-        //SETUP SQL CONNECTION
-
-        var pool = mysql.createPool({
-            connectionLimit: 10, // default = 10
-            host: sqlHost,
-            user: sqlUser,
-            password: sqlPW,
-            database: sqlDB
-        });
+        db.get()
 
         let userID = message.author.id
 
         try {
             //First check if user exists in database
             let returnedRank = null;
-            pool.getConnection(async function(err, con) {
-                    if (err)
-                        console.log(err.message)
 
 
-                    await con.query(`SELECT userRank FROM user WHERE userID = ${userID}`, function(err, result, fields) {
-                            //While query is active check if error occurrs
-                            if (err) {
-                                console.log(err)
-                                return
-                            }
-                            console.log(result[0])
-                                //When no error occurrs, set returnedRank on the Users rank
-                            returnedRank = result[0].userRank
-                        })
-                        //Release SQL Connection
-                    con.release()
-                        //Check on error after release
-                    if (err) {
-                        console.log('error while releasing connection:' + err.message)
-                    }
+
+            //QUICK DB HERE
 
 
-                    //message reply with UserRank
 
-                    let embedRanks = {
-                        "content": "UserRanking",
-                        "title": `**RedRose Ranking** - ` + message.member.user.tag,
-                        "description": "You are currently on Rank: " + returnedRank,
-                        "url": "",
-                        "color": 15844367,
-                        "timestamp": dateTime,
-                    }
+            //message reply with UserRank
 
-                    await message.channel.send({ embed: embedRanks })
+            let embedRanks = {
+                "content": "UserRanking",
+                "title": `**RedRose Ranking** - ` + message.member.user.tag,
+                "description": "You are currently on Rank: " + returnedRank,
+                "url": "",
+                "color": 15844367,
+                "timestamp": dateTime,
+            }
 
-                })
+            await message.channel.send({ embed: embedRanks })
                 //Double check for errors
         } catch (err) {
             console.log(err.message)
@@ -894,14 +859,8 @@ client.on('message', async message => {
         }
 
 
+        // writeAllToQuickDB
 
-        var pool = mysql.createPool({
-            connectionLimit: 10, // default = 10
-            host: sqlHost,
-            user: sqlUser,
-            password: sqlPW,
-            database: sqlDB
-        });
 
         var date;
 
@@ -917,36 +876,33 @@ client.on('message', async message => {
 
             await client.users.cache.forEach(async u => {
 
-                pool.getConnection(async function(err, con) {
 
+                await client.users.cache.forEach(async u => {
+                    let userID = await u.id.toString()
 
-
-
-                    await sleep(2000)
-                    user = u.id
-                    console.log(`Adding ${user} to RedRose Database!`);
-
-                    messageCount = 0
-
-                    var date;
-
-                    args = '2020-05-15'
-
-
-
-                    try {
-                        await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args}", 1)`)
-                        con.on('error', function(err) {
-                            console.log(err)
-                            return
-                        })
-                        await con.release()
-                    } catch (err) {
-                        console.log(err)
-                    }
-                    console.log(`User ${username} with id ${user} added to Database`)
+                    await db.set(`userInfo`, { rank: null }) // adding all users with count 0 to database
+                    await db.add(`userInfo.${userID}_xp`, 0)
+                    await db.add(`userInfo.${userID}_currentRank`, 0)
+                    await db.add(`userInfo_${userID}_messageCount`, 0)
+                    await console.log('Database Data: ' + db)
+                    console.log('Added ' + u.username + ' to quick.db database')
 
                 })
+
+
+                /*
+                try {
+                    await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args}", 1)`)
+                    con.on('error', function(err) {
+                        console.log(err)
+                        return
+                    })
+                    await con.release()
+                } catch (err) {
+                    console.log(err)
+                }
+
+                */
             })
         } catch (err) {
             console.log(err.message)
@@ -1006,37 +962,13 @@ client.on('message', async message => {
 client.on('guildMemberAdd', async member => {
 
 
-    var pool = mysql.createPool({
-        connectionLimit: 10, // default = 10
-        host: sqlHost,
-        user: sqlUser,
-        password: sqlPW,
-        database: sqlDB
-    });
 
 
     try {
-        pool.getConnection(async function(err, con) {
-            if (err) console.log(err);
-            let user = member.id
-            let messageCount = 0
-            let joinedAt = member.joinedAt
 
-            var date;
-            date = joinedAt
-            date = date.getUTCFullYear() + '-' + ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('00' + date.getUTCDate()).slice(-2) + ' ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
+        // Add new member to quickdb
 
-            let cont = date.toString()
-            let args = cont.split(' ')
-            console.log(date)
-            await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args[0]}", 0)`)
-            con.on('error', function(err) {
-                console.log(err)
-                return
-            })
-            await con.release()
-            console.log("Connection released!");
-        })
+
     } catch (err) {
         console.log(err.message)
     }
@@ -1105,13 +1037,6 @@ client.on('ready', async() => {
     let boosterCount = 0
 
     await membercountchannel.setName(`Total Members: ${membercount}`)
-
-    /*
-        setInterval(async function() {
-            await client.user.setActivity(`VRChat (${await VRC.getActivePlayersForBot()} Players)`, { type: 'PLAYING' })
-                .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-                .catch(console.error);
-        }, 30000)*/
 
     await client.user.setActivity(`Roses`, { type: 'LISTENING', url: 'https://open.spotify.com/track/0easEmosKkPhksg0qidzXo?si=Nsjlk1afQB-_lIGsJTii_w' })
         .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))

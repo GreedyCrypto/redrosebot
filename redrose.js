@@ -260,16 +260,119 @@ client.on('message', async message => {
 
 
 
-    try {
+    //Update XP for User message.author.id
+    await db.add(`userInfo.${message.author.id}_xp`, 5)
+    await db.add(`userInfo.${message.author.id}_messageCount`, 1)
 
-    } catch (err) {
-        console.log(err.message)
+    let currentXP = await db.get(`userInfo.${message.author.id}_xp`)
+
+
+    //Check if Member is in RedRose Server
+
+    //
+
+    switch (currentXP) {
+        case 200:
+            message.channel.send(`Congratulations ${message.author}! You've just reached level 1!!`)
+            await db.set(`userInfo.${message.author.id}_currentRank`, 1)
+            break;
+        case 350:
+            message.channel.send(`Congratulations ${message.author}! You've just reached level 2!!`)
+            await db.set(`userInfo.${message.author.id}_currentRank`, 2)
+            break;
+        case 500:
+            message.channel.send(`Congratulations ${message.author}! You've just reached level 3!! How amaziing :)`)
+            await db.set(`userInfo.${message.author.id}_currentRank`, 3)
+            break;
+        case 700:
+            message.channel.send(`Congratulations ${message.author}! You've just reached level 4!! This is coool`)
+            await db.set(`userInfo.${message.author.id}_currentRank`, 4)
+            break;
+        case 950:
+            message.channel.send(`Congratulations ${message.author}! You have finally reached the max Rank 5!!`)
+            message.channel.send(`We would like to award you for your activity. Please get in contact with one of the Admins.`)
+            await db.set(`userInfo.${message.author.id}_currentRank`, 5)
+            break;
+        default:
+            break;
     }
 
 
+    var RedRoseDiscord = await client.guilds.cache.get(`698150099603161199`)
+    let usrID = await message.author.id
+
+    if (RedRoseDiscord.member(usrID)) {
+        // ADD TO CURRENT RANK DISCORDRANK
+        let currentRank = await db.get(`userInfo.${message.author.id}_currentRank`)
+        console.log(currentRank)
+        var currentRankRole = null
+        let GuildMember = null
+        switch (currentRank) {
+            case 0:
+                GuildMember = RedRoseDiscord.members.cache.get(message.author.id)
+                console.log(GuildMember)
+                currentRankRole = await RedRoseDiscord.roles.cache.get('712983986086871061')
+                console.log(currentRankRole)
+                await GuildMember.roles.add(currentRankRole)
+                break
+            case 1:
+                GuildMember = RedRoseDiscord.members.cache.get(message.author.id)
+                console.log(GuildMember)
+                currentRankRole = await RedRoseDiscord.roles.cache.get('712984092920250408')
+                console.log(currentRankRole)
+                await GuildMember.roles.add(currentRankRole)
+                break
+            case 2:
+                GuildMember = RedRoseDiscord.members.cache.get(message.author.id)
+                console.log(GuildMember)
+                currentRankRole = await RedRoseDiscord.roles.cache.get('712984120321376307')
+                console.log(currentRankRole)
+                await GuildMember.roles.add(currentRankRole)
+                break
+            case 3:
+                GuildMember = RedRoseDiscord.members.cache.get(message.author.id)
+                console.log(GuildMember)
+                currentRankRole = await RedRoseDiscord.roles.cache.get('712984145436999733')
+                console.log(currentRankRole)
+                await GuildMember.roles.add(currentRankRole)
+                break
+            case 4:
+                GuildMember = RedRoseDiscord.members.cache.get(message.author.id)
+                console.log(GuildMember)
+                currentRankRole = await RedRoseDiscord.roles.cache.get('712984168619048992')
+                console.log(currentRankRole)
+                await GuildMember.roles.add(currentRankRole)
+                break
+            case 5:
+                GuildMember = RedRoseDiscord.members.cache.get(message.author.id)
+                console.log(GuildMember)
+                currentRankRole = await RedRoseDiscord.roles.cache.get('712984237837647973')
+                console.log(currentRankRole)
+                await GuildMember.roles.add(currentRankRole)
+                break
+            default:
+                currentRankRole = null;
+                break
+        }
+    }
+
+
+
+
+
+
+
+    var SnowsDiscord = await client.guilds.cache.get(`709330557267476490`)
+
+
+    /*} else if (SnowsDiscord.member(usrID)) {
+        // ADD TO CURRENT RAKN DISCORDRANK         
+    } else if (RedRoseDiscord.member(usrID) && SnowsDiscord.member(usrID)) {
+        // WHEN IN BOTH ADD BOTH RANKS BASED ON GUILD
+    }*/
+
     //release connnection
 
-    await con.release()
     console.log('connection released')
         //end connection
 
@@ -418,7 +521,7 @@ client.on('message', async message => {
         message.channel.send('Bombing successful. Thank you for using Cryptobomber 1.0')
     }
     */
-    if (!message.content.startsWith(prefix) && (!responseObject[message.content])) return
+    if (!message.content.startsWith(prefix) && (!responseObject[message.content]) && (!message.content.startsWith(`!rank`))) return
 
 
     /* DEBUG INFORMATION GATHERING */
@@ -563,6 +666,11 @@ client.on('message', async message => {
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}event`)) {
         EVENTS.triggerEvent(message)
+    } else if (message.content.startsWith(`${prefix}resetmyxp`)) {
+        await db.set(`userInfo.${message.author.id}_xp`, 0)
+        await db.set(`userInfo.${message.author.id}_currentRank`, 0)
+        await db.set(`userInfo.${message.author.id}_messageCount`, 0)
+        await message.reply(`I've resetted your Ranking. Current Rank:` + db.get(`userInfo.${message.author.id}_currentRank`)) + ` Current XP: ` + db.get(`userInfo.${message.author.id}_xp`) + ` MessageCount: ` + db.get(`userInfo.${message.author.id}_messageCount`)
     } else if (message.content.startsWith(`${prefix}channelcount`)) {
         let thisGuildObject = await client.guilds.cache.get('698150099603161199')
         let count = 0;
@@ -751,8 +859,189 @@ client.on('message', async message => {
 
     } else if (message.content.startsWith(`${prefix}delete`)) {
         MOD.purgeMessages(message)
-    } else if (message.content.startsWith(`${prefix}rank`)) {
+    } else if (message.content.startsWith(`${prefix}rank`) || (message.content.startsWith(`!rank`))) {
 
+        // Draw canvas for userRank Info
+
+
+
+        const canvas = Canvas.createCanvas(700, 250);
+        const ctx = canvas.getContext('2d');
+
+
+        var posX = 115,
+            posY = canvas.height / 2.4,
+            fps = 1000 / 200,
+            procent = 0,
+            oneProcent = 360 / 100
+        let result = null
+        let level = null
+
+        let levelperProcent = null
+
+
+        let maxexp = null
+
+
+
+        if (db.get(`userInfo.${message.author.id}_xp`) >= 0 && db.get(`userInfo.${message.author.id}_xp`) <= 195) {
+            maxexp = 195
+            oneProcent = 1.846
+            console.log("result: " + result)
+            currentRankStrokeStyle = "#cd7f32"
+        } else if (db.get(`userInfo.${message.author.id}_xp`) >= 200 && db.get(`userInfo.${message.author.id}_xp`) <= 345) {
+            maxexp = 345
+            oneProcent = 1.043
+            console.log("result: " + result)
+            currentRankStrokeStyle = "#cd7f32"
+        } else if (db.get(`userInfo.${message.author.id}_xp`) >= 350 && db.get(`userInfo.${message.author.id}_xp`) <= 495) {
+            maxexp = 495
+            oneProcent = 0.727
+            console.log("result: " + result)
+            currentRankStrokeStyle = "#FFDF00"
+        } else if (db.get(`userInfo.${message.author.id}_xp`) >= 500 && db.get(`userInfo.${message.author.id}_xp`) <= 695) {
+            maxexp = 695
+            oneProcent = 0.517
+            console.log("result: " + result)
+            currentRankStrokeStyle = "#FF00FF"
+        } else if (db.get(`userInfo.${message.author.id}_xp`) >= 700 && db.get(`userInfo.${message.author.id}_xp`) <= 945) {
+            maxexp = 945
+            oneProcent = 0.380
+            console.log("result: " + result)
+            currentRankStrokeStyle = "#8B008B"
+        } else if (db.get(`userInfo.${message.author.id}_xp`) >= 950 && db.get(`userInfo.${message.author.id}_xp`) <= 1200) {
+            maxexp = 1200
+            oneProcent = 0.3
+            console.log("result: " + result)
+            currentRankStrokeStyle = "#4B0082"
+        }
+
+        ctx.lineCap = 'round';
+
+        result = oneProcent * db.get(`userInfo.${message.author.id}_xp`)
+
+        var deegres = 0
+            //while (deegres <= result) {
+            //deegres += 1;
+        deegres = result
+
+
+        /*
+        const avatar = await Canvas.loadImage(message.author.displayAvatarURL({ format: 'jpg' }));
+        ctx.drawImage(avatar, 25, 25, 200, 200);
+
+
+
+        const background = await Canvas.loadImage('./red.jpg');
+                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+                ctx.beginPath();
+                ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.clip();
+                */
+
+
+        console.log('Degrees: ' + deegres)
+
+
+
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        procent = deegres / oneProcent
+        console.log(oneProcent)
+        ctx.beginPath()
+        ctx.arc(posX, posY, 70, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + 360))
+        ctx.strokeStyle = '#b1b1b1';
+        ctx.lineWidth = '10';
+        ctx.stroke();
+
+
+        const background = await Canvas.loadImage('./red.jpg');
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+
+        ctx.beginPath();
+        ctx.strokeStyle = currentRankStrokeStyle;
+        ctx.lineWidth = '10';
+        console.log('Degrees: ' + deegres)
+        ctx.arc(posX, posY, 70, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + deegres));
+        ctx.stroke();
+
+
+
+        ctx.font = '100px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(db.get(`userInfo.${message.author.id}_currentRank`), 88, canvas.height / 1.8);
+
+        ctx.font = '30px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(db.get(`userInfo.${message.author.id}_xp`) + '/' + maxexp + ' EXP', 38, 220);
+
+        // Add an exclamation point here and below
+        ctx.font = applyText(canvas, `${message.author.id}!`);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('You are at level ' + await db.get(`userInfo.${message.author.id}_currentRank`) + `, ${message.author.username}!`, 320, 50);
+
+
+        ctx.beginPath();
+        ctx.arc(600, 150, 80, 0, Math.PI * 2, true);
+        ctx.strokeStyle = '#00FFEE'
+        ctx.closePath();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(600, 150, 80, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.strokeStyle = '#ffffff'
+        ctx.clip();
+
+
+
+        const avatar = await Canvas.loadImage(message.author.displayAvatarURL({ format: 'jpg' }));
+        ctx.drawImage(avatar, 520, 70, 160, 160);
+
+
+
+
+
+        //ctx.drawImage(avatar, 25, 25, 200, 200);
+
+        //}
+        /*
+
+        const background = await Canvas.loadImage('./red.jpg');
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = '#74037b';
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
+        // Slightly smaller text placed above the member's display name
+        ctx.font = '28px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('Welcome to RedRose,', canvas.width / 2.5, canvas.height / 3.5);
+
+        // Add an exclamation point here and below
+        ctx.font = applyText(canvas, `${member.displayName}!`);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
+
+        ctx.beginPath();
+        ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+        */
+
+        //const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'jpg' }));
+        //ctx.drawImage(avatar, 25, 25, 200, 200);
+
+        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'red.png');
+        await message.channel.send(attachment)
+
+
+
+
+        /*
         let embedRanks = {
             "content": "UserRanking",
             "title": `**RedRose Ranking** - ` + message.member.user.tag,
@@ -769,7 +1058,7 @@ client.on('message', async message => {
         //console.log(rows)
         //}).catch((err) => setImmediate(() => { throw err; }));
 
-
+*/
 
     } else if (message.content.startsWith(`${prefix}sendToAll`)) {
         if (message.author.id === '164382979550871553') {
@@ -781,13 +1070,13 @@ client.on('message', async message => {
                     //console.log(user.id)
             })
         } else {
-            message.reply('You are not authorized to use this command.')
+            await message.reply('You are not authorized to use this command.')
         }
     } else if (message.content.startsWith(`${prefix}partner`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
         if (args[0] == null) {
-            message.reply('Please enter Partner')
+            await message.reply('Please enter Partner')
         }
         let partner = message.mentions.users.first().id
         client.users.cache.get(partner).send(`Hey ${args[0]},\nRedRose wants to partner with your Discord Server! Do you accept?\nPlease send your answer to Crypto#5842\n\n -------------------------------------------------------------\n╔═════❁ ✛ ❁═════╗\n |         :rose: Red Rose :rose:       |\n╚═════❁ ✛ ❁═════╝\nInvite discord.gg/jT3XRkD\nBanner https://cdn.discordapp.com/attachments/697935278945468477/705369661109436446/Red_Rose_Black_Background.jpg\n╔                                                           ╗\n   Nice & Wholesome Community.\n   Assets Unity/Blender Sharing.\n   Helpful members and staff.\n   VRChat Pics & Vids.\n   Windex inside.\n   Own Discordbot.\n   Many Commands.\n   VRC User Search.\n   Custom Emotes.\n╰                                                          ┛\n-------------------------------------------------------------`).catch(() => message.reply("Can't send DM to your user!"))
@@ -1035,27 +1324,24 @@ client.on('message', async message => {
 
             let user = null
             let messageCount = null
-            let args = [null]
             let cont = null
 
 
+
+
             await client.users.cache.forEach(async u => {
+                let userID = await u.id.toString()
+
+                await db.set(`userInfo`, { rank: null }) // adding all users with count 0 to database
+                await db.add(`userInfo.${userID}_xp`, 0)
+                await db.add(`userInfo.${userID}_currentRank`, 0)
+                await db.add(`userInfo.${userID}_messageCount`, 0)
+                await console.log('Added ' + u.username + ' to quick.db database')
+
+            })
 
 
-                await client.users.cache.forEach(async u => {
-                    let userID = await u.id.toString()
-
-                    await db.set(`userInfo`, { rank: null }) // adding all users with count 0 to database
-                    await db.add(`userInfo.${userID}_xp`, 0)
-                    await db.add(`userInfo.${userID}_currentRank`, 0)
-                    await db.add(`userInfo_${userID}_messageCount`, 0)
-                    await console.log('Database Data: ' + db)
-                    console.log('Added ' + u.username + ' to quick.db database')
-
-                })
-
-
-                /*
+            /*
                 try {
                     await con.query(`INSERT INTO user (userID, messageCount, joinedAt, userRank) VALUES (${user}, ${messageCount}, "${args}", 1)`)
                     con.on('error', function(err) {
@@ -1067,9 +1353,7 @@ client.on('message', async message => {
                 } catch (err) {
                     console.log(err)
                 }
-
-                */
-            })
+*/
 
         } catch (err) {
             console.log(err.message)
@@ -1134,10 +1418,13 @@ client.on('guildMemberAdd', async member => {
     try {
 
         // Add new member to quickdb
-
+        db.add(`userInfo.${member.id}_xp`, 0)
+        db.add(`userInfo.${member.id}_currentRank`, 0)
+        db.add(`userInfo.${member.id}_messageCount`, 0)
+        console.log(`Added new Guild Member with ID ${member.id} to quickDB database`)
 
     } catch (err) {
-        console.log(err.message)
+        console.log(err.message + `\nCannot add new guildmember to Database`)
     }
 
 
@@ -1176,7 +1463,7 @@ client.on('guildMemberAdd', async member => {
     ctx.clip();
 
     const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'jpg' }));
-    ctx.drawImage(avatar, 25, 25, 200, 200);
+    ctx.drawImage(avatar, 30, 30, 200, 200);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'red.png');
 
@@ -1251,7 +1538,7 @@ client.once('disconnect', () => {
 })
 
 
-// DISCORD JS EMBED COLORS 
+// DISCORD JS EMBED COLORS  
 /*
 DEFAULT: 0,
 AQUA: 1752220,

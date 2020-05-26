@@ -16,10 +16,12 @@ let btoa = require("btoa")
 const Canvas = require("canvas")
 let globalrank = null
 let user = null
+const fs = require('fs')
 const db = require('quick.db')
 const cheweyBotAnalyticsAPI = require("discord-bot-analytics")
+const youtubedl = require('youtube-dl')
 var mysql = require('mysql')
-
+const checkProxy = require('check-proxy').check;
 
 
 
@@ -94,6 +96,48 @@ async function getRandomImage(message, params) {
                 message.channel.send(error)
             }
         })
+}
+
+
+async function ytdl(message, args){
+var randomProxyArray = []
+await fs.readFile('./output.json', 'utf8', async (err, jsonString) => {
+    if (err) {
+        console.log("File read failed:", err)
+        return
+    }
+    //console.log('File data:', jsonString)
+
+    randomProxyArray = await jsonString.split(',').slice(1)
+    console.log("I got random Proxy: " + randomProxyArray[5])
+    await setVideoProxy(randomProxyArray[5], message, args)
+})
+}
+
+
+async function setVideoProxy(proxy, message, args)
+{
+const video = youtubedl(args,
+  // Optional arguments passed to youtube-dl.
+  ['--proxy', 'http://' + proxy, '-x', '--audio-format', 'mp3'])
+console.log("Set Proxy " + proxy)
+
+video.on('info', function(info) {
+  console.log('Download started')
+  console.log('filename: ' + info._filename)
+  console.log('size: ' + info.size)
+})
+ 
+await video.pipe(fs.createWriteStream('myvideo.mp3'))
+video.on('end', function(){
+console.log("finished downloading");
+message.channel.send({
+    files: ['./myvideo.mp3']
+}).catch((err) => message.reply(err.message))
+})
+video.on('error', function error(err, message) {  
+message.reply(err.message)
+})
 }
 
 const applyText = (canvas, text) => {
@@ -507,7 +551,11 @@ client.on('message', async message => {
 
 
     if (message.content.toLowerCase().indexOf('erp') != -1) {
+	if(message.author.id == '596495389256056862'){
+	message.reply("YES ERP!")
+	}else{
         message.reply("NO ERP!")
+	}
         return
     }
 
@@ -660,8 +708,14 @@ client.on('message', async message => {
         */
 
 
+    if(message.content.startsWith(`${prefix}ytdl`))
+    {
+        let cont = message.content.slice(prefix.length).split(' ')
+        var args = cont.slice(1)
 
-    if (message.content.startsWith(`${prefix}image`)) {
+	await ytdl(message, args[0])
+    
+    } else if (message.content.startsWith(`${prefix}image`)) {
         const image = message.content.split(' ')
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}event`)) {
@@ -1328,15 +1382,15 @@ client.on('message', async message => {
 
 
 
-
+	    console.log('1')
             await client.users.cache.forEach(async u => {
                 let userID = await u.id.toString()
-
-                await db.set(`userInfo`, { rank: null }) // adding all users with count 0 to database
-                await db.add(`userInfo.${userID}_xp`, 0)
-                await db.add(`userInfo.${userID}_currentRank`, 0)
-                await db.add(`userInfo.${userID}_messageCount`, 0)
-                await console.log('Added ' + u.username + ' to quick.db database')
+                //await db.set(`userInfo`, { rank: null }) // adding all users with count 0 to database
+                console.log('Added ' + u.username + ' to quick.db database')
+		db.add(`userInfo.${userID}_xp`, 0)
+                db.add(`userInfo.${userID}_currentRank`, 0)
+                db.add(`userInfo.${userID}_messageCount`, 0)
+                console.log('Added ' + u.id + ' to quick.db database')
 
             })
 

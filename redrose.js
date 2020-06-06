@@ -111,9 +111,11 @@ async function ytdl(message, args, callback) {
         //console.log('File data:', jsonString)
 
         randomProxyArray = await jsonString.split(',').slice(1)
-        console.log("I got random Proxy: " + randomProxyArray[5])
-        callback = randomProxyArray[5]
-        await setVideoProxy(randomProxyArray[5], message, args)
+	
+	let rand = Math.floor(Math.random() * 101)
+	console.log("I got random Proxy: " + randomProxyArray[rand])
+        callback = randomProxyArray[rand]
+        await setVideoProxy(randomProxyArray[rand], message, args)
     }, (callback => {
         console.log(callback);
     }));
@@ -132,15 +134,15 @@ async function setVideoProxy(proxy, message, args) {
         console.log('size: ' + info.size)
     })
 
-    await video.pipe(fs.createWriteStream('myvideo.mp3'))
+    video.pipe(fs.createWriteStream('myvideo.mp3'))
     video.on('end', function() {
         console.log("finished downloading");
         message.channel.send({
             files: ['./myvideo.mp3']
-        }).catch((err) => message.reply(err.message))
+        }).catch((err) => message.channel.send(err.message))
     })
     video.on('error', function error(err, message) {
-        message.reply(err.message)
+        message.channel.send(err.message)
     })
 }
 
@@ -282,6 +284,9 @@ client.on('messageReactionAdd', async(reaction, user) => {
         }
 
     }
+
+    //console.log(user.username)
+    //console.log(emojiUser)
 
     // Now the message has been cached and is fully available
     if (iterator > 3) {
@@ -555,7 +560,7 @@ client.on('message', async message => {
 
 
     if (message.content.toLowerCase().indexOf('erp') != -1) {
-        if (message.author.id == '596495389256056862') {
+        if (message.author.id == '596495389256056862' || message.author.id == '646223466781081610') {
             message.reply("YES ERP!")
         } else {
             message.reply("NO ERP!")
@@ -651,7 +656,7 @@ client.on('message', async message => {
             message.reply(`Your Server has to much emojis? More then 100? How? Can't run command. Please contact coder.`)
         }
 
-        if (temparray.length > 0 && temparray < 15) {
+        if (temparray.length > 0 && temparray.length < 15) {
             message.channel.send(emojiArray)
         } else if (temparray.length >= 15 && temparray.length < 30) {
             message.channel.send(emojiArray)
@@ -971,7 +976,12 @@ client.on('message', async message => {
             oneProcent = 0.3
             console.log("result: " + result)
             currentRankStrokeStyle = "#4B0082"
-        }
+        } else {
+	    maxexp = 1200
+	    oneProcent = 0.3
+	    console.log("result: " + result)
+	    currentRankStrokeStyle = "#4B0082"
+	}
 
         ctx.lineCap = 'round';
 
@@ -1128,8 +1138,19 @@ client.on('message', async message => {
             })
         } else {
             await message.reply('You are not authorized to use this command.')
-        }
-    } else if (message.content.startsWith(`${prefix}partner`)) {
+	}
+	} else if (message.content.startsWith(`${prefix}annoy`)) {
+        if (message.author.id === '164382979550871553') {
+            let cont = message.content.slice(prefix.length).split(' ')
+            var args = cont.slice(1)
+	    const userx = message.mentions.users.first().id
+            let user = client.users.cache.get(userx).send(args[2])
+            message.channel.send(`Send message to ${user}`)
+                   //console.log(user.id)
+        } else {
+            await message.reply('You are not authorized to use this command.')
+       	}
+    	} else if (message.content.startsWith(`${prefix}partner`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
         if (args[0] == null) {
@@ -1150,13 +1171,12 @@ client.on('message', async message => {
     } else if (message.content.startsWith(`${prefix}vote`)) {
 
 
-
-
         const filter = (reaction, user) => {
             return reaction.emoji.name === '👌' && user.id === message.author.id;
         };
 
         const collector = message.createReactionCollector(filter, { time: 15000 });
+
         message.react('👍').then(() => message.react('👎'));
 
         collector.on('collect', (reaction, reactionCollector) => {
@@ -1170,8 +1190,13 @@ client.on('message', async message => {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
 
+	//console.log(args[0])
         emojiUser = args[0]
-        message.channel.send(message.author.username + " started a new Vote! Should " + args[0] + " get access on the Asset Server?")
+
+	cont2 = args.slice(1)
+	cont22 = cont2.join(" ")
+	
+        message.channel.send(message.author.username + " started a new Vote! Should " + args[0] + " " + cont22 + "?")
         message.channel.send("VOTE NOW!!!!")
 
     } else if (message.content.startsWith(`${prefix}ban`) || message.content.startsWith(`${prefix}kick`)) {
@@ -1545,38 +1570,84 @@ client.on('ready', async() => {
     let RedRoseDiscord = client.guilds.cache.get('698150099603161199')
     let membercountchannel = client.channels.cache.get('710174438368477194')
     let membercount = RedRoseDiscord.memberCount
-    let boosterCount = 0
+    
+    let SnowsDiscord = client.guilds.cache.get('709330557267476490')
+    let membercountchannelSnow = client.channels.cache.get('718520385553039370')
+    let membercountSnow = SnowsDiscord.memberCount
 
-    await membercountchannel.setName(`Total Members: ${membercount}`)
+
+    let boosterCount = 0
 
     await client.user.setActivity(`Roses`, { type: 'LISTENING', url: 'https://open.spotify.com/track/0easEmosKkPhksg0qidzXo?si=Nsjlk1afQB-_lIGsJTii_w' })
         .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
         .catch(console.error);
 
     let boosterRole = '702294533551030363'
+
+    let boosterRoleSnow = '716767706359136308'
     let usersInBoosterRole = []
+    let usersInBoosterRoleSnow = []
+
+    let i = 0
+    let x = 0
+
+
+        let testChannel = client.channels.cache.get('710171771365490734')
+        let boosterCountChannel = client.channels.cache.get('710187321122619508')
+        let snowBoosterChannel = client.channels.cache.get('718522883772645416')
+
+
+    setInterval(async () => {
+    membercountchannel.setName(`Total Members: ${membercount}`)
+    membercountchannelSnow.setName(`Total Members: ${membercountSnow}`)
+
     RedRoseDiscord.members.cache.forEach(async g => {
         if (g._roles.includes(boosterRole)) {
+	    if(!usersInBoosterRole.includes(g.user.username))
             await usersInBoosterRole.push(g.user.username)
         }
     })
 
-    let i = 0
-    var boosterChannelChange = setInterval(async function() {
+    SnowsDiscord.members.cache.forEach(async g => {
+	if (g._roles.includes(boosterRoleSnow)) {
+	    if(!usersInBoosterRoleSnow.includes(g.user.username))
+	    await usersInBoosterRoleSnow.push(g.user.username)
+	}
+    })
+
+
+
+    
+
+    //var boosterChannelChange = setInterval(async function() {
         //get Channel to Change
-        let testChannel = client.channels.cache.get('710171771365490734')
-        let boosterCountChannel = client.channels.cache.get('710187321122619508')
-        await testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
-        await membercountchannel.setName(`Total Members: ${RedRoseDiscord.memberCount}`)
-        await boosterCountChannel.setName(`Boosts: ${usersInBoosterRole.length}`)
-        i++
+        //let testChannel = client.channels.cache.get('710171771365490734')
+        //let boosterCountChannel = client.channels.cache.get('710187321122619508')
+    	//let snowBoosterChannel = client.channels.cache.get('718522883772645416')
+
+
+	snowBoosterChannel.setName(`Booster: ${usersInBoosterRoleSnow[x]}`)
+	
+	
+	testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
+        membercountchannel.setName(`Total Members: ${RedRoseDiscord.memberCount}`)
+        boosterCountChannel.setName(`Boosts: ${usersInBoosterRole.length}`)
+	console.log("users in booster role: " + usersInBoosterRole)
+
+	x++
+	if (x >= usersInBoosterRoleSnow.length){
+	    x = 0
+	}
+        console.log(x)
+	i++
         if (i >= usersInBoosterRole.length) {
             i = 0
         }
+	console.log(i)
         /*await client.usgit ers.cache.forEach(g => {
             console.log(boosterRole.members.cache)
         })*/
-    }, 10000)
+    }, 15000)
 
 })
 

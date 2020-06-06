@@ -15,6 +15,7 @@
     "node-fetch": "^2.6.0",
     "plain-text-data-to-json": "^1.0.3",
     "quick.db": "^7.1.1",
+    "random": "^2.2.0",
     "remove-duplicate-lines": "^0.1.1",
     "youtube-dl": "^3.0.2"
   }

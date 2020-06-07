@@ -312,6 +312,8 @@ class VRC {
                                 thisTagsArray = tags
                             }
 
+                            let id = object[i]['id'] 
+
                             const vrcEmbed = new MessageEmbed()
                                 .setColor(color)
                                 .setTitle(params)
@@ -319,7 +321,7 @@ class VRC {
                                 .setAuthor(object[i]['displayName'])
                                 .setThumbnail(object[i]['currentAvatarThumbnailImageUrl'])
                                 .setImage(object[i]['currentAvatarImageUrl'])
-                                .addFields({ name: 'Bio', value: bio, inline: false }, { name: 'Tags', value: thisTagsArray, inline: false }, { name: 'Trust Rank', value: trustrank, inline: true }, { name: 'Developer Type', value: devtype, inline: true }, { name: 'Last Platform', value: lastPlatform, inline: true }, )
+                                .addFields({ name: 'Bio', value: bio, inline: false }, { name: 'Tags', value: thisTagsArray, inline: false }, { name: 'Trust Rank', value: trustrank, inline: true }, { name: 'Developer Type', value: devtype, inline: true }, { name: 'Last Platform', value: lastPlatform, inline: true }, {name: 'ID', value: id, inline: false}, )
                                 .setTimestamp(object[i]['dateTime'])
 
                             pages.join()

@@ -1446,6 +1446,12 @@ client.on('message', async message => {
         } else {
             message.reply(" This command is only for Server-Booster. Please ask a booster to execute it or boost yourself. Thank you :)")
         }
+    }else if (message.content.startsWith(`${prefix}getavis`)){
+        if (message.member.roles.cache.find(r => r.name === "Server Booster")) {
+        VRC.getAvatarByUserID(message)
+    } else {
+        message.reply(" This command is only for Server-Booster. Please ask a booster to execute it or boost yourself. Thank you :)")
+    }   
     } else if (message.content.startsWith(`${prefix}blockinfo`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)

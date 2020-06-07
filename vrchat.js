@@ -86,6 +86,71 @@ class VRC {
     }
 
 
+    static async getAvatarByUserID(message){
+        Object.defineProperty(Array.prototype, 'flat', {
+            value: function(depth = 1) {
+                return this.reduce(function(flat, toFlatten) {
+                    return flat.concat((Array.isArray(toFlatten) && (depth > 1)) ? toFlatten.flat(depth - 1) : toFlatten);
+                }, []);
+            },
+            configurable: true
+        });
+
+
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont.slice(1)
+
+        let userid = args[0]
+
+        let apiKey = "&apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
+
+        if(userid == null || userid == "" || !userid.startsWith('usr')){
+            message.reply("You need to specify a correct userid.")
+        }
+
+        endpoint = "avatars?userId=" + userid + "&order=descending"
+        try {
+            await fetch(apiURL + endpoint + apiKey, { method: 'GET', headers: headers }, false)
+                .then(response => response.json())
+                .then(async(object) => {
+
+
+
+
+                    let vrcEmbed = {}
+                    let pages = []
+                    let emojiList = []
+
+                    for (var i = 0; i < object.length; i++) {
+                        var today = new Date()
+                        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+                        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                        var dateTime = date + ' ' + time
+
+                        const embed1 = new MessageEmbed()
+                            .setColor('#0099ff')
+                            .setTitle('New Uploaded Avatar!')
+                            .setURL(object[i]['assetUrl'])
+                            .setAuthor(object[i]['authorName'])
+                            .addField('VRCA', object[i]['assetUrl'], true)
+                            .setThumbnail(object[i]['thumbnailImageUrl'])
+                            .setImage(object[i]['imageUrl'])
+                            .setTimestamp(object[i]['dateTime'])
+
+                        pages.join()
+                        pages.push(embed1)
+                    }
+
+                    console.log(pages)
+
+                    paginationEmbed(message, pages)
+                    return
+                })
+        } catch (error) {
+            message.reply(error.message)
+        }
+    }
+
 
     static async setPlayerCount(object) {
         return object

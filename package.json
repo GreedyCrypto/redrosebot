@@ -12,7 +12,7 @@
     "download-file": "^0.1.5",
     "fs": "0.0.1-security",
     "mysql": "^2.18.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "plain-text-data-to-json": "^1.0.3",
     "quick.db": "^7.1.1",
     "random": "^2.2.0",

@@ -22,7 +22,7 @@ const db = require('quick.db')
 const cheweyBotAnalyticsAPI = require("discord-bot-analytics")
 const youtubedl = require('youtube-dl')
 var mysql = require('mysql')
-const checkProxy = require('check-proxy').check;
+//const checkProxy = require('check-proxy').check;
 const Danbooru = require('danbooru')
 
 

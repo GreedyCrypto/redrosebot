@@ -47,8 +47,7 @@ class VRC {
                 .then(response => response.json())
                 .then(async(object) => {
 
-
-
+                //console.log(object)
 
                     let vrcEmbed = {}
                     let pages = []

@@ -2,6 +2,7 @@ const {
 
     prefix,
     giphy_apiKey,
+    tenor_apiKey,
     discordColors
 
 } = require('./config.json')
@@ -20,14 +21,17 @@ class Emote {
         let params = ""
         let action = ""
         let extra = ""
-        let apiKey = giphy_apiKey
-
+        //let apiKey = giphy_apiKey
+        let apiKey = tenor_apiKey
         var today = new Date()
         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
         var dateTime = date + ' ' + time
 
+
+
         console.log("my content is currently" + message.content)
+        console.log("my content is currently" + args)
         if (message.content.startsWith(`${prefix}cuddle`)) {
             params = "cuddle"
             action = " cuddles with "
@@ -45,7 +49,7 @@ class Emote {
             action = " is kissing "
             extra = "this kiss was awesome "
         } else if (message.content.startsWith(`${prefix}lewd`)) {
-            params = "hentai"
+            params = "lewd"
             action = " is lewding "
             extra = "ERP IN A PUBLIC LOBBY??? BRUH "
         } else if (message.content.startsWith(`${prefix}bite`)) {
@@ -72,7 +76,16 @@ class Emote {
             params = "love"
             action = " is sending love to "
             extra = "look how cute they are awwwww..."
-        } else {
+        } else if (message.content.startsWith(`${prefix}headpat`)) {
+            params = "headpat"
+            action = " is headpatting "
+            extra = "thanks for the head pats uwu..."
+        } else if (message.content.startsWith(`${prefix}custom`)) {
+            params = args[1].replace("_", "%5C")
+            action = " sending " + args[1] + " to "
+            extra = "thats something special o_w_u "
+            args = args[2]
+        } else{
             message.channel.send("An unknown error occurred. Please check contact the coder.")
         }
 
@@ -92,8 +105,17 @@ class Emote {
 
 
         let color = discordColors[colorRandomize]
-        let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + "+" + "anime" + apiKey
-            //let user = getUserFromMention(args)
+        
+        let apiURL = null;
+        
+        //let apiURL = "https://api.giphy.com/v1/gifs/search?limit=20&offset=" + offsetRandomize + "&q=" + params + "+" + "anime" + apiKey
+        if(message.content.startsWith(`${prefix}custom`)){
+        apiURL = "https://api.tenor.com/v1/search?q=" + params + "&key=" + apiKey
+        }else{
+        apiURL = "https://api.tenor.com/v1/search?q=" + params + "%5Canime&key=" + apiKey
+        }
+        //message.channel.send(apiURL)
+        //let user = getUserFromMention(args)
         console.log(apiURL)
 
         if (!args) return
@@ -111,29 +133,37 @@ class Emote {
             .then((object) => {
 
 
-                //message.channel.send("DEBUG INFO: The limit is 20 and i got " + object['data'].length + " objects.")
+                //message.channel.send("DEBUG INFO: The limit is 10 and i got " + object['results'][0]['media'][0]['gif']['url'] + " objects.")
 
 
+                let random = Math.floor(Math.random() * 11)
 
-                let random = Math.floor(Math.random() * 21)
-
-                if (object['data'].length < 20) {
-                    random = Math.floor(Math.random() * (object['data'].length))
+                if (object['results'].length < 1) 
+                {
+                 message.channel.send('No Image found.')
+                 return
                 }
 
-                let coderun = false
+                if (object['results'].length < 10) {
+                    random = Math.floor(Math.random() * (object['results'].length))
+                }
+
+                let coderun = false 
+                try{
                 while (coderun == false) {
-                    if (object['data'][random]['embed_url'] === undefined) {
+                    if (object['results'][random]['media'][0]['gif']['url'] === undefined) {
                         console.log("Something was wrong")
-                        random = Math.floor(Math.random() * 21)
-                    } else if (object['data'][random]['images']['original']['url'] != undefined) {
+                        random = Math.floor(Math.random() * 11)
+                    } else if (object['results'][random]['media'][0]['gif']['url'] != undefined) {
                         coderun = true
                     } else {
                         coderun = true
                         break
                     }
                 }
-
+                }catch(ex){
+                    message.channel.send(ex.message)
+                }
                 try {
                     //str.substring(0, str.length() - 1)
                     //message.channel.send(message.member.user.tag + " cuddles with: " + args + ": " + "\n" + object['data'][random]['embed_url'])
@@ -147,7 +177,7 @@ class Emote {
                         //    .setImage(object['data'][random]['embed_url'])
 
                     //message.channel.send({ myEmbed })
-                    let url = object['data'][random]['images']['original']['url']
+                    let url = object['results'][random]['media'][0]['gif']['url']
 
 
                     switch (client.users.cache.get(args)['username']) {

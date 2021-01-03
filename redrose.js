@@ -23,7 +23,7 @@ const cheweyBotAnalyticsAPI = require("discord-bot-analytics")
 const youtubedl = require('youtube-dl')
 var mysql = require('mysql')
 const checkProxy = require('check-proxy').check;
-
+const Danbooru = require('danbooru')
 
 
 
@@ -33,6 +33,7 @@ const {
     token,
     discordColors,
     giphy_apiKey,
+    tenor_apiKey,
     analytics_api,
     sqlHost,
     sqlUser,
@@ -718,8 +719,8 @@ client.on('message', async message => {
 
 
     if (message.content.startsWith(`${prefix}ytdl`)) {
-        let cont = message.content.slice(prefix.length).split(' ')
-        var args = cont.slice(1)
+            let cont = message.content.slice(prefix.length).split(' ')
+            var args = cont.slice(1)
 
         await ytdl(message, args[0])
 
@@ -728,6 +729,24 @@ client.on('message', async message => {
         getRandomImage(message, image[1])
     } else if (message.content.startsWith(`${prefix}event`)) {
         EVENTS.triggerEvent(message)
+    } else if (message.content.startsWith(`${prefix}weebimage`)){
+    
+    // Perform a search for popular image posts
+
+    /*
+    try{
+            let cont = message.content.slice(prefix.length).split(' ')
+            var args = cont.slice(1)
+
+            await fetch("https://api.jikan.moe/v3/search/anime?q=" + `${args}` + "&page=1", { method: "GET", headers: headers })
+            .then((resp) => resp.json())
+            .then((object) => {
+            console.log(object)
+            message.channel.send(object['pictures'][0]['large'])
+            })
+            }catch(ex){
+                message.channel.send(ex.message + " searched for: " + args + " with fetchurl " + "https://api.jikan.moe/v3/search/anime?q=" + `${args}` + "&page=1")
+            }*/
     } else if (message.content.startsWith(`${prefix}resetmyxp`)) {
         await db.set(`userInfo.${message.author.id}_xp`, 0)
         await db.set(`userInfo.${message.author.id}_currentRank`, 0)
@@ -999,8 +1018,8 @@ client.on('message', async message => {
 
 
 
-        const background = await Canvas.loadImage('./red.jpg');
-                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+          const background = await Canvas.loadImage('./red.jpg');
+          ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
                 ctx.beginPath();
                 ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
@@ -1013,7 +1032,7 @@ client.on('message', async message => {
 
 
 
-
+        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         procent = deegres / oneProcent
         console.log(oneProcent)
@@ -1068,9 +1087,7 @@ client.on('message', async message => {
         const avatar = await Canvas.loadImage(message.author.displayAvatarURL({ format: 'jpg' }));
         ctx.drawImage(avatar, 520, 70, 160, 160);
 
-
-
-
+        
 
         //ctx.drawImage(avatar, 25, 25, 200, 200);
 
@@ -1125,7 +1142,7 @@ client.on('message', async message => {
         //console.log(rows)
         //}).catch((err) => setImmediate(() => { throw err; }));
 
-*/
+        */
 
     } else if (message.content.startsWith(`${prefix}sendToAll`)) {
         if (message.author.id === '164382979550871553') {
@@ -1371,12 +1388,18 @@ client.on('message', async message => {
         message.content.startsWith(`${prefix}kiss`) ||
         message.content.startsWith(`${prefix}love`) ||
         message.content.startsWith(`${prefix}slap`) ||
+        message.content.startsWith(`${prefix}headpat`) ||
         message.content.startsWith(`${prefix}oniichan`) ||
         message.content.startsWith(`${prefix}rape`)) {
-        let cont = message.content.slice(prefix.lenght).split(" ")
+        let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
         console.log(args[0])
+        console.log(cont[0])
         Emote.emotetype(client, message, args[0])
+    } else if (message.content.startsWith(`${prefix}custom`)){
+        let cont = message.content.slice(prefix.length).split(" ")
+        let args = cont
+        Emote.emotetype(client, message, args)
     } else if (message.content.startsWith(`${prefix}listServers`)) {
         const guildNames = client.guilds.cache.map(g => g.name).join("\n")
 
@@ -1441,13 +1464,13 @@ client.on('message', async message => {
             console.log(err.message)
         }
     } else if (message.content.startsWith(`${prefix}latestVRC`)) {
-        if (message.member.roles.cache.find(r => r.name === "Server Booster")) {
+        if (!message.member.roles.cache.find(r => r.name === "Server Booster")) {
             VRC.getLastestUploadedAvatars(message)
         } else {
             message.reply(" This command is only for Server-Booster. Please ask a booster to execute it or boost yourself. Thank you :)")
         }
     }else if (message.content.startsWith(`${prefix}getavis`)){
-        if (message.member.roles.cache.find(r => r.name === "Server Booster")) {
+        if (!message.member.roles.cache.find(r => r.name === "Server Booster")) {
         VRC.getAvatarByUserID(message)
     } else {
         message.reply(" This command is only for Server-Booster. Please ask a booster to execute it or boost yourself. Thank you :)")
@@ -1509,6 +1532,11 @@ client.on('guildMemberAdd', async member => {
         db.add(`userInfo.${member.id}_xp`, 0)
         db.add(`userInfo.${member.id}_currentRank`, 0)
         db.add(`userInfo.${member.id}_messageCount`, 0)
+
+        await db.set(`userInfo.${member.id}_xp`, 0)
+        await db.set(`userInfo.${member.id}_currentRank`, 0)
+        await db.set(`userInfo.${member.id}_messageCount`, 0)
+
         console.log(`Added new Guild Member with ID ${member.id} to quickDB database`)
 
     } catch (err) {
@@ -1577,35 +1605,35 @@ client.on('ready', async() => {
     let membercountchannel = client.channels.cache.get('710174438368477194')
     let membercount = RedRoseDiscord.memberCount
     
-    let SnowsDiscord = client.guilds.cache.get('709330557267476490')
-    let membercountchannelSnow = client.channels.cache.get('718520385553039370')
-    let membercountSnow = SnowsDiscord.memberCount
+    //let SnowsDiscord = client.guilds.cache.get('709330557267476490')
+    //let membercountchannelSnow = client.channels.cache.get('718520385553039370')
+    //let membercountSnow = SnowsDiscord.memberCount
 
 
     let boosterCount = 0
 
-    await client.user.setActivity(`Roses`, { type: 'LISTENING', url: 'https://open.spotify.com/track/0easEmosKkPhksg0qidzXo?si=Nsjlk1afQB-_lIGsJTii_w' })
+    await client.user.setActivity(`Roses`, { type: 'STREAMING', url: 'https://www.youtube.com/watch?v=XHA-QM-q-3E' })
         .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
         .catch(console.error);
 
     let boosterRole = '702294533551030363'
 
-    let boosterRoleSnow = '716767706359136308'
+    //let boosterRoleSnow = '716767706359136308'
     let usersInBoosterRole = []
-    let usersInBoosterRoleSnow = []
+    //let usersInBoosterRoleSnow = []
 
     let i = 0
     let x = 0
 
 
-        let testChannel = client.channels.cache.get('710171771365490734')
-        let boosterCountChannel = client.channels.cache.get('710187321122619508')
-        let snowBoosterChannel = client.channels.cache.get('718522883772645416')
+        //let testChannel = client.channels.cache.get('710171771365490734')
+        //let boosterCountChannel = client.channels.cache.get('710187321122619508')
+        //let snowBoosterChannel = client.channels.cache.get('718522883772645416')
 
 
     setInterval(async () => {
-    membercountchannel.setName(`Total Members: ${membercount}`)
-    membercountchannelSnow.setName(`Total Members: ${membercountSnow}`)
+    //membercountchannel.setName(`Total Members: ${membercount}`)
+    //membercountchannelSnow.setName(`Total Members: ${membercountSnow}`)
 
     RedRoseDiscord.members.cache.forEach(async g => {
         if (g._roles.includes(boosterRole)) {
@@ -1613,14 +1641,14 @@ client.on('ready', async() => {
             await usersInBoosterRole.push(g.user.username)
         }
     })
-
+    /*
     SnowsDiscord.members.cache.forEach(async g => {
 	if (g._roles.includes(boosterRoleSnow)) {
 	    if(!usersInBoosterRoleSnow.includes(g.user.username))
 	    await usersInBoosterRoleSnow.push(g.user.username)
 	}
     })
-
+    */
 
 
     
@@ -1632,20 +1660,21 @@ client.on('ready', async() => {
     	//let snowBoosterChannel = client.channels.cache.get('718522883772645416')
 
 
-	snowBoosterChannel.setName(`Booster: ${usersInBoosterRoleSnow[x]}`)
+	//snowBoosterChannel.setName(`Booster: ${usersInBoosterRoleSnow[x]}`)
 	
 	
-	testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
+	//testChannel.setName(`Booster: ${usersInBoosterRole[i]}`)
         membercountchannel.setName(`Total Members: ${RedRoseDiscord.memberCount}`)
-        boosterCountChannel.setName(`Boosts: ${usersInBoosterRole.length}`)
+        //boosterCountChannel.setName(`Boosts: ${usersInBoosterRole.length}`)
 	console.log("users in booster role: " + usersInBoosterRole)
-
+    /*
 	x++
-	if (x >= usersInBoosterRoleSnow.length){
+    if (x >= usersInBoosterRoleSnow.length){
 	    x = 0
 	}
         console.log(x)
-	i++
+	*/
+    i++
         if (i >= usersInBoosterRole.length) {
             i = 0
         }
@@ -1660,7 +1689,7 @@ client.on('ready', async() => {
 
 
 client.once('ready', () => {
-    console.log('Ready!')
+    console.log('RedRose is Ready!')
 
 
 })

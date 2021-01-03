@@ -14,7 +14,6 @@
     "download-file": "^0.1.5",
     "fs": "0.0.1-security",
     "fstream": "^1.0.12",
-    "loadsh": "^0.0.4",
     "lodash": "^4.17.20",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.0",

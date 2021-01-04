@@ -302,7 +302,7 @@ class VRC {
                                 devtype = object[i]['developerType']
                             }
 
-                            if (object[i]['tags'].indexOf('system_supporter')){
+                            if (object[i]['tags'].indexOf('system_supporter') != -1){
                                 vrcplus = "yes"
                             }
 

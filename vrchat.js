@@ -239,6 +239,7 @@ class VRC {
                         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
                         var dateTime = date + ' ' + time
 
+                        let vrcplus = null;
 
 
                         let colorRandomize = Math.floor(Math.random() * 24)
@@ -301,6 +302,10 @@ class VRC {
                                 devtype = object[i]['developerType']
                             }
 
+                            if (object[i]['tags'].indexOf('system_supporter')){
+                                vrcplus = "yes"
+                            }
+
                             console.log('Devtype: ' + devtype)
                             let trustrank = await tagsort(tags)
                             let thisTagsArray = []
@@ -320,30 +325,13 @@ class VRC {
                                 .setAuthor(object[i]['displayName'])
                                 .setThumbnail(object[i]['currentAvatarThumbnailImageUrl'])
                                 .setImage(object[i]['currentAvatarImageUrl'])
-                                .addFields({ name: 'Bio', value: bio, inline: false }, { name: 'Tags', value: thisTagsArray, inline: false }, { name: 'Trust Rank', value: trustrank, inline: true }, { name: 'Developer Type', value: devtype, inline: true }, { name: 'Last Platform', value: lastPlatform, inline: true }, {name: 'ID', value: id, inline: false}, )
+                                .addFields({ name: 'Bio', value: bio, inline: false }, { name: 'Tags', value: thisTagsArray, inline: false }, { name: 'Trust Rank', value: trustrank, inline: true }, { name: 'Developer Type', value: devtype, inline: true }, { name: 'Last Platform', value: lastPlatform, inline: true }, { name: 'VRC+', value: vrcplus, inline: true }, {name: 'ID', value: id, inline: false}, )
                                 .setTimestamp(object[i]['dateTime'])
 
                             pages.join()
                             pages.push(vrcEmbed)
                         }
-
-
-                        /*
-                                                let vrcEmbed = {
-                                                    "content": params,
-                                                    "title": object[0]['displayName'],
-                                                    "description": bio + " " + " | Rank: " + await tagsort(tags),
-                                                    "url": "https://vrchat.com/home/user/" + object[0]['id'],
-                                                    "color": color,
-                                                    "timestamp": dateTime,
-                                                    "image": {
-                                                        "url": object[0]['currentAvatarImageUrl']
-                                                    },
-                                                    "thumbnail": {
-                                                        "url": object[0]['currentAvatarThumbnailImageUrl']
-                                                    }
-                                                }
-                        */
+                
                         paginationEmbed(message, pages)
                         return
                     }

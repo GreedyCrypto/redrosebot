@@ -14,6 +14,7 @@
     "download-file": "^0.1.5",
     "fs": "0.0.1-security",
     "fstream": "^1.0.12",
+    "lightweight-charts": "^3.2.0",
     "lodash": "^4.17.20",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.0",

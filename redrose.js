@@ -9,6 +9,7 @@ var BLOCK = require("./BLOCK")
 var VRC = require("./vrchat")
 var EVENTS = require("./events")
 var get_proxy = require("./getproxy")
+var FINANCIALS = require("./financials")
 const headers = { 'Content-Type': 'application/json' }
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
@@ -1475,6 +1476,9 @@ client.on('message', async message => {
     } else {
         message.reply(" This command is only for Server-Booster. Please ask a booster to execute it or boost yourself. Thank you :)")
     }   
+    }
+    else if (message.content.startsWith(`${prefix}getChart`)) {
+        FINANCIALS.buildChart()
     } else if (message.content.startsWith(`${prefix}blockinfo`)) {
         let cont = message.content.slice(prefix.length).split(" ")
         let args = cont.slice(1)
@@ -1502,7 +1506,7 @@ client.on('message', async message => {
         let args = cont.slice(1)
         if (args[0] == null) {
             args[0] = message.guild.id
-        }
+        } 
 
         let guildID = args[0]
         let guild = client.guilds.cache.get(`${guildID}`)

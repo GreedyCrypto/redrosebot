@@ -7,11 +7,11 @@ discordColors
 const paginationEmbed = require('discord.js-pagination')
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch')
-const chart = require('lightweight-charts')
+const createChart = require('lightweight-charts')
 
 let messageImageObject = null
 
-const chart = createChart(messageImageObject, { width: 200, height: 100});
+let chart = createChart(messageImageObject, { width: 200, height: 100});
 const lineSeries = chart.addLineSeries()
 
 let params = ""
